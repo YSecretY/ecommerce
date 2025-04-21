@@ -16,6 +16,9 @@ internal class AuthService(
 {
     public async Task RegisterAsync(RegisterUserCommand command, CancellationToken cancellationToken = default)
     {
+        if (await usersRepository.ExistsAsync(command.Email, cancellationToken))
+            throw new UnauthorizedAccessException("User already exists.");
+
         User user = new(
             email: command.Email,
             passwordHash: passwordHasher.Hash(command.Password),

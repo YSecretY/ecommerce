@@ -1,5 +1,6 @@
 using Ecommerce.Domain;
 using Ecommerce.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure.Repositories.Users;
 
@@ -9,4 +10,7 @@ internal class UsersRepository(
 {
     public async Task AddAsync(User user, CancellationToken cancellationToken = default) =>
         await dbContext.AddAsync(user, cancellationToken);
+
+    public async Task<bool> ExistsAsync(string email, CancellationToken cancellationToken = default) =>
+        await dbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken) is not null;
 }
