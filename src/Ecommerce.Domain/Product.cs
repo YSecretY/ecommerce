@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Ecommerce.Domain;
 
 public class Product(
