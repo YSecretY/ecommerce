@@ -21,6 +21,7 @@ public class Product(
     DateTime? saleEndsAtUtc
 )
 {
+    public const string TableName = "Products";
     public const int MaxNameLength = 512;
     public const int MaxDescriptionLength = 2056;
     public const int MaxSkuLength = 256;
@@ -31,31 +32,24 @@ public class Product(
 
     public Guid Id { get; init; } = Guid.NewGuid();
 
-    [MaxLength(MaxNameLength)]
     public string Name { get; private set; } = name;
 
-    [MaxLength(MaxDescriptionLength)]
     public string Description { get; private set; } = description;
 
-    [MaxLength(MaxSkuLength)]
     public string Sku { get; private set; } = sku;
 
-    [MaxLength(MaxBrandLength)]
     public string Brand { get; private set; } = brand;
 
     public decimal Price { get; private set; } = price;
 
     public decimal? SalePrice { get; private set; } = salePrice;
 
-    [MaxLength(MaxImageUrlLength)]
     public string MainImageUrl { get; private set; } = mainImageUrl;
 
     public List<string>? ImageGalleryUrls { get; private set; } = imageGalleryUrls;
 
-    [MaxLength(MaxCurrencyCodeLength)]
     public string CurrencyCode { get; private set; } = currencyCode;
 
-    [MaxLength(MaxCountryCodeLength)]
     public string CountryCode { get; private set; } = countryCode;
 
     public long TotalCount { get; private set; } = totalCount;

@@ -1,8 +1,21 @@
+using Ecommerce.CredentialProvider;
+using Ecommerce.Infrastructure;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+# region Credentials
+
+ICredentialProvider credentialProvider =
+    CredentialProviderFactory.GetCredentialProvider(builder.Environment, builder.Configuration);
+
+string productsDbConnection = credentialProvider.GetProductsDbConnection();
+
+# endregion
 
 # region Core
 
 builder.Services
+    .AddInfrastructure(productsDbConnection)
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddControllers();
