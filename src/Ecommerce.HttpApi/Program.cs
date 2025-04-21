@@ -1,4 +1,6 @@
+using Ecommerce.Core;
 using Ecommerce.CredentialProvider;
+using Ecommerce.Extensions;
 using Ecommerce.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -16,7 +18,9 @@ string usersDbConnection = credentialProvider.GetUsersDbConnection();
 # region Core
 
 builder.Services
+    .AddExtensions()
     .AddInfrastructure(productsDbConnection, usersDbConnection)
+    .AddCore()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddControllers();

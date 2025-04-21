@@ -3,7 +3,7 @@ using Ecommerce.Infrastructure.Database;
 
 namespace Ecommerce.Infrastructure.Repositories.Users;
 
-internal class UserRepository(
+internal class UsersRepository(
     UsersDbContext dbContext
 ) : IUsersRepository
 {

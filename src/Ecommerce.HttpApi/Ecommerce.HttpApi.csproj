@@ -16,10 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\shared\Ecommerce.CredentialProvider\Ecommerce.CredentialProvider.csproj" />
       <ProjectReference Include="..\Ecommerce.Core\Ecommerce.Core.csproj" />
     </ItemGroup>
