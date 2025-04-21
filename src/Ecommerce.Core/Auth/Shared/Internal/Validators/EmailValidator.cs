@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Ecommerce.Extensions.Exceptions;
 using ValidationResult = Ecommerce.Extensions.Exceptions.ValidationResult;
 
-namespace Ecommerce.Core.Auth.Register.Internal.Validators;
+namespace Ecommerce.Core.Auth.Shared.Internal.Validators;
 
 internal class EmailValidator
 {

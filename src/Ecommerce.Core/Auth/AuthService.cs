@@ -1,6 +1,7 @@
 using Ecommerce.Core.Auth.Login;
 using Ecommerce.Core.Auth.Register;
-using Ecommerce.Core.Auth.Register.Internal;
+using Ecommerce.Core.Auth.Shared;
+using Ecommerce.Core.Auth.Shared.Internal;
 using Ecommerce.Domain;
 using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;
@@ -13,10 +14,12 @@ internal class AuthService(
     IUsersRepository usersRepository,
     IUsersUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher,
-    IDateTimeProvider dateTimeProvider
+    IDateTimeProvider dateTimeProvider,
+    IIdentityTokenGenerator identityTokenGenerator
 ) : IAuthService
 {
-    public async Task RegisterAsync(RegisterUserCommand command, CancellationToken cancellationToken = default)
+    public async Task<IdentityToken> RegisterAsync(RegisterUserCommand command,
+        CancellationToken cancellationToken = default)
     {
         if (await usersRepository.ExistsAsync(command.Email, cancellationToken))
             throw new UnauthorizedAccessException("User already exists.");
@@ -33,15 +36,17 @@ internal class AuthService(
 
         await usersRepository.AddAsync(user, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return identityTokenGenerator.Generate(user);
     }
 
-    public async Task<AuthToken> LoginAsync(LoginUserCommand command, CancellationToken cancellationToken = default)
+    public async Task<IdentityToken> LoginAsync(LoginUserCommand command, CancellationToken cancellationToken = default)
     {
         User user = await usersRepository.GetByEmailAsync(command.Email, cancellationToken)
                     ?? throw new UnauthorizedException();
 
         UnauthorizedException.ThrowIf(() => !passwordHasher.IsValid(command.Password, user.PasswordHash));
 
-        throw new NotImplementedException();
+        return identityTokenGenerator.Generate(user);
     }
 }

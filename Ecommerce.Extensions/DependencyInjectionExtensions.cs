@@ -15,6 +15,8 @@ public static class DependencyInjectionExtensions
 
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
+        services.AddHttpContextAccessor();
+
         return services;
     }
 }

@@ -1,5 +1,7 @@
 using Ecommerce.Core;
+using Ecommerce.Core.Auth;
 using Ecommerce.CredentialProvider;
+using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;
 using Ecommerce.Infrastructure;
 
@@ -12,6 +14,7 @@ ICredentialProvider credentialProvider =
 
 string productsDbConnection = credentialProvider.GetProductsDbConnection();
 string usersDbConnection = credentialProvider.GetUsersDbConnection();
+JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
 
 # endregion
 
@@ -20,7 +23,14 @@ string usersDbConnection = credentialProvider.GetUsersDbConnection();
 builder.Services
     .AddExtensions()
     .AddInfrastructure(productsDbConnection, usersDbConnection)
-    .AddCore()
+    .AddCore(new JwtSettings(
+        secret: jwtCredential.Secret,
+        issuer: jwtCredential.Issuer,
+        audience: jwtCredential.Audience,
+        accessTokenExpirationMinutes: jwtCredential.AccessTokenExpirationMinutes,
+        refreshTokenExpirationDays: jwtCredential.RefreshTokenExpirationDays,
+        refreshTokenCookieName: jwtCredential.RefreshTokenCookieName
+    ))
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddControllers();

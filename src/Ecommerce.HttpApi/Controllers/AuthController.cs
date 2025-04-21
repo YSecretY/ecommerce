@@ -1,5 +1,8 @@
 using Ecommerce.Core.Auth;
+using Ecommerce.Core.Auth.Login;
 using Ecommerce.Core.Auth.Register;
+using Ecommerce.HttpApi.Contracts.Auth;
+using Ecommerce.HttpApi.Contracts.Auth.Login;
 using Ecommerce.HttpApi.Contracts.Auth.Register;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +15,8 @@ public class AuthController(
 ) : ControllerBase
 {
     [HttpPost("/users/register")]
-    public async Task<IActionResult> Register(RegisterUserRequest request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IdentityTokenResponse>> Register([FromBody] RegisterUserRequest request,
+        CancellationToken cancellationToken = default)
     {
         RegisterUserCommand command = new(
             email: request.Email,
@@ -21,8 +25,18 @@ public class AuthController(
             lastName: request.LastName
         );
 
-        await authService.RegisterAsync(command, cancellationToken);
+        return Ok(await authService.RegisterAsync(command, cancellationToken));
+    }
 
-        return Ok();
+    [HttpPost("/users/login")]
+    public async Task<ActionResult<IdentityTokenResponse>> Login([FromBody] LoginUserRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        LoginUserCommand command = new(
+            email: request.Email,
+            password: request.Password
+        );
+
+        return Ok(await authService.LoginAsync(command, cancellationToken));
     }
 }

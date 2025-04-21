@@ -1,7 +1,7 @@
 using Ecommerce.Domain;
 using Ecommerce.Extensions.Exceptions;
 
-namespace Ecommerce.Core.Auth.Register.Internal.Validators;
+namespace Ecommerce.Core.Auth.Shared.Internal.Validators;
 
 internal class NameValidator
 {

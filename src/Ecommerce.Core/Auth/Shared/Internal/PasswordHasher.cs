@@ -1,4 +1,4 @@
-namespace Ecommerce.Core.Auth.Register.Internal;
+namespace Ecommerce.Core.Auth.Shared.Internal;
 
 internal class PasswordHasher : IPasswordHasher
 {

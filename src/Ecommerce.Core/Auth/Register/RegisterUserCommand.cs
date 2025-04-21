@@ -1,4 +1,4 @@
-using Ecommerce.Core.Auth.Register.Internal.Validators;
+using Ecommerce.Core.Auth.Shared.Internal.Validators;
 using Ecommerce.Extensions.Exceptions;
 using ValidationResult = Ecommerce.Extensions.Exceptions.ValidationResult;
 
