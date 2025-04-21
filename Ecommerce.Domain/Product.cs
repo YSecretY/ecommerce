@@ -15,9 +15,10 @@ public class Product(
     string countryCode,
     long totalCount,
     bool isInStock,
-    bool isOnSale,
     DateTime createdAtUtc,
-    DateTime updatedAtUtc
+    DateTime updatedAtUtc,
+    DateTime? saleStartsAtUtc,
+    DateTime? saleEndsAtUtc
 )
 {
     public const int MaxNameLength = 512;
@@ -65,5 +66,15 @@ public class Product(
 
     public bool IsInStock { get; private set; } = isInStock;
 
-    public bool IsOnSale { get; private set; } = isOnSale;
+    public DateTime? SaleStartsAtUtc { get; private set; } = saleStartsAtUtc;
+
+    public DateTime? SaleEndsAtUtc { get; private set; } = saleEndsAtUtc;
+
+    public bool IsOnSale =>
+        SalePrice.HasValue &&
+        SaleStartsAtUtc <= DateTime.UtcNow &&
+        SaleEndsAtUtc >= DateTime.UtcNow;
+
+    public decimal DisplayPrice =>
+        IsOnSale ? SalePrice!.Value : Price;
 }
