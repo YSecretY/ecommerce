@@ -5,11 +5,11 @@
       context: .
       dockerfile: src/Ecommerce.HttpApi/Dockerfile
     depends_on:
-      - products_db
+      - postgres
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
-  products_db:
+  postgres:
     image: postgres:latest
     container_name: ecommerce_postgres
     restart: unless-stopped

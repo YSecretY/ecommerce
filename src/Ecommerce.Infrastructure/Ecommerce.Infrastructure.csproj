@@ -15,8 +15,4 @@
       <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Database\Migrations\" />
-    </ItemGroup>
-
 </Project>

@@ -6,9 +6,14 @@ namespace Ecommerce.Infrastructure.Database;
 
 public static class EntityConfigurations
 {
-    public static void ApplyAllEntityTypeConfigurations(this ModelBuilder modelBuilder)
+    public static void ApplyAllProductsDatabaseEntityTypeConfigurations(this ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyProductConfigurations();
+    }
+
+    public static void ApplyAllUsersDatabaseEntityTypeConfigurations(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyUserConfigurations();
     }
 
     private static void ApplyProductConfigurations(this ModelBuilder modelBuilder)
@@ -63,5 +68,41 @@ public static class EntityConfigurations
         productBuilder.Ignore(p => p.IsOnSale);
 
         productBuilder.Ignore(p => p.DisplayPrice);
+    }
+
+    private static void ApplyUserConfigurations(this ModelBuilder modelBuilder)
+    {
+        EntityTypeBuilder<User> userBuilder = modelBuilder.Entity<User>();
+
+        userBuilder.ToTable(User.TableName);
+
+        userBuilder.HasKey(u => u.Id);
+
+        userBuilder.HasIndex(u => u.Email).IsUnique();
+
+        userBuilder.Property(u => u.Email)
+            .IsRequired()
+            .HasMaxLength(User.MaxEmailLength);
+
+        userBuilder.Property(u => u.PasswordHash)
+            .IsRequired()
+            .HasMaxLength(User.MaxPasswordHashLength);
+
+        userBuilder.Property(u => u.FirstName)
+            .IsRequired()
+            .HasMaxLength(User.MaxNameLength);
+
+        userBuilder.Property(u => u.LastName)
+            .IsRequired()
+            .HasMaxLength(User.MaxNameLength);
+
+        userBuilder.Property(u => u.IsEmailConfirmed)
+            .IsRequired();
+
+        userBuilder.Property(u => u.Role)
+            .IsRequired();
+
+        userBuilder.Property(u => u.CreatedAtUtc)
+            .IsRequired();
     }
 }

@@ -1,4 +1,6 @@
 using Ecommerce.Infrastructure.Database;
+using Ecommerce.Infrastructure.Database.Products;
+using Ecommerce.Infrastructure.Database.Users;
 using Ecommerce.Infrastructure.Repositories.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,13 +10,18 @@ namespace Ecommerce.Infrastructure;
 
 public static class DependencyInjectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string productsDbConnection)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        string productsDbConnection,
+        string usersDbConnection)
     {
         services.AddDbContext<ProductsDbContext>(options => options.UseNpgsql(productsDbConnection));
+        services.AddDbContext<UsersDbContext>(options => options.UseNpgsql(usersDbConnection));
 
         services.ApplyMigrations();
 
         services.AddRepositories();
+        services.AddUnitsOfWork();
 
         return services;
     }
@@ -24,10 +31,18 @@ public static class DependencyInjectionExtensions
         services.TryAddScoped<IProductsRepository, ProductsRepository>();
     }
 
+    private static void AddUnitsOfWork(this IServiceCollection services)
+    {
+        services.TryAddScoped<IProductsUnitOfWork, ProductsUnitOfWork>();
+        services.TryAddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
+    }
+
     private static void ApplyMigrations(this IServiceCollection services)
     {
-        ProductsDbContext dbContext = services.BuildServiceProvider().GetRequiredService<ProductsDbContext>();
+        ProductsDbContext productsDbContext = services.BuildServiceProvider().GetRequiredService<ProductsDbContext>();
+        UsersDbContext usersDbContext = services.BuildServiceProvider().GetRequiredService<UsersDbContext>();
 
-        dbContext.Database.Migrate();
+        productsDbContext.Database.Migrate();
+        usersDbContext.Database.Migrate();
     }
 }

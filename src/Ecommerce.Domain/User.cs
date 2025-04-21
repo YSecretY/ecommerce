@@ -11,6 +11,9 @@ public class User(
 )
 {
     public const string TableName = "Users";
+    public const int MaxEmailLength = 256;
+    public const int MaxNameLength = 256;
+    public const int MaxPasswordHashLength = 512;
 
     public Guid Id { get; init; }
 

@@ -9,4 +9,8 @@ internal class AppSettingsCredentialProvider(
     public string GetProductsDbConnection() =>
         configuration.GetConnectionString(CredentialsNames.ProductsDbConnection)
         ?? throw new KeyNotFoundException(nameof(CredentialsNames.ProductsDbConnection));
+
+    public string GetUsersDbConnection() =>
+        configuration.GetConnectionString(CredentialsNames.UsersDbConnection)
+        ?? throw new KeyNotFoundException(nameof(CredentialsNames.UsersDbConnection));
 }

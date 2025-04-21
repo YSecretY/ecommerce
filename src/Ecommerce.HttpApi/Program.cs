@@ -9,13 +9,14 @@ ICredentialProvider credentialProvider =
     CredentialProviderFactory.GetCredentialProvider(builder.Environment, builder.Configuration);
 
 string productsDbConnection = credentialProvider.GetProductsDbConnection();
+string usersDbConnection = credentialProvider.GetUsersDbConnection();
 
 # endregion
 
 # region Core
 
 builder.Services
-    .AddInfrastructure(productsDbConnection)
+    .AddInfrastructure(productsDbConnection, usersDbConnection)
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddControllers();

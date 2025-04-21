@@ -10,11 +10,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Ecommerce.Infrastructure.Database.Migrations
+namespace Ecommerce.Infrastructure.Database.Products.Migrations
 {
     [DbContext(typeof(ProductsDbContext))]
-    [Migration("20250421115017_AddProductEntity")]
-    partial class AddProductEntity
+    [Migration("20250421124314_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

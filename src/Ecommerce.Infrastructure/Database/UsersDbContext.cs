@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure.Database;
 
-internal class ProductsDbContext(DbContextOptions<ProductsDbContext> options) : DbContext(options)
+internal class UsersDbContext(DbContextOptions<UsersDbContext> options) : DbContext(options)
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyAllProductsDatabaseEntityTypeConfigurations();
+        modelBuilder.ApplyAllUsersDatabaseEntityTypeConfigurations();
 
         base.OnModelCreating(modelBuilder);
     }
 
-    public DbSet<Product> Products { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
 }
