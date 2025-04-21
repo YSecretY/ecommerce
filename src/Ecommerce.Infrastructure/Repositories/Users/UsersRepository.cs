@@ -12,5 +12,12 @@ internal class UsersRepository(
         await dbContext.AddAsync(user, cancellationToken);
 
     public async Task<bool> ExistsAsync(string email, CancellationToken cancellationToken = default) =>
-        await dbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken) is not null;
+        await dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Email == email, cancellationToken) is not null;
+
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default) =>
+        await dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 }

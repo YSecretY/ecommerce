@@ -1,6 +1,8 @@
+using Ecommerce.Core.Auth.Login;
 using Ecommerce.Core.Auth.Register;
 using Ecommerce.Core.Auth.Register.Internal;
 using Ecommerce.Domain;
+using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;
 using Ecommerce.Infrastructure.Database.Users;
 using Ecommerce.Infrastructure.Repositories.Users;
@@ -31,5 +33,15 @@ internal class AuthService(
 
         await usersRepository.AddAsync(user, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<AuthToken> LoginAsync(LoginUserCommand command, CancellationToken cancellationToken = default)
+    {
+        User user = await usersRepository.GetByEmailAsync(command.Email, cancellationToken)
+                    ?? throw new UnauthorizedException();
+
+        UnauthorizedException.ThrowIf(() => !passwordHasher.IsValid(command.Password, user.PasswordHash));
+
+        throw new NotImplementedException();
     }
 }
