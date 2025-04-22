@@ -1,4 +1,6 @@
-namespace Ecommerce.Domain;
+using Ecommerce.Domain.Reviews;
+
+namespace Ecommerce.Domain.Users;
 
 public class User(
     string email,

@@ -1,4 +1,5 @@
 using Ecommerce.Domain;
+using Ecommerce.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure.Database;

@@ -1,6 +1,6 @@
-namespace Ecommerce.Domain;
+namespace Ecommerce.Core.Products.Create;
 
-public class Product(
+public class AdminCreateProductCommand(
     string name,
     string description,
     string sku,
@@ -16,20 +16,8 @@ public class Product(
     DateTime createdAtUtc,
     DateTime updatedAtUtc,
     DateTime? saleStartsAtUtc,
-    DateTime? saleEndsAtUtc
-)
+    DateTime? saleEndsAtUtc)
 {
-    public const string TableName = "Products";
-    public const int MaxNameLength = 512;
-    public const int MaxDescriptionLength = 2056;
-    public const int MaxSkuLength = 256;
-    public const int MaxBrandLength = 256;
-    public const int MaxImageUrlLength = 2056;
-    public const int MaxCurrencyCodeLength = 3;
-    public const int MaxCountryCodeLength = 3;
-
-    public Guid Id { get; init; } = Guid.NewGuid();
-
     public string Name { get; private set; } = name;
 
     public string Description { get; private set; } = description;
@@ -61,14 +49,4 @@ public class Product(
     public DateTime? SaleStartsAtUtc { get; private set; } = saleStartsAtUtc;
 
     public DateTime? SaleEndsAtUtc { get; private set; } = saleEndsAtUtc;
-
-    public ICollection<ProductReview> Reviews { get; private set; } = null!;
-
-    public bool IsOnSale =>
-        SalePrice.HasValue &&
-        SaleStartsAtUtc <= DateTime.UtcNow &&
-        SaleEndsAtUtc >= DateTime.UtcNow;
-
-    public decimal DisplayPrice =>
-        IsOnSale ? SalePrice!.Value : Price;
 }

@@ -1,4 +1,5 @@
 using Ecommerce.Domain;
+using Ecommerce.Domain.Products;
 
 namespace Ecommerce.Infrastructure.Repositories.Products;
 

@@ -1,4 +1,5 @@
 using Ecommerce.Domain;
+using Ecommerce.Domain.Users;
 using Ecommerce.Extensions.Exceptions;
 
 namespace Ecommerce.Core.Auth.Shared.Internal.Validators;

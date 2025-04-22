@@ -1,4 +1,6 @@
 using Ecommerce.Domain;
+using Ecommerce.Domain.Products;
+using Ecommerce.Domain.Reviews;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure.Database;

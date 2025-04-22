@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Ecommerce.Domain;
+using Ecommerce.Domain.Users;
 
 namespace Ecommerce.Core.Auth.Shared.Internal;
 

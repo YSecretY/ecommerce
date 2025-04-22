@@ -1,4 +1,7 @@
 using Ecommerce.Domain;
+using Ecommerce.Domain.Products;
+using Ecommerce.Domain.Reviews;
+using Ecommerce.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -30,30 +33,30 @@ public static class EntityConfigurations
 
         productBuilder.Property(p => p.Name)
             .IsRequired()
-            .HasMaxLength(Product.MaxNameLength);
+            .HasMaxLength(ProductValidator.MaxNameLength);
 
         productBuilder.Property(p => p.Description)
             .IsRequired()
-            .HasMaxLength(Product.MaxDescriptionLength);
+            .HasMaxLength(ProductValidator.MaxDescriptionLength);
 
         productBuilder.Property(p => p.Sku)
             .IsRequired()
-            .HasMaxLength(Product.MaxSkuLength);
+            .HasMaxLength(ProductValidator.MaxSkuLength);
 
         productBuilder.Property(p => p.Brand)
-            .HasMaxLength(Product.MaxBrandLength);
+            .HasMaxLength(ProductValidator.MaxBrandLength);
 
         productBuilder.Property(p => p.MainImageUrl)
             .IsRequired()
-            .HasMaxLength(Product.MaxImageUrlLength);
+            .HasMaxLength(ProductValidator.MaxImageUrlLength);
 
         productBuilder.Property(p => p.CurrencyCode)
             .IsRequired()
-            .HasMaxLength(Product.MaxCurrencyCodeLength);
+            .HasMaxLength(ProductValidator.MaxCurrencyCodeLength);
 
         productBuilder.Property(p => p.CountryCode)
             .IsRequired()
-            .HasMaxLength(Product.MaxCountryCodeLength);
+            .HasMaxLength(ProductValidator.MaxCountryCodeLength);
 
         productBuilder.Property(p => p.TotalCount)
             .IsRequired();

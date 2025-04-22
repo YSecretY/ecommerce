@@ -26,13 +26,7 @@ public class GlobalExceptionHandler(
                 _ => StatusCodes.Status422UnprocessableEntity
             };
 
-            var errorResponse = new EndpointResult<object>
-            {
-                IsSuccess = false,
-                ErrorCode = resultException.Code,
-                ErrorMessage = resultException.Message,
-                Data = resultException.AdditionalData
-            };
+            EndpointResult<ResponseException> errorResponse = new(resultException);
 
             await httpContext.Response.WriteAsJsonAsync(errorResponse, cancellationToken);
         }
