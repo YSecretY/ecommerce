@@ -40,24 +40,6 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    IsEmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Role = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductsReviews",
                 columns: table => new
                 {
@@ -74,12 +56,6 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                         name: "FK_ProductsReviews_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductsReviews_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -103,23 +79,12 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                         principalTable: "ProductsReviews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductReviewReplies_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductReviewReplies_ReviewId",
                 table: "ProductReviewReplies",
                 column: "ReviewId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductReviewReplies_UserId",
-                table: "ProductReviewReplies",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Sku",
@@ -130,11 +95,6 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                 name: "IX_ProductsReviews_ProductId",
                 table: "ProductsReviews",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductsReviews_UserId",
-                table: "ProductsReviews",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -148,9 +108,6 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "User");
         }
     }
 }

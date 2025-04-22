@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerce.Infrastructure.Database.Products.Migrations
 {
     [DbContext(typeof(ProductsDbContext))]
-    [Migration("20250422162646_Initial")]
+    [Migration("20250422214348_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,7 +26,7 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Ecommerce.Domain.Product", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,7 +101,7 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("Ecommerce.Domain.ProductReview", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Reviews.ProductReview", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,12 +125,10 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("ProductsReviews", (string)null);
                 });
 
-            modelBuilder.Entity("Ecommerce.Domain.ProductReviewReply", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Reviews.ProductReviewReply", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,98 +152,39 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
 
                     b.HasIndex("ReviewId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("ProductReviewReplies", (string)null);
                 });
 
-            modelBuilder.Entity("Ecommerce.Domain.User", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Reviews.ProductReview", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsEmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("Ecommerce.Domain.ProductReview", b =>
-                {
-                    b.HasOne("Ecommerce.Domain.Product", "Product")
+                    b.HasOne("Ecommerce.Domain.Products.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecommerce.Domain.User", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ecommerce.Domain.ProductReviewReply", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Reviews.ProductReviewReply", b =>
                 {
-                    b.HasOne("Ecommerce.Domain.ProductReview", "Review")
+                    b.HasOne("Ecommerce.Domain.Reviews.ProductReview", "Review")
                         .WithMany("Replies")
                         .HasForeignKey("ReviewId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecommerce.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Review");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ecommerce.Domain.Product", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Products.Product", b =>
                 {
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("Ecommerce.Domain.ProductReview", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Reviews.ProductReview", b =>
                 {
                     b.Navigation("Replies");
-                });
-
-            modelBuilder.Entity("Ecommerce.Domain.User", b =>
-                {
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

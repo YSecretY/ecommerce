@@ -124,11 +124,6 @@ public static class EntityConfigurations
             .IsRequired()
             .HasMaxLength(ProductReview.MaxTextLength);
 
-        review.HasOne(r => r.User)
-            .WithMany(u => u.Reviews)
-            .HasForeignKey(r => r.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         review.HasOne(r => r.Product)
             .WithMany(p => p.Reviews)
             .HasForeignKey(r => r.ProductId)
@@ -151,11 +146,6 @@ public static class EntityConfigurations
         reviewReply.Property(r => r.Text)
             .IsRequired()
             .HasMaxLength(ProductReview.MaxTextLength);
-
-        reviewReply.HasOne(r => r.User)
-            .WithMany()
-            .HasForeignKey(r => r.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
 
         reviewReply.HasOne(r => r.Review)
             .WithMany(r => r.Replies)

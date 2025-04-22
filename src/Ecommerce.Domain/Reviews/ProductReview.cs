@@ -17,8 +17,6 @@ public class ProductReview(
 
     public Guid UserId { get; private set; } = userId;
 
-    public User User { get; private set; } = null!;
-
     public Guid ProductId { get; private set; } = productId;
 
     public Product Product { get; private set; } = null!;

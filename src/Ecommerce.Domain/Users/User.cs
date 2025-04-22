@@ -1,5 +1,3 @@
-using Ecommerce.Domain.Reviews;
-
 namespace Ecommerce.Domain.Users;
 
 public class User(
@@ -33,8 +31,6 @@ public class User(
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
 
     public UserRole Role { get; private set; } = role;
-
-    public ICollection<ProductReview> Reviews { get; private set; } = null!;
 
     public void ConfirmEmail() =>
         IsEmailConfirmed = true;

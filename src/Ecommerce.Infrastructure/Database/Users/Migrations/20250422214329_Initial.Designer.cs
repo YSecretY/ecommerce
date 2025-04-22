@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerce.Infrastructure.Database.Users.Migrations
 {
     [DbContext(typeof(UsersDbContext))]
-    [Migration("20250421125433_Initial")]
+    [Migration("20250422214329_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Ecommerce.Domain.User", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

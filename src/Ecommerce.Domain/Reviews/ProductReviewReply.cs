@@ -15,9 +15,7 @@ public class ProductReviewReply(
     public Guid Id { get; init; } = Guid.NewGuid();
 
     public Guid UserId { get; private set; } = userId;
-
-    public User User { get; private set; } = null!;
-
+    
     public Guid ReviewId { get; private set; } = reviewId;
 
     public ProductReview Review { get; private set; } = null!;
