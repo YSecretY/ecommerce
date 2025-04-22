@@ -1,5 +1,3 @@
-using Ecommerce.Domain.Users;
-
 namespace Ecommerce.Domain.Reviews;
 
 public class ProductReviewReply(

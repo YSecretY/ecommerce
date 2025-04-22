@@ -1,5 +1,6 @@
 using Ecommerce.Domain.Products;
 using Ecommerce.Extensions.Exceptions;
+using Ecommerce.Extensions.Time;
 using Ecommerce.Infrastructure.Database.Products;
 using Ecommerce.Infrastructure.Repositories.Products;
 
@@ -7,11 +8,14 @@ namespace Ecommerce.Core.Admin.Products.Update;
 
 public class AdminUpdateProductUseCase(
     IProductsRepository productsRepository,
-    IProductsUnitOfWork unitOfWork
+    IProductsUnitOfWork unitOfWork,
+    IDateTimeProvider dateTimeProvider
 ) : IAdminUpdateProductUseCase
 {
     public async Task HandleAsync(AdminUpdateProductCommand command, CancellationToken cancellationToken = default)
     {
+        DateTime utcNow = dateTimeProvider.UtcNow;
+
         Product product = await productsRepository.GetByIdAsync(command.ProductId, true, cancellationToken)
                           ?? throw new ProductNotFoundException();
 
@@ -29,7 +33,7 @@ public class AdminUpdateProductUseCase(
             totalCount: command.TotalCount,
             isInStock: command.IsInStock,
             createdAtUtc: command.CreatedAtUtc,
-            updatedAtUtc: command.UpdatedAtUtc,
+            updatedAtUtc: utcNow,
             saleStartsAtUtc: command.SaleStartsAtUtc,
             saleEndsAtUtc: command.SaleEndsAtUtc
         );

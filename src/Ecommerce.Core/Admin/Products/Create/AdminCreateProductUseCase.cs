@@ -1,5 +1,6 @@
 using Ecommerce.Domain.Products;
 using Ecommerce.Extensions.Exceptions;
+using Ecommerce.Extensions.Time;
 using Ecommerce.Infrastructure.Database.Products;
 using Ecommerce.Infrastructure.Repositories.Products;
 
@@ -7,11 +8,14 @@ namespace Ecommerce.Core.Admin.Products.Create;
 
 public class AdminCreateProductUseCase(
     IProductsRepository productsRepository,
-    IProductsUnitOfWork unitOfWork
+    IProductsUnitOfWork unitOfWork,
+    IDateTimeProvider dateTimeProvider
 ) : IAdminCreateProductUseCase
 {
     public async Task<Guid> HandleAsync(AdminCreateProductCommand command, CancellationToken cancellationToken = default)
     {
+        DateTime utcNow = dateTimeProvider.UtcNow;
+
         Product product = new(
             name: command.Name,
             description: command.Description,
@@ -25,8 +29,8 @@ public class AdminCreateProductUseCase(
             countryCode: command.CountryCode,
             totalCount: command.TotalCount,
             isInStock: command.IsInStock,
-            createdAtUtc: command.CreatedAtUtc,
-            updatedAtUtc: command.UpdatedAtUtc,
+            createdAtUtc: utcNow,
+            updatedAtUtc: utcNow,
             saleStartsAtUtc: command.SaleStartsAtUtc,
             saleEndsAtUtc: command.SaleEndsAtUtc
         );

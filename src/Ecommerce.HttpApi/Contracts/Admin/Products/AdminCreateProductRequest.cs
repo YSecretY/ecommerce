@@ -37,12 +37,6 @@ public class AdminCreateProductRequest
     [JsonPropertyName("totalCount")]
     public long TotalCount { get; set; }
 
-    [JsonPropertyName("createdAtUtc")]
-    public DateTime CreatedAtUtc { get; set; }
-
-    [JsonPropertyName("updatedAtUtc")]
-    public DateTime UpdatedAtUtc { get; set; }
-
     [JsonPropertyName("isInStock")]
     public bool IsInStock { get; set; }
 

@@ -43,9 +43,6 @@ public class AdminUpdateProductRequest
     [JsonPropertyName("createdAtUtc")]
     public DateTime CreatedAtUtc { get; set; }
 
-    [JsonPropertyName("updatedAtUtc")]
-    public DateTime UpdatedAtUtc { get; set; }
-
     [JsonPropertyName("isInStock")]
     public bool IsInStock { get; set; }
 

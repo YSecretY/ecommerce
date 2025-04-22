@@ -15,7 +15,6 @@ public class AdminUpdateProductCommand(
     long totalCount,
     bool isInStock,
     DateTime createdAtUtc,
-    DateTime updatedAtUtc,
     DateTime? saleStartsAtUtc,
     DateTime? saleEndsAtUtc)
 {
@@ -44,9 +43,7 @@ public class AdminUpdateProductCommand(
     public long TotalCount { get; private set; } = totalCount;
 
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
-
-    public DateTime UpdatedAtUtc { get; private set; } = updatedAtUtc;
-
+    
     public bool IsInStock { get; private set; } = isInStock;
 
     public DateTime? SaleStartsAtUtc { get; private set; } = saleStartsAtUtc;

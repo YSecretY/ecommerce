@@ -1,5 +1,4 @@
 using Ecommerce.Domain.Products;
-using Ecommerce.Domain.Users;
 
 namespace Ecommerce.Domain.Reviews;
 

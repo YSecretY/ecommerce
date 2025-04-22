@@ -13,8 +13,6 @@ public class AdminCreateProductCommand(
     string countryCode,
     long totalCount,
     bool isInStock,
-    DateTime createdAtUtc,
-    DateTime updatedAtUtc,
     DateTime? saleStartsAtUtc,
     DateTime? saleEndsAtUtc)
 {
@@ -39,10 +37,6 @@ public class AdminCreateProductCommand(
     public string CountryCode { get; private set; } = countryCode;
 
     public long TotalCount { get; private set; } = totalCount;
-
-    public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
-
-    public DateTime UpdatedAtUtc { get; private set; } = updatedAtUtc;
 
     public bool IsInStock { get; private set; } = isInStock;
 

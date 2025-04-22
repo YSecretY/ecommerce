@@ -33,8 +33,6 @@ public class AdminProductsController(
             countryCode: request.CountryCode,
             totalCount: request.TotalCount,
             isInStock: request.IsInStock,
-            createdAtUtc: request.CreatedAtUtc,
-            updatedAtUtc: request.UpdatedAtUtc,
             saleStartsAtUtc: request.SaleStartsAtUtc,
             saleEndsAtUtc: request.SaleEndsAtUtc
         );
@@ -61,7 +59,6 @@ public class AdminProductsController(
             totalCount: request.TotalCount,
             isInStock: request.IsInStock,
             createdAtUtc: request.CreatedAtUtc,
-            updatedAtUtc: request.UpdatedAtUtc,
             saleStartsAtUtc: request.SaleStartsAtUtc,
             saleEndsAtUtc: request.SaleEndsAtUtc
         );
