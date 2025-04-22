@@ -4,6 +4,7 @@ using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Core.Auth;
 using Ecommerce.Core.Auth.Shared.Internal;
 using Ecommerce.Core.Products.GetById;
+using Ecommerce.Core.Products.GetList;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -67,6 +68,7 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddProducts(this IServiceCollection services)
     {
         services.TryAddScoped<IGetProductByIdUseCase, GetProductByIdUseCase>();
+        services.TryAddScoped<IGetProductsListUseCase, GetProductsListUseCase>();
 
         return services;
     }
