@@ -3,6 +3,7 @@ using Ecommerce.Core.Admin.Products.Create;
 using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Core.Auth;
 using Ecommerce.Core.Auth.Shared.Internal;
+using Ecommerce.Core.Products.GetById;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -16,6 +17,7 @@ public static class DependencyInjectionExtensions
     {
         services
             .AddShared()
+            .AddAdmin()
             .AddProducts()
             .AddAuth(jwtSettings);
 
@@ -54,13 +56,21 @@ public static class DependencyInjectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddProducts(this IServiceCollection services)
+    private static IServiceCollection AddAdmin(this IServiceCollection services)
     {
         services.TryAddScoped<IAdminCreateProductUseCase, AdminCreateProductUseCase>();
         services.TryAddScoped<IAdminUpdateProductUseCase, AdminUpdateProductUseCase>();
 
         return services;
     }
+
+    private static IServiceCollection AddProducts(this IServiceCollection services)
+    {
+        services.TryAddScoped<IGetProductByIdUseCase, GetProductByIdUseCase>();
+
+        return services;
+    }
+
 
     private static IServiceCollection AddShared(this IServiceCollection services)
     {
