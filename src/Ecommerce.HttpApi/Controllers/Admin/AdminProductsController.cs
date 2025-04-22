@@ -1,5 +1,5 @@
-using Ecommerce.Core.Products.Create;
-using Ecommerce.Domain;
+using Ecommerce.Core.Admin.Products.Create;
+using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Domain.Users;
 using Ecommerce.Extensions.Requests;
 using Ecommerce.HttpApi.Contracts.Admin.Products;
@@ -12,7 +12,8 @@ namespace Ecommerce.HttpApi.Controllers.Admin;
 [Authorize(Roles = nameof(UserRole.Admin))]
 [Route("/api/v1/admin/products")]
 public class AdminProductsController(
-    IAdminCreateProductUseCase createProductUseCase
+    IAdminCreateProductUseCase createProductUseCase,
+    IAdminUpdateProductUseCase updateProductUseCase
 )
 {
     [HttpPost]
@@ -39,5 +40,34 @@ public class AdminProductsController(
         );
 
         return new EndpointResult<Guid>(await createProductUseCase.HandleAsync(command, cancellationToken));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProduct([FromBody] AdminUpdateProductRequest request,
+        CancellationToken cancellationToken)
+    {
+        AdminUpdateProductCommand command = new(
+            productId: request.ProductId,
+            name: request.Name,
+            description: request.Description,
+            sku: request.Sku,
+            brand: request.Brand,
+            price: request.Price,
+            salePrice: request.SalePrice,
+            mainImageUrl: request.MainImageUrl,
+            imageGalleryUrls: request.ImageGalleryUrls,
+            currencyCode: request.CurrencyCode,
+            countryCode: request.CountryCode,
+            totalCount: request.TotalCount,
+            isInStock: request.IsInStock,
+            createdAtUtc: request.CreatedAtUtc,
+            updatedAtUtc: request.UpdatedAtUtc,
+            saleStartsAtUtc: request.SaleStartsAtUtc,
+            saleEndsAtUtc: request.SaleEndsAtUtc
+        );
+
+        await updateProductUseCase.HandleAsync(command, cancellationToken);
+
+        return new OkResult();
     }
 }

@@ -1,4 +1,4 @@
-namespace Ecommerce.Core.Products.Create;
+namespace Ecommerce.Core.Admin.Products.Create;
 
 public class AdminCreateProductCommand(
     string name,

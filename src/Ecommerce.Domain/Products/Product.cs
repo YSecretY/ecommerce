@@ -66,4 +66,41 @@ public class Product(
 
     public decimal DisplayPrice =>
         IsOnSale ? SalePrice!.Value : Price;
+
+    public void Update(
+        string name,
+        string description,
+        string sku,
+        string brand,
+        decimal price,
+        decimal? salePrice,
+        string mainImageUrl,
+        List<string>? imageGalleryUrls,
+        string currencyCode,
+        string countryCode,
+        long totalCount,
+        bool isInStock,
+        DateTime createdAtUtc,
+        DateTime updatedAtUtc,
+        DateTime? saleStartsAtUtc,
+        DateTime? saleEndsAtUtc
+    )
+    {
+        Name = name;
+        Description = description;
+        Sku = sku;
+        Brand = brand;
+        Price = price;
+        SalePrice = salePrice;
+        MainImageUrl = mainImageUrl;
+        ImageGalleryUrls = imageGalleryUrls;
+        CurrencyCode = currencyCode;
+        CountryCode = countryCode;
+        TotalCount = totalCount;
+        IsInStock = isInStock;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
+        SaleStartsAtUtc = saleStartsAtUtc;
+        SaleEndsAtUtc = saleEndsAtUtc;
+    }
 }

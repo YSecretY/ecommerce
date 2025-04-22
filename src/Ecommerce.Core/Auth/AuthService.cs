@@ -2,7 +2,6 @@ using Ecommerce.Core.Auth.Login;
 using Ecommerce.Core.Auth.Register;
 using Ecommerce.Core.Auth.Shared;
 using Ecommerce.Core.Auth.Shared.Internal;
-using Ecommerce.Domain;
 using Ecommerce.Domain.Users;
 using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;

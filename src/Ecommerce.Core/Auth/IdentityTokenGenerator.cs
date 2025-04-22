@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Ecommerce.Core.Auth.Shared;
 using Ecommerce.Core.Auth.Shared.Internal;
-using Ecommerce.Domain;
 using Ecommerce.Domain.Users;
 using Ecommerce.Extensions.Exceptions;
 using Microsoft.AspNetCore.Http;

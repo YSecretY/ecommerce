@@ -1,4 +1,3 @@
-using Ecommerce.Domain;
 using Ecommerce.Domain.Users;
 
 namespace Ecommerce.Infrastructure.Repositories.Users;

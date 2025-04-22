@@ -1,4 +1,3 @@
-using Ecommerce.Domain;
 using Ecommerce.Domain.Users;
 using Ecommerce.Extensions.Exceptions;
 

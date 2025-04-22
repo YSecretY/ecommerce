@@ -3,16 +3,19 @@ using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Infrastructure.Database.Products;
 using Ecommerce.Infrastructure.Repositories.Products;
 
-namespace Ecommerce.Core.Products.Create;
+namespace Ecommerce.Core.Admin.Products.Update;
 
-public class AdminCreateProductUseCase(
+public class AdminUpdateProductUseCase(
     IProductsRepository productsRepository,
     IProductsUnitOfWork unitOfWork
-) : IAdminCreateProductUseCase
+) : IAdminUpdateProductUseCase
 {
-    public async Task<Guid> HandleAsync(AdminCreateProductCommand command, CancellationToken cancellationToken = default)
+    public async Task HandleAsync(AdminUpdateProductCommand command, CancellationToken cancellationToken = default)
     {
-        Product product = new(
+        Product product = await productsRepository.GetByIdAsync(command.ProductId, true, cancellationToken)
+                          ?? throw new ProductNotFoundException();
+
+        product.Update(
             name: command.Name,
             description: command.Description,
             sku: command.Sku,
@@ -34,9 +37,6 @@ public class AdminCreateProductUseCase(
         ValidationResult validationResult = ProductValidator.Validate(product);
         ResponseValidationException.ThrowIf(validationResult.Failed, validationResult.Errors);
 
-        await productsRepository.AddAsync(product, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return product.Id;
     }
 }
