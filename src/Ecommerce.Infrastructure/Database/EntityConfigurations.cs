@@ -9,6 +9,8 @@ public static class EntityConfigurations
     public static void ApplyAllProductsDatabaseEntityTypeConfigurations(this ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyProductConfigurations();
+        modelBuilder.ApplyReviewsConfigurations();
+        modelBuilder.ApplyReviewRepliesConfigurations();
     }
 
     public static void ApplyAllUsersDatabaseEntityTypeConfigurations(this ModelBuilder modelBuilder)
@@ -103,6 +105,62 @@ public static class EntityConfigurations
             .IsRequired();
 
         userBuilder.Property(u => u.CreatedAtUtc)
+            .IsRequired();
+    }
+
+    private static void ApplyReviewsConfigurations(this ModelBuilder modelBuilder)
+    {
+        EntityTypeBuilder<ProductReview> review = modelBuilder.Entity<ProductReview>();
+
+        review.ToTable(ProductReview.TableName);
+
+        review.HasKey(r => r.Id);
+
+        review.HasIndex(r => r.ProductId);
+
+        review.Property(r => r.Text)
+            .IsRequired()
+            .HasMaxLength(ProductReview.MaxTextLength);
+
+        review.HasOne(r => r.User)
+            .WithMany(u => u.Reviews)
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        review.HasOne(r => r.Product)
+            .WithMany(p => p.Reviews)
+            .HasForeignKey(r => r.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        review.Property(r => r.CreatedAtUtc)
+            .IsRequired();
+    }
+
+    private static void ApplyReviewRepliesConfigurations(this ModelBuilder modelBuilder)
+    {
+        EntityTypeBuilder<ProductReviewReply> reviewReply = modelBuilder.Entity<ProductReviewReply>();
+
+        reviewReply.ToTable(ProductReviewReply.TableName);
+
+        reviewReply.HasKey(r => r.Id);
+
+        reviewReply.HasIndex(r => r.ReviewId);
+
+        reviewReply.Property(r => r.Text)
+            .IsRequired()
+            .HasMaxLength(ProductReview.MaxTextLength);
+
+        reviewReply.HasOne(r => r.User)
+            .WithMany()
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        reviewReply.HasOne(r => r.Review)
+            .WithMany(r => r.Replies)
+            .HasForeignKey(r => r.ReviewId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        reviewReply.Property(r => r.CreatedAtUtc)
             .IsRequired();
     }
 }

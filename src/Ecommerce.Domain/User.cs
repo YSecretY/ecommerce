@@ -16,7 +16,7 @@ public class User(
     public const int MaxPasswordLength = 60;
     public const int MaxPasswordHashLength = 512;
 
-    public Guid Id { get; init; }
+    public Guid Id { get; init; } = Guid.NewGuid();
 
     public string Email { get; private set; } = email;
 
@@ -31,6 +31,8 @@ public class User(
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
 
     public UserRole Role { get; private set; } = role;
+
+    public ICollection<ProductReview> Reviews { get; private set; } = null!;
 
     public void ConfirmEmail() =>
         IsEmailConfirmed = true;

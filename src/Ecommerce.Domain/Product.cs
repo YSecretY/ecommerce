@@ -62,6 +62,8 @@ public class Product(
 
     public DateTime? SaleEndsAtUtc { get; private set; } = saleEndsAtUtc;
 
+    public ICollection<ProductReview> Reviews { get; private set; } = null!;
+
     public bool IsOnSale =>
         SalePrice.HasValue &&
         SaleStartsAtUtc <= DateTime.UtcNow &&

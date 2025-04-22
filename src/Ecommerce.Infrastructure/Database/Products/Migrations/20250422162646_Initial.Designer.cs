@@ -4,17 +4,20 @@ using System.Collections.Generic;
 using Ecommerce.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Ecommerce.Infrastructure.Database.Users.Migrations
+namespace Ecommerce.Infrastructure.Database.Products.Migrations
 {
-    [DbContext(typeof(UsersDbContext))]
-    partial class UsersDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ProductsDbContext))]
+    [Migration("20250422162646_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,22 +34,26 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.Property<string>("Brand")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(2056)
+                        .HasColumnType("character varying(2056)");
 
                     b.PrimitiveCollection<List<string>>("ImageGalleryUrls")
                         .HasColumnType("text[]");
@@ -56,11 +63,13 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.Property<string>("MainImageUrl")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(2056)
+                        .HasColumnType("character varying(2056)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
@@ -76,7 +85,8 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.Property<string>("Sku")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<long>("TotalCount")
                         .HasColumnType("bigint");
@@ -86,7 +96,9 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.HasIndex("Sku");
+
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Domain.ProductReview", b =>
@@ -103,7 +115,8 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50000)
+                        .HasColumnType("character varying(50000)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -114,7 +127,7 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProductReview");
+                    b.ToTable("ProductsReviews", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Domain.ProductReviewReply", b =>
@@ -131,7 +144,8 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50000)
+                        .HasColumnType("character varying(50000)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -142,7 +156,7 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProductReviewReply");
+                    b.ToTable("ProductReviewReplies", (string)null);
                 });
 
             modelBuilder.Entity("Ecommerce.Domain.User", b =>
@@ -156,36 +170,29 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsEmailConfirmed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Role")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Ecommerce.Domain.ProductReview", b =>

@@ -13,4 +13,8 @@ internal class ProductsDbContext(DbContextOptions<ProductsDbContext> options) : 
     }
 
     public DbSet<Product> Products { get; set; } = null!;
+
+    public DbSet<ProductReview> ProductsReviews { get; set; } = null!;
+
+    public DbSet<ProductReviewReply> ProductReviewReplies { get; set; } = null!;
 }
