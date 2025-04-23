@@ -2,6 +2,7 @@ using Ecommerce.Infrastructure.Database;
 using Ecommerce.Infrastructure.Database.Products;
 using Ecommerce.Infrastructure.Database.Users;
 using Ecommerce.Infrastructure.Repositories.Products;
+using Ecommerce.Infrastructure.Repositories.Reviews;
 using Ecommerce.Infrastructure.Repositories.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,7 @@ public static class DependencyInjectionExtensions
     {
         services.TryAddScoped<IProductsRepository, ProductsRepository>();
         services.TryAddScoped<IUsersRepository, UsersRepository>();
+        services.TryAddScoped<IProductsReviewsRepository, ProductsReviewsRepository>();
     }
 
     private static void AddUnitsOfWork(this IServiceCollection services)

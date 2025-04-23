@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <Folder Include="Admin\Products\" />
+      <Folder Include="Users\Reviews\" />
     </ItemGroup>
 
 </Project>

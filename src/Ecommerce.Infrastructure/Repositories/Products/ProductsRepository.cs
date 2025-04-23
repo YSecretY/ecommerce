@@ -10,7 +10,7 @@ internal class ProductsRepository(
 ) : IProductsRepository
 {
     public async Task AddAsync(Product product, CancellationToken cancellationToken = default) =>
-        await dbContext.AddAsync(product, cancellationToken);
+        await dbContext.Products.AddAsync(product, cancellationToken);
 
     public async Task<Product?> GetByIdAsync(Guid id, bool tracking = false, CancellationToken cancellationToken = default)
     {

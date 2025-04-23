@@ -15,7 +15,11 @@ internal class IdentityTokenGenerator(
 {
     public IdentityToken Generate(User user)
     {
-        List<Claim> claims = [new(ClaimsNames.Role, user.Role.ToString())];
+        List<Claim> claims =
+        [
+            new(ClaimsNames.UserId, user.Id.ToString()),
+            new(ClaimsNames.Role, user.Role.ToString())
+        ];
 
         return Generate(claims);
     }

@@ -10,7 +10,6 @@ public class ProductReview(
 )
 {
     public const string TableName = "ProductsReviews";
-    public const int MaxTextLength = 50_000;
 
     public Guid Id { get; init; } = Guid.NewGuid();
 

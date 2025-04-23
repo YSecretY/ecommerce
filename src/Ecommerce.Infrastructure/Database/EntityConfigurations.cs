@@ -122,7 +122,7 @@ public static class EntityConfigurations
 
         review.Property(r => r.Text)
             .IsRequired()
-            .HasMaxLength(ProductReview.MaxTextLength);
+            .HasMaxLength(ProductReviewValidator.MaxTextLength);
 
         review.HasOne(r => r.Product)
             .WithMany(p => p.Reviews)
@@ -145,7 +145,7 @@ public static class EntityConfigurations
 
         reviewReply.Property(r => r.Text)
             .IsRequired()
-            .HasMaxLength(ProductReview.MaxTextLength);
+            .HasMaxLength(ProductReviewValidator.MaxTextLength);
 
         reviewReply.HasOne(r => r.Review)
             .WithMany(r => r.Replies)

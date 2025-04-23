@@ -3,9 +3,11 @@ using Ecommerce.Core.Admin.Products.Create;
 using Ecommerce.Core.Admin.Products.DeleteById;
 using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Core.Auth;
+using Ecommerce.Core.Auth.Shared;
 using Ecommerce.Core.Auth.Shared.Internal;
 using Ecommerce.Core.Products.GetById;
 using Ecommerce.Core.Products.GetList;
+using Ecommerce.Core.Users.Reviews.Create;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,6 +23,7 @@ public static class DependencyInjectionExtensions
             .AddShared()
             .AddAdmin()
             .AddProducts()
+            .AddReviews()
             .AddAuth(jwtSettings);
 
         return services;
@@ -28,11 +31,13 @@ public static class DependencyInjectionExtensions
 
     private static IServiceCollection AddAuth(this IServiceCollection services, JwtSettings jwtSettings)
     {
+        services.AddHttpContextAccessor();
         services.TryAddSingleton<IPasswordHasher, PasswordHasher>();
         services.TryAddSingleton(jwtSettings);
         services.TryAddScoped<IAuthService, AuthService>();
         services.TryAddSingleton<IJwtHelper, JwtHelper>();
         services.TryAddSingleton<IIdentityTokenGenerator, IdentityTokenGenerator>();
+        services.TryAddSingleton<IIdentityUserAccessor, IdentityUserAccessor>();
 
         services.AddAuthentication(options =>
             {
@@ -75,6 +80,12 @@ public static class DependencyInjectionExtensions
         return services;
     }
 
+    private static IServiceCollection AddReviews(this IServiceCollection services)
+    {
+        services.TryAddScoped<IUserCreateReviewUseCase, UserCreateReviewUseCase>();
+
+        return services;
+    }
 
     private static IServiceCollection AddShared(this IServiceCollection services)
     {
