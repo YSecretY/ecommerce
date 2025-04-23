@@ -12,5 +12,10 @@ public interface IProductsRepository
     public Task<PaginatedEnumerable<Product>> GetListAsync(PaginationQuery paginationQuery, bool tracking = false,
         CancellationToken cancellationToken = default);
 
+    public Task<List<Product>> GetListAsync(IEnumerable<Guid> ids, bool tracking = false,
+        CancellationToken cancellationToken = default);
+
     public void SoftDelete(Product product);
+    
+    public void SoftDelete(IEnumerable<Product> products);
 }

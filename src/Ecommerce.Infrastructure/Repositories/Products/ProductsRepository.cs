@@ -41,6 +41,25 @@ internal class ProductsRepository(
         return new PaginatedEnumerable<Product>(products, paginationQuery.PageSize, paginationQuery.PageNumber, totalCount);
     }
 
+    public Task<List<Product>> GetListAsync(IEnumerable<Guid> ids, bool tracking = false,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<Product> query = dbContext.Products.AsQueryable();
+
+        if (!tracking)
+            query = query.AsNoTracking();
+
+        return query
+            .Where(p => ids.Contains(p.Id))
+            .ToListAsync(cancellationToken);
+    }
+
     public void SoftDelete(Product product) =>
         product.Delete();
+
+    public void SoftDelete(IEnumerable<Product> products)
+    {
+        foreach (Product product in products)
+            product.Delete();
+    }
 }
