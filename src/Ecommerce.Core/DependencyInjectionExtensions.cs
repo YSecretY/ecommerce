@@ -8,6 +8,7 @@ using Ecommerce.Core.Auth.Shared.Internal;
 using Ecommerce.Core.Products.GetById;
 using Ecommerce.Core.Products.GetList;
 using Ecommerce.Core.Users.Reviews.Create;
+using Ecommerce.Core.Users.Reviews.DeleteById;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -83,6 +84,7 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddReviews(this IServiceCollection services)
     {
         services.TryAddScoped<IUserCreateReviewUseCase, UserCreateReviewUseCase>();
+        services.TryAddScoped<IUserDeleteReviewByIdUseCase, UserDeleteReviewByIdUseCase>();
 
         return services;
     }

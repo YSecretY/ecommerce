@@ -1,4 +1,5 @@
 using Ecommerce.Core.Admin.Products.Update;
+using Ecommerce.Core.Exceptions.Products;
 using Ecommerce.Domain.Products;
 using Ecommerce.Infrastructure.Database.Products;
 using Ecommerce.Infrastructure.Repositories.Products;

@@ -1,3 +1,4 @@
+using Ecommerce.Core.Exceptions.Products;
 using Ecommerce.Domain.Products;
 using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;

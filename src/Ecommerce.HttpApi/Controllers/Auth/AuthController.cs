@@ -6,7 +6,7 @@ using Ecommerce.HttpApi.Contracts.Auth.Login;
 using Ecommerce.HttpApi.Contracts.Auth.Register;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ecommerce.HttpApi.Controllers;
+namespace Ecommerce.HttpApi.Controllers.Auth;
 
 [ApiController]
 [Route("/api/v1/auth")]
