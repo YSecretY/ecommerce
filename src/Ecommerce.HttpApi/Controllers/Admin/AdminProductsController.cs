@@ -1,4 +1,5 @@
 using Ecommerce.Core.Admin.Products.Create;
+using Ecommerce.Core.Admin.Products.DeleteById;
 using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Domain.Users;
 using Ecommerce.Extensions.Requests;
@@ -13,7 +14,8 @@ namespace Ecommerce.HttpApi.Controllers.Admin;
 [Route("/api/v1/admin/products")]
 public class AdminProductsController(
     IAdminCreateProductUseCase createProductUseCase,
-    IAdminUpdateProductUseCase updateProductUseCase
+    IAdminUpdateProductUseCase updateProductUseCase,
+    IAdminDeleteProductByIdUseCase deleteProductByIdUseCase
 )
 {
     [HttpPost]
@@ -64,6 +66,14 @@ public class AdminProductsController(
         );
 
         await updateProductUseCase.HandleAsync(command, cancellationToken);
+
+        return new OkResult();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteProduct([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        await deleteProductByIdUseCase.HandleAsync(id, cancellationToken);
 
         return new OkResult();
     }

@@ -1,5 +1,6 @@
 using System.Text;
 using Ecommerce.Core.Admin.Products.Create;
+using Ecommerce.Core.Admin.Products.DeleteById;
 using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Core.Auth;
 using Ecommerce.Core.Auth.Shared.Internal;
@@ -61,6 +62,7 @@ public static class DependencyInjectionExtensions
     {
         services.TryAddScoped<IAdminCreateProductUseCase, AdminCreateProductUseCase>();
         services.TryAddScoped<IAdminUpdateProductUseCase, AdminUpdateProductUseCase>();
+        services.TryAddScoped<IAdminDeleteProductByIdUseCase, AdminDeleteProductByIdUseCase>();
 
         return services;
     }
