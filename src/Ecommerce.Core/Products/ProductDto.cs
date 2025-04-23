@@ -1,6 +1,6 @@
 using Ecommerce.Domain.Products;
 
-namespace Ecommerce.Core.Products.GetById;
+namespace Ecommerce.Core.Products;
 
 public class ProductDto(
     Guid id,

@@ -1,0 +1,21 @@
+using System.Text.Json.Serialization;
+using Ecommerce.Core.Users.Reviews;
+
+namespace Ecommerce.HttpApi.Contracts.Users.Reviews;
+
+public class ProductReviewResponse(Guid userId, string text, DateTime createdAt)
+{
+    public ProductReviewResponse(ProductReviewDto dto)
+        : this(dto.UserId, dto.Text, dto.CreatedAt)
+    {
+    }
+
+    [JsonPropertyName("userId")]
+    public Guid UserId { get; private set; } = userId;
+
+    [JsonPropertyName("text")]
+    public string Text { get; private set; } = text;
+
+    [JsonPropertyName("createdAt")]
+    public DateTime CreatedAt { get; private set; } = createdAt;
+}

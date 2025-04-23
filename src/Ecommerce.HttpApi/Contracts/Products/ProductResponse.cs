@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Ecommerce.Core.Products;
 using Ecommerce.Core.Products.GetById;
 
 namespace Ecommerce.HttpApi.Contracts.Products;

@@ -9,6 +9,7 @@ using Ecommerce.Core.Products.GetById;
 using Ecommerce.Core.Products.GetList;
 using Ecommerce.Core.Users.Reviews.Create;
 using Ecommerce.Core.Users.Reviews.DeleteById;
+using Ecommerce.Core.Users.Reviews.GetList;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -85,6 +86,7 @@ public static class DependencyInjectionExtensions
     {
         services.TryAddScoped<IUserCreateReviewUseCase, UserCreateReviewUseCase>();
         services.TryAddScoped<IUserDeleteReviewByIdUseCase, UserDeleteReviewByIdUseCase>();
+        services.TryAddScoped<IUserGetReviewsListUseCase, UserGetReviewsListUseCase>();
 
         return services;
     }

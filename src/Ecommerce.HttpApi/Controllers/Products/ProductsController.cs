@@ -1,3 +1,4 @@
+using Ecommerce.Core.Products;
 using Ecommerce.Core.Products.GetById;
 using Ecommerce.Core.Products.GetList;
 using Ecommerce.Extensions.Requests;
