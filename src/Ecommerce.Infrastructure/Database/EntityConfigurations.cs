@@ -69,6 +69,8 @@ public static class EntityConfigurations
         productBuilder.Property(p => p.UpdatedAtUtc)
             .IsRequired();
 
+        productBuilder.HasQueryFilter(p => !p.IsDeleted);
+
         productBuilder.Ignore(p => p.IsOnSale);
 
         productBuilder.Ignore(p => p.DisplayPrice);
@@ -131,6 +133,8 @@ public static class EntityConfigurations
 
         review.Property(r => r.CreatedAtUtc)
             .IsRequired();
+
+        review.HasQueryFilter(r => !r.IsDeleted);
     }
 
     private static void ApplyReviewRepliesConfigurations(this ModelBuilder modelBuilder)
@@ -154,5 +158,7 @@ public static class EntityConfigurations
 
         reviewReply.Property(r => r.CreatedAtUtc)
             .IsRequired();
+
+        reviewReply.HasQueryFilter(r => !r.IsDeleted);
     }
 }

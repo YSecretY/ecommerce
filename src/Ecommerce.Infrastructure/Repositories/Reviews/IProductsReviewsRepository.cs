@@ -15,5 +15,5 @@ public interface IProductsReviewsRepository
         Func<IQueryable<ProductReview>, IQueryable<ProductReview>>? filter = null,
         CancellationToken cancellationToken = default);
 
-    public void Remove(ProductReview productReview);
+    public void SoftDelete(ProductReview productReview);
 }

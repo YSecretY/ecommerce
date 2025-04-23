@@ -17,13 +17,13 @@ public class UserDeleteReviewByIdUseCase(
     {
         Guid userId = identityUserAccessor.GetUserId();
 
-        ProductReview review = await reviewsRepository.GetByIdAsync(id, cancellationToken: cancellationToken)
+        ProductReview review = await reviewsRepository.GetByIdAsync(id, true, cancellationToken: cancellationToken)
                                ?? throw new ProductReviewNotFoundException();
 
         if (review.UserId != userId)
             throw new UnauthorizedException();
 
-        reviewsRepository.Remove(review);
+        reviewsRepository.SoftDelete(review);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

@@ -57,6 +57,8 @@ public class Product(
 
     public DateTime? SaleEndsAtUtc { get; private set; } = saleEndsAtUtc;
 
+    public bool IsDeleted { get; private set; } = false;
+
     public ICollection<ProductReview> Reviews { get; private set; } = null!;
 
     public bool IsOnSale =>
@@ -103,4 +105,7 @@ public class Product(
         SaleStartsAtUtc = saleStartsAtUtc;
         SaleEndsAtUtc = saleEndsAtUtc;
     }
+
+    public void Delete() =>
+        IsDeleted = true;
 }

@@ -41,6 +41,6 @@ internal class ProductsRepository(
         return new PaginatedEnumerable<Product>(products, paginationQuery.PageSize, paginationQuery.PageNumber, totalCount);
     }
 
-    public void Remove(Product product) =>
-        dbContext.Products.Remove(product);
+    public void SoftDelete(Product product) =>
+        product.Delete();
 }

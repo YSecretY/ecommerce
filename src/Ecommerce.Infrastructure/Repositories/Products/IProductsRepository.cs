@@ -12,5 +12,5 @@ public interface IProductsRepository
     public Task<PaginatedEnumerable<Product>> GetListAsync(PaginationQuery paginationQuery, bool tracking = false,
         CancellationToken cancellationToken = default);
 
-    public void Remove(Product product);
+    public void SoftDelete(Product product);
 }

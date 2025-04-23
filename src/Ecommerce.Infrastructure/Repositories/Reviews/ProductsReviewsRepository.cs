@@ -48,6 +48,6 @@ internal class ProductsReviewsRepository(
             totalCount);
     }
 
-    public void Remove(ProductReview productReview) =>
-        dbContext.ProductsReviews.Remove(productReview);
+    public void SoftDelete(ProductReview productReview) =>
+        productReview.Delete();
 }

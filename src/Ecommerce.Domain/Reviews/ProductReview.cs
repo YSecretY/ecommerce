@@ -24,4 +24,9 @@ public class ProductReview(
     public ICollection<ProductReviewReply> Replies { get; private set; } = null!;
 
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
+
+    public bool IsDeleted { get; private set; }
+
+    public void Delete() =>
+        IsDeleted = true;
 }

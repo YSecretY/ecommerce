@@ -13,7 +13,7 @@ public class ProductReviewReply(
     public Guid Id { get; init; } = Guid.NewGuid();
 
     public Guid UserId { get; private set; } = userId;
-    
+
     public Guid ReviewId { get; private set; } = reviewId;
 
     public ProductReview Review { get; private set; } = null!;
@@ -21,4 +21,9 @@ public class ProductReviewReply(
     public string Text { get; private set; } = text;
 
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
+
+    public bool IsDeleted { get; private set; }
+
+    public void Delete() =>
+        IsDeleted = true;
 }

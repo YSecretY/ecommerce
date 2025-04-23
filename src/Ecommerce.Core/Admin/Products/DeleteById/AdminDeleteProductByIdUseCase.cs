@@ -13,10 +13,10 @@ public class AdminDeleteProductByIdUseCase(
 {
     public async Task HandleAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        Product product = await productsRepository.GetByIdAsync(id, cancellationToken: cancellationToken)
+        Product product = await productsRepository.GetByIdAsync(id, true, cancellationToken: cancellationToken)
                           ?? throw new ProductNotFoundException();
 
-        productsRepository.Remove(product);
+        productsRepository.SoftDelete(product);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
