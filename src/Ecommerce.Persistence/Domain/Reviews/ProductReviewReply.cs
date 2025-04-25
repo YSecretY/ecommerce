@@ -7,7 +7,7 @@ public class ProductReviewReply(
     Guid reviewId,
     string text,
     DateTime createdAtUtc
-)
+) : ISoftDeletable
 {
     public const string TableName = "ProductReviewReplies";
 
@@ -24,8 +24,8 @@ public class ProductReviewReply(
 
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
 
-    public bool IsDeleted { get; private set; }
+    public bool IsDeleted { get; set; }
 
-    public void Delete() =>
+    public void SoftDelete() =>
         IsDeleted = true;
 }

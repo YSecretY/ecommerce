@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Ecommerce.Infrastructure.Database.Users.Migrations
+namespace Ecommerce.Persistence.Database.Users.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -22,7 +22,8 @@ namespace Ecommerce.Infrastructure.Database.Users.Migrations
                     LastName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     IsEmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Role = table.Column<int>(type: "integer", nullable: false)
+                    Role = table.Column<int>(type: "integer", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

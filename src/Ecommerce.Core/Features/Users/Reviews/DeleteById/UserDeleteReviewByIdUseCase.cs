@@ -1,8 +1,10 @@
 using Ecommerce.Core.Exceptions.Reviews;
+using Ecommerce.Core.Extensions.Reviews;
 using Ecommerce.Core.Features.Auth.Shared;
 using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Reviews;
+using Ecommerce.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Features.Users.Reviews.DeleteById;
@@ -17,14 +19,15 @@ public class UserDeleteReviewByIdUseCase(
         Guid userId = identityUserAccessor.GetUserId();
 
         ProductReview review = await dbContext.ProductsReviews
-                                   .AsNoTracking()
+                                   .IncludeToSoftDelete()
                                    .FirstOrDefaultAsync(r => r.Id == id, cancellationToken)
                                ?? throw new ProductReviewNotFoundException();
 
         if (review.UserId != userId)
             throw new ForbiddenException();
 
-        dbContext.ProductsReviews.Remove(review);
+        dbContext.SoftDelete(review);
+
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

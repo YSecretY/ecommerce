@@ -8,7 +8,7 @@ public class User(
     bool isEmailConfirmed,
     UserRole role,
     DateTime createdAtUtc
-)
+) : ISoftDeletable
 {
     public const string TableName = "Users";
     public const int MaxEmailLength = 256;
@@ -31,6 +31,11 @@ public class User(
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;
 
     public UserRole Role { get; private set; } = role;
+
+    public bool IsDeleted { get; set; }
+
+    public void SoftDelete() =>
+        IsDeleted = true;
 
     public void ConfirmEmail() =>
         IsEmailConfirmed = true;

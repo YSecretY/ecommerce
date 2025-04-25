@@ -1,5 +1,7 @@
+using Ecommerce.Core.Extensions.Products;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;
+using Ecommerce.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Features.Admin.Products.DeleteList;
@@ -15,11 +17,11 @@ public class AdminDeleteProductsListUseCase(
         foreach (Guid[] currentIds in ids.Chunk(BatchSize))
         {
             List<Product> products = await dbContext.Products
-                .AsNoTracking()
+                .IncludeToSoftDelete()
                 .Where(p => currentIds.Contains(p.Id))
                 .ToListAsync(cancellationToken);
 
-            dbContext.Products.RemoveRange(products);
+            dbContext.SoftDeleteRange(products);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);

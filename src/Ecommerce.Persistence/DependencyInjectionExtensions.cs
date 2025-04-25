@@ -1,6 +1,7 @@
 using Ecommerce.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Ecommerce.Persistence;
 
@@ -9,8 +10,19 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddPersistence(this IServiceCollection services, string productsDbConnection,
         string usersDbConnection)
     {
-        services.AddDbContext<ProductsDbContext>(options => options.UseNpgsql(productsDbConnection));
-        services.AddDbContext<UsersDbContext>(options => options.UseNpgsql(usersDbConnection));
+        SoftDeleteInterceptor softDeleteInterceptor = new();
+
+        services.TryAddSingleton(softDeleteInterceptor);
+
+        services.AddDbContext<ProductsDbContext>(options => options
+            .UseNpgsql(productsDbConnection)
+            .AddInterceptors(softDeleteInterceptor)
+        );
+
+        services.AddDbContext<UsersDbContext>(options => options
+            .UseNpgsql(usersDbConnection)
+            .AddInterceptors(softDeleteInterceptor)
+        );
 
         services.ApplyMigrations();
 

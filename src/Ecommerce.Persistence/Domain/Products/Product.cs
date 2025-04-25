@@ -20,7 +20,7 @@ public class Product(
     DateTime updatedAtUtc,
     DateTime? saleStartsAtUtc,
     DateTime? saleEndsAtUtc
-)
+) : ISoftDeletable
 {
     public const string TableName = "Products";
 
@@ -65,7 +65,15 @@ public class Product(
 
     public DateTime? SaleEndsAtUtc { get; private set; } = saleEndsAtUtc;
 
-    public bool IsDeleted { get; private set; } = false;
+    public bool IsDeleted { get; set; }
+
+    public void SoftDelete()
+    {
+        IsDeleted = true;
+
+        foreach (ProductReview review in Reviews)
+            review.SoftDelete();
+    }
 
     public ICollection<ProductReview> Reviews { get; private set; } = null!;
 
@@ -113,7 +121,4 @@ public class Product(
         SaleStartsAtUtc = saleStartsAtUtc;
         SaleEndsAtUtc = saleEndsAtUtc;
     }
-
-    public void Delete() =>
-        IsDeleted = true;
 }
