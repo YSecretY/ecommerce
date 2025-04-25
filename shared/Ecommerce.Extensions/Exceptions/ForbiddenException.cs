@@ -1,8 +1,8 @@
 namespace Ecommerce.Extensions.Exceptions;
 
-public class UnauthorizedException() : ResponseException("Unauthorized", "Forbidden.")
+public class ForbiddenException() : ResponseException("Unauthorized", "Forbidden.")
 {
-    public UnauthorizedException(object? additionalData) : this() =>
+    public ForbiddenException(object? additionalData) : this() =>
         AdditionalData = additionalData;
 
     public static void ThrowIf(Func<bool> condition, object? data = null)

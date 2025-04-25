@@ -7,8 +7,8 @@ public class LoginUserCommand
 {
     public LoginUserCommand(string email, string password)
     {
-        UnauthorizedException.ThrowIf(string.IsNullOrWhiteSpace(email) || email.Length > User.MaxEmailLength);
-        UnauthorizedException.ThrowIf(string.IsNullOrWhiteSpace(password) || password.Length > User.MaxPasswordLength);
+        ForbiddenException.ThrowIf(string.IsNullOrWhiteSpace(email) || email.Length > User.MaxEmailLength);
+        ForbiddenException.ThrowIf(string.IsNullOrWhiteSpace(password) || password.Length > User.MaxPasswordLength);
 
         Email = email;
         Password = password;

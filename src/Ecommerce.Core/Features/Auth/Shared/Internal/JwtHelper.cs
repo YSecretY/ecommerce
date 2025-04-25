@@ -73,7 +73,7 @@ internal class JwtHelper : IJwtHelper
         }
         catch
         {
-            throw new UnauthorizedException();
+            throw new ForbiddenException();
         }
     }
 

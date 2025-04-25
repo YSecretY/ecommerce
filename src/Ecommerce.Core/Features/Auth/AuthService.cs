@@ -21,7 +21,7 @@ internal class AuthService(
         CancellationToken cancellationToken = default)
     {
         if (await usersDbContext.Users.AnyAsync(u => u.Email == command.Email, cancellationToken))
-            throw new UnauthorizedException("User already exists.");
+            throw new ForbiddenException("User already exists.");
 
         User user = new(
             email: command.Email,
@@ -42,9 +42,9 @@ internal class AuthService(
     public async Task<IdentityToken> LoginAsync(LoginUserCommand command, CancellationToken cancellationToken = default)
     {
         User user = await usersDbContext.Users.FirstOrDefaultAsync(u => u.Email == command.Email, cancellationToken)
-                    ?? throw new UnauthorizedException();
+                    ?? throw new ForbiddenException();
 
-        UnauthorizedException.ThrowIf(() => !passwordHasher.IsValid(command.Password, user.PasswordHash));
+        ForbiddenException.ThrowIf(() => !passwordHasher.IsValid(command.Password, user.PasswordHash));
 
         return identityTokenGenerator.Generate(user);
     }

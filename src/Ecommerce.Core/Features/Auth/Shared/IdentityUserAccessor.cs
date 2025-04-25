@@ -15,6 +15,6 @@ internal class IdentityUserAccessor(
 
         string? userId = user?.FindFirstValue(ClaimsNames.UserId);
 
-        return Guid.Parse(userId ?? throw new UnauthorizedException());
+        return Guid.Parse(userId ?? throw new ForbiddenException());
     }
 }

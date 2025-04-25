@@ -22,7 +22,7 @@ public class UserDeleteReviewByIdUseCase(
                                ?? throw new ProductReviewNotFoundException();
 
         if (review.UserId != userId)
-            throw new UnauthorizedException();
+            throw new ForbiddenException();
 
         dbContext.ProductsReviews.Remove(review);
         await dbContext.SaveChangesAsync(cancellationToken);

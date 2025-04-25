@@ -27,7 +27,7 @@ internal class IdentityTokenGenerator(
     public IdentityToken Generate(List<Claim> claims)
     {
         HttpContext httpContext = httpContextAccessor.HttpContext
-                                  ?? throw new UnauthorizedException();
+                                  ?? throw new ForbiddenException();
 
         JwtToken accessToken = jwtHelper.GenerateAccessToken(claims);
         JwtToken refreshToken = jwtHelper.GenerateRefreshToken(claims);
@@ -47,10 +47,10 @@ internal class IdentityTokenGenerator(
     public IdentityToken Refresh()
     {
         HttpContext httpContext = httpContextAccessor.HttpContext
-                                  ?? throw new UnauthorizedException();
+                                  ?? throw new ForbiddenException();
 
         if (!httpContext.Request.Cookies.TryGetValue(jwtSettings.RefreshTokenCookieName, out string? refreshToken))
-            throw new UnauthorizedException();
+            throw new ForbiddenException();
 
         jwtHelper.Validate(refreshToken);
 

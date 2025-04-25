@@ -22,7 +22,7 @@ public class GlobalExceptionHandler(
             httpContext.Response.StatusCode = exception switch
             {
                 ResponseValidationException => StatusCodes.Status400BadRequest,
-                UnauthorizedException => StatusCodes.Status403Forbidden,
+                ForbiddenException => StatusCodes.Status403Forbidden,
                 _ => StatusCodes.Status422UnprocessableEntity
             };
 
