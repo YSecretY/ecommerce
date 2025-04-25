@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Ecommerce.Persistence.Domain.Reviews;
 
 public class ProductReviewReply(
@@ -8,7 +10,6 @@ public class ProductReviewReply(
 )
 {
     public const string TableName = "ProductReviewReplies";
-    public const int MaxTextLength = 50_000;
 
     public Guid Id { get; init; } = Guid.NewGuid();
 
@@ -18,6 +19,7 @@ public class ProductReviewReply(
 
     public ProductReview Review { get; private set; } = null!;
 
+    [MaxLength(ProductReviewReplyValidator.MaxTextLength)]
     public string Text { get; private set; } = text;
 
     public DateTime CreatedAtUtc { get; private set; } = createdAtUtc;

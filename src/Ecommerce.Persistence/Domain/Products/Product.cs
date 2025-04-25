@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Ecommerce.Persistence.Domain.Reviews;
 
 namespace Ecommerce.Persistence.Domain.Products;
@@ -25,24 +26,31 @@ public class Product(
 
     public Guid Id { get; init; } = Guid.NewGuid();
 
+    [MaxLength(ProductValidator.MaxNameLength)]
     public string Name { get; private set; } = name;
 
+    [MaxLength(ProductValidator.MaxDescriptionLength)]
     public string Description { get; private set; } = description;
 
+    [MaxLength(ProductValidator.MaxSkuLength)]
     public string Sku { get; private set; } = sku;
 
+    [MaxLength(ProductValidator.MaxBrandLength)]
     public string Brand { get; private set; } = brand;
 
     public decimal Price { get; private set; } = price;
 
     public decimal? SalePrice { get; private set; } = salePrice;
 
+    [MaxLength(ProductValidator.MaxImageUrlLength)]
     public string MainImageUrl { get; private set; } = mainImageUrl;
 
     public List<string>? ImageGalleryUrls { get; private set; } = imageGalleryUrls;
 
+    [MaxLength(ProductValidator.MaxCurrencyCodeLength)]
     public string CurrencyCode { get; private set; } = currencyCode;
 
+    [MaxLength(ProductValidator.MaxCountryCodeLength)]
     public string CountryCode { get; private set; } = countryCode;
 
     public long TotalCount { get; private set; } = totalCount;
