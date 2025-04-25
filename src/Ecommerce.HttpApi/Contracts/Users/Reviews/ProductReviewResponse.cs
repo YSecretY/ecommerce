@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Ecommerce.Core.Users.Reviews;
+using Ecommerce.Core.Features.Users.Reviews;
 
 namespace Ecommerce.HttpApi.Contracts.Users.Reviews;
 

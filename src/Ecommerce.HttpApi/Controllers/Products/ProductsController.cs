@@ -1,6 +1,6 @@
-using Ecommerce.Core.Products;
-using Ecommerce.Core.Products.GetById;
-using Ecommerce.Core.Products.GetList;
+using Ecommerce.Core.Features.Products;
+using Ecommerce.Core.Features.Products.GetById;
+using Ecommerce.Core.Features.Products.GetList;
 using Ecommerce.Extensions.Requests;
 using Ecommerce.Extensions.Types;
 using Ecommerce.HttpApi.Contracts;

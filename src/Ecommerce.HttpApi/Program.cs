@@ -1,5 +1,5 @@
 using Ecommerce.Core;
-using Ecommerce.Core.Auth;
+using Ecommerce.Core.Features.Auth;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;

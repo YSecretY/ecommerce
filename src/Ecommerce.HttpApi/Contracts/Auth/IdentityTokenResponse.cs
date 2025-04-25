@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Ecommerce.Core.Auth.Shared;
+using Ecommerce.Core.Features.Auth.Shared;
 
 namespace Ecommerce.HttpApi.Contracts.Auth;
 

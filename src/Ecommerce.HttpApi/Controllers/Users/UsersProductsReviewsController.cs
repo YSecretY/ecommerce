@@ -1,7 +1,7 @@
-using Ecommerce.Core.Users.Reviews;
-using Ecommerce.Core.Users.Reviews.Create;
-using Ecommerce.Core.Users.Reviews.DeleteById;
-using Ecommerce.Core.Users.Reviews.GetList;
+using Ecommerce.Core.Features.Users.Reviews;
+using Ecommerce.Core.Features.Users.Reviews.Create;
+using Ecommerce.Core.Features.Users.Reviews.DeleteById;
+using Ecommerce.Core.Features.Users.Reviews.GetList;
 using Ecommerce.Extensions.Requests;
 using Ecommerce.Extensions.Types;
 using Ecommerce.HttpApi.Contracts;

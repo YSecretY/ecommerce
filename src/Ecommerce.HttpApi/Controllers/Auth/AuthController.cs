@@ -1,6 +1,6 @@
-using Ecommerce.Core.Auth;
-using Ecommerce.Core.Auth.Login;
-using Ecommerce.Core.Auth.Register;
+using Ecommerce.Core.Features.Auth;
+using Ecommerce.Core.Features.Auth.Login;
+using Ecommerce.Core.Features.Auth.Register;
 using Ecommerce.HttpApi.Contracts.Auth;
 using Ecommerce.HttpApi.Contracts.Auth.Login;
 using Ecommerce.HttpApi.Contracts.Auth.Register;

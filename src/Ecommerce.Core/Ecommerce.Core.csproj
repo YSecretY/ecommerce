@@ -16,4 +16,8 @@
       <ProjectReference Include="..\Ecommerce.Persistence\Ecommerce.Persistence.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\" />
+    </ItemGroup>
+
 </Project>
