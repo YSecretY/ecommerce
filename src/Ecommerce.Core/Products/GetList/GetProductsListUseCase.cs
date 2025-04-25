@@ -1,19 +1,21 @@
-using Ecommerce.Core.Products.GetById;
-using Ecommerce.Domain.Products;
 using Ecommerce.Extensions.Types;
-using Ecommerce.Infrastructure.Repositories.Products;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Products;
+using Ecommerce.Persistence.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Products.GetList;
 
 public class GetProductsListUseCase(
-    IProductsRepository productsRepository
+    ProductsDbContext dbContext
 ) : IGetProductsListUseCase
 {
     public async Task<PaginatedEnumerable<ProductDto>> HandleAsync(PaginationQuery paginationQuery,
         CancellationToken cancellationToken = default)
     {
-        PaginatedEnumerable<Product> products =
-            await productsRepository.GetListAsync(paginationQuery, cancellationToken: cancellationToken);
+        PaginatedEnumerable<Product> products = await dbContext.Products
+            .AsNoTracking()
+            .ToPaginatedEnumerableAsync(paginationQuery, cancellationToken);
 
         return products.Map(p => new ProductDto(p));
     }

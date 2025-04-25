@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using Ecommerce.Domain.Users;
+using Ecommerce.Persistence.Domain.Users;
 
 namespace Ecommerce.Core.Auth.Shared.Internal;
 

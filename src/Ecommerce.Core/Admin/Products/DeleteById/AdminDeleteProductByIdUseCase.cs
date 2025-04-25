@@ -1,23 +1,22 @@
-using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Core.Exceptions.Products;
-using Ecommerce.Domain.Products;
-using Ecommerce.Infrastructure.Database.Products;
-using Ecommerce.Infrastructure.Repositories.Products;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Admin.Products.DeleteById;
 
 public class AdminDeleteProductByIdUseCase(
-    IProductsRepository productsRepository,
-    IProductsUnitOfWork unitOfWork
+    ProductsDbContext dbContext
 ) : IAdminDeleteProductByIdUseCase
 {
     public async Task HandleAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        Product product = await productsRepository.GetByIdAsync(id, true, cancellationToken: cancellationToken)
+        Product product = await dbContext.Products
+                              .AsNoTracking()
+                              .FirstOrDefaultAsync(p => p.Id == id, cancellationToken)
                           ?? throw new ProductNotFoundException();
 
-        productsRepository.SoftDelete(product);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        dbContext.Products.Remove(product);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

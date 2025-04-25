@@ -1,15 +1,13 @@
 using Ecommerce.Core.Auth.Shared;
-using Ecommerce.Domain.Reviews;
 using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;
-using Ecommerce.Infrastructure.Database.Products;
-using Ecommerce.Infrastructure.Repositories.Reviews;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Reviews;
 
 namespace Ecommerce.Core.Users.Reviews.Create;
 
 public class UserCreateReviewUseCase(
-    IProductsReviewsRepository reviewsRepository,
-    IProductsUnitOfWork unitOfWork,
+    ProductsDbContext dbContext,
     IDateTimeProvider dateTimeProvider,
     IIdentityUserAccessor identityUserAccessor
 ) : IUserCreateReviewUseCase
@@ -26,8 +24,8 @@ public class UserCreateReviewUseCase(
         ValidationResult validationResult = ProductReviewValidator.Validate(review);
         ResponseValidationException.ThrowIf(validationResult.Failed, validationResult.Errors);
 
-        await reviewsRepository.AddAsync(review, cancellationToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await dbContext.ProductsReviews.AddAsync(review, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return review.Id;
     }

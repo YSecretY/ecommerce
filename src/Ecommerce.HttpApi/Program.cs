@@ -3,7 +3,7 @@ using Ecommerce.Core.Auth;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;
-using Ecommerce.Infrastructure;
+using Ecommerce.Persistence;
 using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -23,7 +23,7 @@ JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
 
 builder.Services
     .AddExtensions()
-    .AddInfrastructure(productsDbConnection, usersDbConnection)
+    .AddPersistence(productsDbConnection, usersDbConnection)
     .AddCore(new JwtSettings(
         secret: jwtCredential.Secret,
         issuer: jwtCredential.Issuer,

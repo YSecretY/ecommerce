@@ -1,4 +1,4 @@
-using Ecommerce.Domain.Reviews;
+using Ecommerce.Persistence.Domain.Reviews;
 
 namespace Ecommerce.Core.Users.Reviews;
 

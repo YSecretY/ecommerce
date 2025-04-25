@@ -1,17 +1,19 @@
-using Ecommerce.Core.Admin.Products.Update;
 using Ecommerce.Core.Exceptions.Products;
-using Ecommerce.Domain.Products;
-using Ecommerce.Infrastructure.Repositories.Products;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Products.GetById;
 
 public class GetProductByIdUseCase(
-    IProductsRepository productsRepository
+    ProductsDbContext dbContext
 ) : IGetProductByIdUseCase
 {
     public async Task<ProductDto> HandleAsync(Guid productId, CancellationToken cancellationToken = default)
     {
-        Product product = await productsRepository.GetByIdAsync(productId, cancellationToken: cancellationToken)
+        Product product = await dbContext.Products
+                              .AsNoTracking()
+                              .FirstOrDefaultAsync(p => p.Id == productId, cancellationToken)
                           ?? throw new ProductNotFoundException();
 
         return new ProductDto(product);

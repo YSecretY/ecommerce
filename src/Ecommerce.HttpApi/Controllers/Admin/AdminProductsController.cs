@@ -2,9 +2,9 @@ using Ecommerce.Core.Admin.Products.Create;
 using Ecommerce.Core.Admin.Products.DeleteById;
 using Ecommerce.Core.Admin.Products.DeleteList;
 using Ecommerce.Core.Admin.Products.Update;
-using Ecommerce.Domain.Users;
 using Ecommerce.Extensions.Requests;
 using Ecommerce.HttpApi.Contracts.Admin.Products;
+using Ecommerce.Persistence.Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

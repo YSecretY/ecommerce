@@ -1,12 +1,11 @@
-using Ecommerce.Domain.Products;
-using Ecommerce.Infrastructure.Database.Products;
-using Ecommerce.Infrastructure.Repositories.Products;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Admin.Products.DeleteList;
 
 public class AdminDeleteProductsListUseCase(
-    IProductsRepository productsRepository,
-    IProductsUnitOfWork unitOfWork
+    ProductsDbContext dbContext
 ) : IAdminDeleteProductsListUseCase
 {
     private const int BatchSize = 300;
@@ -15,11 +14,14 @@ public class AdminDeleteProductsListUseCase(
     {
         foreach (Guid[] currentIds in ids.Chunk(BatchSize))
         {
-            List<Product> products = await productsRepository.GetListAsync(currentIds, true, cancellationToken);
+            List<Product> products = await dbContext.Products
+                .AsNoTracking()
+                .Where(p => currentIds.Contains(p.Id))
+                .ToListAsync(cancellationToken);
 
-            productsRepository.SoftDelete(products);
+            dbContext.Products.RemoveRange(products);
         }
-        
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

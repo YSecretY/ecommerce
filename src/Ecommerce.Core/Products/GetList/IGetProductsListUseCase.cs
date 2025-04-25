@@ -1,4 +1,3 @@
-using Ecommerce.Core.Products.GetById;
 using Ecommerce.Extensions.Types;
 
 namespace Ecommerce.Core.Products.GetList;

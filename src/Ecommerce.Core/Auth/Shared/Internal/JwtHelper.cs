@@ -66,7 +66,7 @@ internal class JwtHelper : IJwtHelper
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _securityKey,
                 ValidateAudience = true,
-                ValidAudience = _jwtSettings.Audience,
+                ValidAudience = _jwtSettings.Audience
             };
 
             _ = _handler.ValidateToken(refreshToken, parameters, out _);

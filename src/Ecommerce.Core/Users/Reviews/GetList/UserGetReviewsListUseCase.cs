@@ -1,12 +1,13 @@
 using Ecommerce.Core.Auth.Shared;
-using Ecommerce.Domain.Reviews;
 using Ecommerce.Extensions.Types;
-using Ecommerce.Infrastructure.Repositories.Reviews;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Reviews;
+using Ecommerce.Persistence.Extensions;
 
 namespace Ecommerce.Core.Users.Reviews.GetList;
 
 public class UserGetReviewsListUseCase(
-    IProductsReviewsRepository reviewsRepository,
+    ProductsDbContext dbContext,
     IIdentityUserAccessor identityUserAccessor
 ) : IUserGetReviewsListUseCase
 {
@@ -15,11 +16,9 @@ public class UserGetReviewsListUseCase(
     {
         Guid userId = identityUserAccessor.GetUserId();
 
-        PaginatedEnumerable<ProductReview> reviews = await reviewsRepository.GetListAsync(
-            paginationQuery,
-            filter: query => query.Where(r => r.UserId == userId),
-            cancellationToken: cancellationToken
-        );
+        PaginatedEnumerable<ProductReview> reviews = await dbContext.ProductsReviews
+            .Where(r => r.UserId == userId)
+            .ToPaginatedEnumerableAsync(paginationQuery, cancellationToken);
 
         return reviews.Map(r => new ProductReviewDto(r));
     }

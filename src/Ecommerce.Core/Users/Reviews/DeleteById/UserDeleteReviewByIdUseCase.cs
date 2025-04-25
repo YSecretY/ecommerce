@@ -1,30 +1,30 @@
 using Ecommerce.Core.Auth.Shared;
 using Ecommerce.Core.Exceptions.Reviews;
-using Ecommerce.Domain.Reviews;
 using Ecommerce.Extensions.Exceptions;
-using Ecommerce.Infrastructure.Database.Products;
-using Ecommerce.Infrastructure.Repositories.Reviews;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Reviews;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Users.Reviews.DeleteById;
 
 public class UserDeleteReviewByIdUseCase(
-    IIdentityUserAccessor identityUserAccessor,
-    IProductsReviewsRepository reviewsRepository,
-    IProductsUnitOfWork unitOfWork
+    ProductsDbContext dbContext,
+    IIdentityUserAccessor identityUserAccessor
 ) : IUserDeleteReviewByIdUseCase
 {
     public async Task HandleAsync(Guid id, CancellationToken cancellationToken = default)
     {
         Guid userId = identityUserAccessor.GetUserId();
 
-        ProductReview review = await reviewsRepository.GetByIdAsync(id, true, cancellationToken: cancellationToken)
+        ProductReview review = await dbContext.ProductsReviews
+                                   .AsNoTracking()
+                                   .FirstOrDefaultAsync(r => r.Id == id, cancellationToken)
                                ?? throw new ProductReviewNotFoundException();
 
         if (review.UserId != userId)
             throw new UnauthorizedException();
 
-        reviewsRepository.SoftDelete(review);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        dbContext.ProductsReviews.Remove(review);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

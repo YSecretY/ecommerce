@@ -1,4 +1,4 @@
-using Ecommerce.Domain.Products;
+using Ecommerce.Persistence.Domain.Products;
 
 namespace Ecommerce.Core.Products;
 

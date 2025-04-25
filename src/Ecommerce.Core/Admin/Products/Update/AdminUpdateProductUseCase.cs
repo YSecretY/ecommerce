@@ -1,15 +1,14 @@
 using Ecommerce.Core.Exceptions.Products;
-using Ecommerce.Domain.Products;
 using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;
-using Ecommerce.Infrastructure.Database.Products;
-using Ecommerce.Infrastructure.Repositories.Products;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Admin.Products.Update;
 
 public class AdminUpdateProductUseCase(
-    IProductsRepository productsRepository,
-    IProductsUnitOfWork unitOfWork,
+    ProductsDbContext dbContext,
     IDateTimeProvider dateTimeProvider
 ) : IAdminUpdateProductUseCase
 {
@@ -17,7 +16,8 @@ public class AdminUpdateProductUseCase(
     {
         DateTime utcNow = dateTimeProvider.UtcNow;
 
-        Product product = await productsRepository.GetByIdAsync(command.ProductId, true, cancellationToken)
+        Product product = await dbContext.Products
+                              .FirstOrDefaultAsync(p => p.Id == command.ProductId, cancellationToken)
                           ?? throw new ProductNotFoundException();
 
         product.Update(
@@ -42,6 +42,6 @@ public class AdminUpdateProductUseCase(
         ValidationResult validationResult = ProductValidator.Validate(product);
         ResponseValidationException.ThrowIf(validationResult.Failed, validationResult.Errors);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

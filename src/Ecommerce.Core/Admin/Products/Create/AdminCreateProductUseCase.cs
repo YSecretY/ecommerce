@@ -1,14 +1,12 @@
-using Ecommerce.Domain.Products;
 using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;
-using Ecommerce.Infrastructure.Database.Products;
-using Ecommerce.Infrastructure.Repositories.Products;
+using Ecommerce.Persistence.Database;
+using Ecommerce.Persistence.Domain.Products;
 
 namespace Ecommerce.Core.Admin.Products.Create;
 
 public class AdminCreateProductUseCase(
-    IProductsRepository productsRepository,
-    IProductsUnitOfWork unitOfWork,
+    ProductsDbContext dbContext,
     IDateTimeProvider dateTimeProvider
 ) : IAdminCreateProductUseCase
 {
@@ -38,8 +36,8 @@ public class AdminCreateProductUseCase(
         ValidationResult validationResult = ProductValidator.Validate(product);
         ResponseValidationException.ThrowIf(validationResult.Failed, validationResult.Errors);
 
-        await productsRepository.AddAsync(product, cancellationToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await dbContext.Products.AddAsync(product, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return product.Id;
     }
