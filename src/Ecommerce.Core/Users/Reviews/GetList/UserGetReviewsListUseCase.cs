@@ -3,6 +3,7 @@ using Ecommerce.Extensions.Types;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Reviews;
 using Ecommerce.Persistence.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Users.Reviews.GetList;
 
@@ -17,6 +18,7 @@ public class UserGetReviewsListUseCase(
         Guid userId = identityUserAccessor.GetUserId();
 
         PaginatedEnumerable<ProductReview> reviews = await dbContext.ProductsReviews
+            .AsNoTracking()
             .Where(r => r.UserId == userId)
             .ToPaginatedEnumerableAsync(paginationQuery, cancellationToken);
 

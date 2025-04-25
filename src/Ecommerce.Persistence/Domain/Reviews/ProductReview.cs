@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Ecommerce.Persistence.Domain.Products;
 
 namespace Ecommerce.Persistence.Domain.Reviews;
@@ -19,6 +20,7 @@ public class ProductReview(
 
     public Product Product { get; private set; } = null!;
 
+    [MaxLength(ProductReviewValidator.MaxTextLength)]
     public string Text { get; private set; } = text;
 
     public ICollection<ProductReviewReply> Replies { get; private set; } = null!;

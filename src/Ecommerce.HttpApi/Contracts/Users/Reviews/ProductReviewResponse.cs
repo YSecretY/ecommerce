@@ -3,12 +3,15 @@ using Ecommerce.Core.Users.Reviews;
 
 namespace Ecommerce.HttpApi.Contracts.Users.Reviews;
 
-public class ProductReviewResponse(Guid userId, string text, DateTime createdAt)
+public class ProductReviewResponse(Guid reviewId, Guid userId, string text, DateTime createdAt)
 {
     public ProductReviewResponse(ProductReviewDto dto)
-        : this(dto.UserId, dto.Text, dto.CreatedAt)
+        : this(dto.ReviewId, dto.UserId, dto.Text, dto.CreatedAt)
     {
     }
+
+    [JsonPropertyName("reviewId")]
+    public Guid ReviewId { get; private set; } = reviewId;
 
     [JsonPropertyName("userId")]
     public Guid UserId { get; private set; } = userId;
