@@ -6,6 +6,7 @@ using Ecommerce.Core.Features.Products.GetById;
 using Ecommerce.Core.Features.Products.GetList;
 using Ecommerce.Core.Features.Users.Auth.Login;
 using Ecommerce.Core.Features.Users.Auth.Register;
+using Ecommerce.Core.Features.Users.Replies.Create;
 using Ecommerce.Core.Features.Users.Reviews.Create;
 using Ecommerce.Core.Features.Users.Reviews.DeleteById;
 using Ecommerce.Core.Features.Users.Reviews.GetList;
@@ -53,6 +54,8 @@ public static class DependencyInjectionExtensions
         services.TryAddScoped<IUserCreateReviewUseCase, UserCreateReviewUseCase>();
         services.TryAddScoped<IUserDeleteReviewByIdUseCase, UserDeleteReviewByIdUseCase>();
         services.TryAddScoped<IUserGetReviewsListUseCase, UserGetReviewsListUseCase>();
+
+        services.TryAddScoped<IUserCreateReviewReplyUseCase, UserCreateReviewReplyUseCase>();
 
         return services;
     }

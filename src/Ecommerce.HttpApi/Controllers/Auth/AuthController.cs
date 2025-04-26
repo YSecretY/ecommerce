@@ -1,5 +1,6 @@
 using Ecommerce.Core.Features.Users.Auth.Login;
 using Ecommerce.Core.Features.Users.Auth.Register;
+using Ecommerce.Extensions.Requests;
 using Ecommerce.HttpApi.Contracts.Users.Auth;
 using Ecommerce.HttpApi.Contracts.Users.Auth.Login;
 using Ecommerce.HttpApi.Contracts.Users.Auth.Register;
@@ -31,11 +32,13 @@ public class AuthController(
     }
 
     [HttpPost("/users/login")]
-    public async Task<ActionResult<IdentityTokenResponse>> Login([FromBody] LoginUserRequest request,
+    public async Task<ActionResult<EndpointResult<IdentityTokenResponse>>> Login([FromBody] LoginUserRequest request,
         CancellationToken cancellationToken = default)
     {
         UserLoginCommand command = new(Email: request.Email, Password: request.Password);
 
-        return Ok(await loginUserUseCase.HandleAsync(command, cancellationToken));
+        return Ok(new EndpointResult<IdentityTokenResponse>(
+            new IdentityTokenResponse(await loginUserUseCase.HandleAsync(command, cancellationToken))
+        ));
     }
 }
