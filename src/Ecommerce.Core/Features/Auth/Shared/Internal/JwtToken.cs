@@ -1,8 +1,0 @@
-namespace Ecommerce.Core.Features.Auth.Shared.Internal;
-
-internal struct JwtToken(string token, DateTime expiration)
-{
-    public string Token { get; private set; } = token;
-
-    public DateTime Expiration { get; private set; } = expiration;
-}

@@ -88,19 +88,19 @@ public static class EntityConfigurations
 
         userBuilder.Property(u => u.Email)
             .IsRequired()
-            .HasMaxLength(User.MaxEmailLength);
+            .HasMaxLength(UserValidator.MaxEmailLength);
 
         userBuilder.Property(u => u.PasswordHash)
             .IsRequired()
-            .HasMaxLength(User.MaxPasswordHashLength);
+            .HasMaxLength(UserValidator.MaxPasswordHashLength);
 
         userBuilder.Property(u => u.FirstName)
             .IsRequired()
-            .HasMaxLength(User.MaxNameLength);
+            .HasMaxLength(UserValidator.MaxNameLength);
 
         userBuilder.Property(u => u.LastName)
             .IsRequired()
-            .HasMaxLength(User.MaxNameLength);
+            .HasMaxLength(UserValidator.MaxNameLength);
 
         userBuilder.Property(u => u.IsEmailConfirmed)
             .IsRequired();

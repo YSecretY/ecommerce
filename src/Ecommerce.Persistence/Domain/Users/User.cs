@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Ecommerce.Persistence.Domain.Users;
 
 public class User(
@@ -11,19 +13,19 @@ public class User(
 ) : ISoftDeletable
 {
     public const string TableName = "Users";
-    public const int MaxEmailLength = 256;
-    public const int MaxNameLength = 256;
-    public const int MaxPasswordLength = 60;
-    public const int MaxPasswordHashLength = 512;
 
     public Guid Id { get; init; } = Guid.NewGuid();
 
+    [MaxLength(UserValidator.MaxEmailLength)]
     public string Email { get; private set; } = email;
 
+    [MaxLength(UserValidator.MaxPasswordHashLength)]
     public string PasswordHash { get; private set; } = passwordHash;
 
+    [MaxLength(UserValidator.MaxNameLength)]
     public string FirstName { get; private set; } = firstName;
 
+    [MaxLength(UserValidator.MaxNameLength)]
     public string LastName { get; private set; } = lastName;
 
     public bool IsEmailConfirmed { get; private set; } = isEmailConfirmed;

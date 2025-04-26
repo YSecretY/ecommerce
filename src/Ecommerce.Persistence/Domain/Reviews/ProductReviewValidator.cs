@@ -6,7 +6,7 @@ public class ProductReviewValidator
 {
     public const int MaxTextLength = 50_000;
 
-    public static ValidationResult Validate(ProductReview review)
+    public static void Validate(ProductReview review)
     {
         List<ValidationError> errors = [];
 
@@ -16,6 +16,25 @@ public class ProductReviewValidator
         if (review.Text.Length > MaxTextLength)
             errors.Add(new ValidationError($"Review text cannot be longer than {MaxTextLength} characters."));
 
-        return new ValidationResult(errors);
+        ResponseValidationException.ThrowIf(errors.Any, errors);
+    }
+
+    public static ProductReview CreateValid(
+        Guid userId,
+        Guid productId,
+        string text,
+        DateTime createdAtUtc
+    )
+    {
+        ProductReview review = new(
+            userId,
+            productId,
+            text,
+            createdAtUtc
+        );
+
+        Validate(review);
+
+        return review;
     }
 }

@@ -1,6 +1,5 @@
 using Ecommerce.Core.Exceptions.Products;
-using Ecommerce.Extensions.Exceptions;
-using Ecommerce.Extensions.Time;
+using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;
 using Microsoft.EntityFrameworkCore;

@@ -1,8 +1,9 @@
 using Ecommerce.Core;
-using Ecommerce.Core.Features.Auth;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;
+using Ecommerce.Infrastructure;
+using Ecommerce.Infrastructure.Auth.Abstractions;
 using Ecommerce.Persistence;
 using Microsoft.OpenApi.Models;
 
@@ -24,7 +25,7 @@ JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
 builder.Services
     .AddExtensions()
     .AddPersistence(productsDbConnection, usersDbConnection)
-    .AddCore(new JwtSettings(
+    .AddInfrastructure(new JwtSettings(
         secret: jwtCredential.Secret,
         issuer: jwtCredential.Issuer,
         audience: jwtCredential.Audience,
@@ -32,6 +33,7 @@ builder.Services
         refreshTokenExpirationDays: jwtCredential.RefreshTokenExpirationDays,
         refreshTokenCookieName: jwtCredential.RefreshTokenCookieName
     ))
+    .AddCore()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen(options =>
     {

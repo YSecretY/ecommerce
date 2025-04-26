@@ -1,9 +1,8 @@
-using Ecommerce.Core.Features.Auth;
-using Ecommerce.Core.Features.Auth.Login;
-using Ecommerce.Core.Features.Auth.Register;
-using Ecommerce.HttpApi.Contracts.Auth;
-using Ecommerce.HttpApi.Contracts.Auth.Login;
-using Ecommerce.HttpApi.Contracts.Auth.Register;
+using Ecommerce.Core.Features.Users.Auth.Login;
+using Ecommerce.Core.Features.Users.Auth.Register;
+using Ecommerce.HttpApi.Contracts.Users.Auth;
+using Ecommerce.HttpApi.Contracts.Users.Auth.Login;
+using Ecommerce.HttpApi.Contracts.Users.Auth.Register;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.HttpApi.Controllers.Auth;
@@ -11,29 +10,32 @@ namespace Ecommerce.HttpApi.Controllers.Auth;
 [ApiController]
 [Route("/api/v1/auth")]
 public class AuthController(
-    IAuthService authService
+    IUserRegisterUseCase registerUserUseCase,
+    IUserLoginCommandUseCase loginUserUseCase
 ) : ControllerBase
 {
     [HttpPost("/users/register")]
-    public async Task<ActionResult<IdentityTokenResponse>> Register([FromBody] RegisterUserRequest request,
+    public async Task<IActionResult> Register([FromBody] RegisterUserRequest request,
         CancellationToken cancellationToken = default)
     {
-        RegisterUserCommand command = new(
+        UserRegisterCommand command = new(
             Email: request.Email,
             Password: request.Password,
             FirstName: request.FirstName,
             LastName: request.LastName
         );
 
-        return Ok(await authService.RegisterAsync(command, cancellationToken));
+        await registerUserUseCase.HandleAsync(command, cancellationToken);
+
+        return Ok();
     }
 
     [HttpPost("/users/login")]
     public async Task<ActionResult<IdentityTokenResponse>> Login([FromBody] LoginUserRequest request,
         CancellationToken cancellationToken = default)
     {
-        LoginUserCommand command = new(request.Email, request.Password);
+        UserLoginCommand command = new(Email: request.Email, Password: request.Password);
 
-        return Ok(await authService.LoginAsync(command, cancellationToken));
+        return Ok(await loginUserUseCase.HandleAsync(command, cancellationToken));
     }
 }

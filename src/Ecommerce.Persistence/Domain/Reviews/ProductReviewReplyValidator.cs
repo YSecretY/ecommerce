@@ -6,16 +6,30 @@ public class ProductReviewReplyValidator
 {
     public const int MaxTextLength = 50_000;
 
-    public static ValidationResult Validate(ProductReviewReply review)
+    public static void Validate(ProductReviewReply reply)
     {
         List<ValidationError> errors = [];
 
-        if (string.IsNullOrWhiteSpace(review.Text))
+        if (string.IsNullOrWhiteSpace(reply.Text))
             errors.Add(new ValidationError("Reply text cannot be empty."));
 
-        if (review.Text.Length > MaxTextLength)
+        if (reply.Text.Length > MaxTextLength)
             errors.Add(new ValidationError($"Reply text cannot be longer than {MaxTextLength} characters."));
 
-        return new ValidationResult(errors);
+        ResponseValidationException.ThrowIf(errors.Any, errors);
+    }
+
+    public static ProductReviewReply CreateValid(
+        Guid userId,
+        Guid reviewId,
+        string text,
+        DateTime createdAtUtc
+    )
+    {
+        ProductReviewReply reply = new(userId, reviewId, text, createdAtUtc);
+
+        Validate(reply);
+
+        return reply;
     }
 }

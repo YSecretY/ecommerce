@@ -1,7 +1,7 @@
 using Ecommerce.Core.Exceptions.Reviews;
 using Ecommerce.Core.Extensions.Reviews;
-using Ecommerce.Core.Features.Auth.Shared;
 using Ecommerce.Extensions.Exceptions;
+using Ecommerce.Infrastructure.Auth.Abstractions;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Reviews;
 using Ecommerce.Persistence.Extensions;

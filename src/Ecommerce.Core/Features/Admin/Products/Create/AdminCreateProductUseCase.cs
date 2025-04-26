@@ -1,4 +1,4 @@
-using Ecommerce.Extensions.Time;
+using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;
 
