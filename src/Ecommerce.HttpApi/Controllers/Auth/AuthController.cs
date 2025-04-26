@@ -19,10 +19,10 @@ public class AuthController(
         CancellationToken cancellationToken = default)
     {
         RegisterUserCommand command = new(
-            email: request.Email,
-            password: request.Password,
-            firstName: request.FirstName,
-            lastName: request.LastName
+            Email: request.Email,
+            Password: request.Password,
+            FirstName: request.FirstName,
+            LastName: request.LastName
         );
 
         return Ok(await authService.RegisterAsync(command, cancellationToken));
@@ -32,10 +32,7 @@ public class AuthController(
     public async Task<ActionResult<IdentityTokenResponse>> Login([FromBody] LoginUserRequest request,
         CancellationToken cancellationToken = default)
     {
-        LoginUserCommand command = new(
-            email: request.Email,
-            password: request.Password
-        );
+        LoginUserCommand command = new(request.Email, request.Password);
 
         return Ok(await authService.LoginAsync(command, cancellationToken));
     }

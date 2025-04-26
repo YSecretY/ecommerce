@@ -39,8 +39,7 @@ public class AdminUpdateProductUseCase(
             saleEndsAtUtc: command.SaleEndsAtUtc
         );
 
-        ValidationResult validationResult = ProductValidator.Validate(product);
-        ResponseValidationException.ThrowIf(validationResult.Failed, validationResult.Errors);
+        ProductValidator.Validate(product);
 
         await dbContext.SaveChangesAsync(cancellationToken);
     }

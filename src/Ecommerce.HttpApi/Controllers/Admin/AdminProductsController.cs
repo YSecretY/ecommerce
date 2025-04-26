@@ -25,20 +25,20 @@ public class AdminProductsController(
         CancellationToken cancellationToken)
     {
         AdminCreateProductCommand command = new(
-            name: request.Name,
-            description: request.Description,
-            sku: request.Sku,
-            brand: request.Brand,
-            price: request.Price,
-            salePrice: request.SalePrice,
-            mainImageUrl: request.MainImageUrl,
-            imageGalleryUrls: request.ImageGalleryUrls,
-            currencyCode: request.CurrencyCode,
-            countryCode: request.CountryCode,
-            totalCount: request.TotalCount,
-            isInStock: request.IsInStock,
-            saleStartsAtUtc: request.SaleStartsAtUtc,
-            saleEndsAtUtc: request.SaleEndsAtUtc
+            Name: request.Name,
+            Description: request.Description,
+            Sku: request.Sku,
+            Brand: request.Brand,
+            Price: request.Price,
+            SalePrice: request.SalePrice,
+            MainImageUrl: request.MainImageUrl,
+            ImageGalleryUrls: request.ImageGalleryUrls,
+            CurrencyCode: request.CurrencyCode,
+            CountryCode: request.CountryCode,
+            TotalCount: request.TotalCount,
+            IsInStock: request.IsInStock,
+            SaleStartsAtUtc: request.SaleStartsAtUtc,
+            SaleEndsAtUtc: request.SaleEndsAtUtc
         );
 
         return new EndpointResult<Guid>(await createProductUseCase.HandleAsync(command, cancellationToken));
@@ -49,22 +49,22 @@ public class AdminProductsController(
         CancellationToken cancellationToken)
     {
         AdminUpdateProductCommand command = new(
-            productId: request.ProductId,
-            name: request.Name,
-            description: request.Description,
-            sku: request.Sku,
-            brand: request.Brand,
-            price: request.Price,
-            salePrice: request.SalePrice,
-            mainImageUrl: request.MainImageUrl,
-            imageGalleryUrls: request.ImageGalleryUrls,
-            currencyCode: request.CurrencyCode,
-            countryCode: request.CountryCode,
-            totalCount: request.TotalCount,
-            isInStock: request.IsInStock,
-            createdAtUtc: request.CreatedAtUtc,
-            saleStartsAtUtc: request.SaleStartsAtUtc,
-            saleEndsAtUtc: request.SaleEndsAtUtc
+            ProductId: request.ProductId,
+            Name: request.Name,
+            Description: request.Description,
+            Sku: request.Sku,
+            Brand: request.Brand,
+            Price: request.Price,
+            SalePrice: request.SalePrice,
+            MainImageUrl: request.MainImageUrl,
+            ImageGalleryUrls: request.ImageGalleryUrls,
+            CurrencyCode: request.CurrencyCode,
+            CountryCode: request.CountryCode,
+            TotalCount: request.TotalCount,
+            IsInStock: request.IsInStock,
+            CreatedAtUtc: request.CreatedAtUtc,
+            SaleStartsAtUtc: request.SaleStartsAtUtc,
+            SaleEndsAtUtc: request.SaleEndsAtUtc
         );
 
         await updateProductUseCase.HandleAsync(command, cancellationToken);

@@ -1,4 +1,3 @@
-using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Extensions.Time;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;
@@ -14,7 +13,7 @@ public class AdminCreateProductUseCase(
     {
         DateTime utcNow = dateTimeProvider.UtcNow;
 
-        Product product = new(
+        Product product = ProductValidator.CreateValid(
             name: command.Name,
             description: command.Description,
             sku: command.Sku,
@@ -32,9 +31,6 @@ public class AdminCreateProductUseCase(
             saleStartsAtUtc: command.SaleStartsAtUtc,
             saleEndsAtUtc: command.SaleEndsAtUtc
         );
-
-        ValidationResult validationResult = ProductValidator.Validate(product);
-        ResponseValidationException.ThrowIf(validationResult.Failed, validationResult.Errors);
 
         await dbContext.Products.AddAsync(product, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);

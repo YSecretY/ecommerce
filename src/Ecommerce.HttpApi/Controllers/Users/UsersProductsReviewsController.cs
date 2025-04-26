@@ -27,8 +27,8 @@ public class UsersProductsReviewsController(
         CancellationToken cancellationToken)
     {
         UserCreateReviewCommand command = new(
-            productId: request.ProductId,
-            text: request.Text
+            ProductId: request.ProductId,
+            Text: request.Text
         );
 
         return new EndpointResult<Guid>(await userCreateReviewUseCase.HandleAsync(command, cancellationToken));

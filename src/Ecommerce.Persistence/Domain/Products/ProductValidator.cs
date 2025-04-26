@@ -12,7 +12,7 @@ public class ProductValidator
     public const int MaxCurrencyCodeLength = 3;
     public const int MaxCountryCodeLength = 3;
 
-    public static ValidationResult Validate(Product product)
+    public static void Validate(Product product)
     {
         List<ValidationError> errors = [];
 
@@ -58,6 +58,49 @@ public class ProductValidator
         if (product.CountryCode.Length > MaxCountryCodeLength)
             errors.Add(new ValidationError($"Product countryCode cannot be longer than {MaxCountryCodeLength}"));
 
-        return new ValidationResult(errors);
+        ResponseValidationException.ThrowIf(errors.Any, errors);
+    }
+
+    public static Product CreateValid(
+        string name,
+        string description,
+        string sku,
+        string brand,
+        decimal price,
+        decimal? salePrice,
+        string mainImageUrl,
+        List<string>? imageGalleryUrls,
+        string currencyCode,
+        string countryCode,
+        long totalCount,
+        bool isInStock,
+        DateTime createdAtUtc,
+        DateTime updatedAtUtc,
+        DateTime? saleStartsAtUtc,
+        DateTime? saleEndsAtUtc
+    )
+    {
+        Product product = new(
+            name: name,
+            description: description,
+            sku: sku,
+            brand: brand,
+            price: price,
+            salePrice: salePrice,
+            mainImageUrl: mainImageUrl,
+            imageGalleryUrls: imageGalleryUrls,
+            currencyCode: currencyCode,
+            countryCode: countryCode,
+            totalCount: totalCount,
+            isInStock: isInStock,
+            createdAtUtc: createdAtUtc,
+            updatedAtUtc: updatedAtUtc,
+            saleStartsAtUtc: saleStartsAtUtc,
+            saleEndsAtUtc: saleEndsAtUtc
+        );
+
+        Validate(product);
+
+        return product;
     }
 }
