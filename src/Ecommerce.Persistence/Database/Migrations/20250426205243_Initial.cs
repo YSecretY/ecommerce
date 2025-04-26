@@ -20,7 +20,9 @@ namespace Ecommerce.Persistence.Database.Migrations
                     Name = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     Description = table.Column<string>(type: "character varying(2056)", maxLength: 2056, nullable: false),
                     Sku = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    Category = table.Column<int>(type: "integer", nullable: false),
                     Brand = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    SellerName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     SalePrice = table.Column<decimal>(type: "numeric", nullable: true),
                     MainImageUrl = table.Column<string>(type: "character varying(2056)", maxLength: 2056, nullable: false),
@@ -73,7 +75,8 @@ namespace Ecommerce.Persistence.Database.Migrations
                     CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeliveredAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CurrencyCode = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false)
+                    CurrencyCode = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
+                    CancellationReason = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {

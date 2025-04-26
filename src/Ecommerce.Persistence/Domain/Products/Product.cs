@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Ecommerce.Persistence.Domain.Products.Enums;
 using Ecommerce.Persistence.Domain.Reviews;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,7 +10,9 @@ public class Product(
     string name,
     string description,
     string sku,
+    ProductCategory category,
     string brand,
+    string sellerName,
     decimal price,
     decimal? salePrice,
     string mainImageUrl,
@@ -37,8 +40,13 @@ public class Product(
     [MaxLength(ProductValidator.MaxSkuLength)]
     public string Sku { get; private set; } = sku;
 
+    public ProductCategory Category { get; private set; } = category;
+
     [MaxLength(ProductValidator.MaxBrandLength)]
     public string Brand { get; private set; } = brand;
+
+    [MaxLength(ProductValidator.MaxSellerNameLength)]
+    public string SellerName { get; private set; } = sellerName;
 
     public decimal Price { get; private set; } = price;
 

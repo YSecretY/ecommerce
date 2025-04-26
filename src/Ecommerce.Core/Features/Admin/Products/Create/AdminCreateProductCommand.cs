@@ -1,10 +1,14 @@
+using Ecommerce.Persistence.Domain.Products.Enums;
+
 namespace Ecommerce.Core.Features.Admin.Products.Create;
 
 public record AdminCreateProductCommand(
     string Name,
     string Description,
     string Sku,
+    ProductCategory Category,
     string Brand,
+    string SellerName,
     decimal Price,
     decimal? SalePrice,
     string MainImageUrl,

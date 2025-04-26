@@ -3,7 +3,9 @@ using Ecommerce.Core.Features.Admin.Products.DeleteById;
 using Ecommerce.Core.Features.Admin.Products.DeleteList;
 using Ecommerce.Core.Features.Admin.Products.Update;
 using Ecommerce.Extensions.Requests;
+using Ecommerce.Extensions.Types;
 using Ecommerce.HttpApi.Contracts.Admin.Products;
+using Ecommerce.Persistence.Domain.Products.Enums;
 using Ecommerce.Persistence.Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +30,9 @@ public class AdminProductsController(
             Name: request.Name,
             Description: request.Description,
             Sku: request.Sku,
+            Category: request.Category.ToEnum<ProductCategory>(),
             Brand: request.Brand,
+            SellerName: request.SellerName,
             Price: request.Price,
             SalePrice: request.SalePrice,
             MainImageUrl: request.MainImageUrl,

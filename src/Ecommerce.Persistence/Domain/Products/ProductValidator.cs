@@ -1,4 +1,5 @@
 using Ecommerce.Extensions.Exceptions;
+using Ecommerce.Persistence.Domain.Products.Enums;
 
 namespace Ecommerce.Persistence.Domain.Products;
 
@@ -8,6 +9,7 @@ public class ProductValidator
     public const int MaxDescriptionLength = 2056;
     public const int MaxSkuLength = 256;
     public const int MaxBrandLength = 256;
+    public const int MaxSellerNameLength = 256;
     public const int MaxImageUrlLength = 2056;
     public const int MaxCurrencyCodeLength = 3;
     public const int MaxCountryCodeLength = 3;
@@ -40,6 +42,12 @@ public class ProductValidator
         if (product.Brand.Length > MaxBrandLength)
             errors.Add(new ValidationError($"Product brand cannot be longer than {MaxBrandLength}"));
 
+        if (string.IsNullOrWhiteSpace(product.SellerName))
+            errors.Add(new ValidationError("Product seller name cannot be empty."));
+
+        if (product.SellerName.Length > MaxSellerNameLength)
+            errors.Add(new ValidationError($"Product seller name cannot be longer than {MaxSellerNameLength}"));
+
         if (string.IsNullOrWhiteSpace(product.MainImageUrl))
             errors.Add(new ValidationError("Product mainImageUrl cannot be empty."));
 
@@ -65,7 +73,9 @@ public class ProductValidator
         string name,
         string description,
         string sku,
+        ProductCategory category,
         string brand,
+        string sellerName,
         decimal price,
         decimal? salePrice,
         string mainImageUrl,
@@ -84,7 +94,9 @@ public class ProductValidator
             name: name,
             description: description,
             sku: sku,
+            category: category,
             brand: brand,
+            sellerName: sellerName,
             price: price,
             salePrice: salePrice,
             mainImageUrl: mainImageUrl,

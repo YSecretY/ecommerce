@@ -28,6 +28,9 @@ namespace Ecommerce.Persistence.Database.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<int?>("CancellationReason")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -97,6 +100,9 @@ namespace Ecommerce.Persistence.Database.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
                     b.Property<string>("CountryCode")
                         .IsRequired()
                         .HasMaxLength(3)
@@ -145,6 +151,11 @@ namespace Ecommerce.Persistence.Database.Migrations
 
                     b.Property<DateTime?>("SaleStartsAtUtc")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("SellerName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("Sku")
                         .IsRequired()

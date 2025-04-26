@@ -13,8 +13,14 @@ public class AdminCreateProductRequest
     [JsonPropertyName("sku")]
     public string Sku { get; set; } = string.Empty;
 
+    [JsonPropertyName("category")]
+    public string Category { get; set; } = string.Empty;
+
     [JsonPropertyName("brand")]
     public string Brand { get; set; } = string.Empty;
+
+    [JsonPropertyName("sellerName")]
+    public string SellerName { get; set; } = string.Empty;
 
     [JsonPropertyName("price")]
     public decimal Price { get; set; }

@@ -2,9 +2,11 @@ using Ecommerce.Core;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;
+using Ecommerce.Extensions.Types;
 using Ecommerce.Infrastructure;
 using Ecommerce.Infrastructure.Auth.Abstractions;
 using Ecommerce.Persistence;
+using Ecommerce.Persistence.Domain.Products.Enums;
 using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

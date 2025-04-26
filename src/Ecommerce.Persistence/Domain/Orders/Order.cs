@@ -9,15 +9,6 @@ namespace Ecommerce.Persistence.Domain.Orders;
 
 public class Order
 {
-    /// <summary>
-    /// Constructor for Entity Framework
-    /// </summary>
-#pragma warning disable CS8618, CS9264
-    protected Order()
-#pragma warning restore CS8618, CS9264
-    {
-    }
-
     public Order(
         Guid userId,
         List<OrderItem> items,
@@ -35,6 +26,15 @@ public class Order
         Status = status;
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
+    }
+
+    /// <summary>
+    /// Constructor for Entity Framework
+    /// </summary>
+#pragma warning disable CS8618, CS9264
+    protected Order()
+#pragma warning restore CS8618, CS9264
+    {
     }
 
     private const string TableName = "Orders";
@@ -62,8 +62,17 @@ public class Order
     [MaxLength(ProductValidator.MaxCurrencyCodeLength)]
     public string CurrencyCode { get; private set; }
 
+    public OrderCancellationReason? CancellationReason { get; private set; }
+
     public void Deliver(DateTime utcNow) =>
         DeliveredAt = utcNow;
+
+    public void Cancel(OrderCancellationReason reason, DateTime utcNow)
+    {
+        Status = OrderStatus.Cancelled;
+        CancellationReason = reason;
+        UpdatedAtUtc = utcNow;
+    }
 
     public static void Builder(EntityTypeBuilder<Order> order)
     {
