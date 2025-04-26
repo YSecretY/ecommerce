@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Products.GetById;
 
 public class GetProductByIdUseCase(
-    ProductsDbContext dbContext
+    ApplicationDbContext dbContext
 ) : IGetProductByIdUseCase
 {
     public async Task<ProductDto> HandleAsync(Guid productId, CancellationToken cancellationToken = default)

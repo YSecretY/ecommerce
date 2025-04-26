@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Ecommerce.Infrastructure.Database.Products.Migrations
+namespace Ecommerce.Persistence.Database.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -32,11 +32,31 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                     UpdatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsInStock = table.Column<bool>(type: "boolean", nullable: false),
                     SaleStartsAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    SaleEndsAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    SaleEndsAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    PasswordHash = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
+                    FirstName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    LastName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    IsEmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Role = table.Column<int>(type: "integer", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +67,8 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     Text = table.Column<string>(type: "character varying(50000)", maxLength: 50000, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,6 +77,12 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                         name: "FK_ProductsReviews_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductsReviews_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -68,7 +95,8 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ReviewId = table.Column<Guid>(type: "uuid", nullable: false),
                     Text = table.Column<string>(type: "character varying(50000)", maxLength: 50000, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreatedAtUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,12 +107,23 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                         principalTable: "ProductsReviews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductReviewReplies_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductReviewReplies_ReviewId",
                 table: "ProductReviewReplies",
                 column: "ReviewId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductReviewReplies_UserId",
+                table: "ProductReviewReplies",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Sku",
@@ -95,6 +134,17 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
                 name: "IX_ProductsReviews_ProductId",
                 table: "ProductsReviews",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductsReviews_UserId",
+                table: "ProductsReviews",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -108,6 +158,9 @@ namespace Ecommerce.Infrastructure.Database.Products.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

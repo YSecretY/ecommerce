@@ -13,10 +13,6 @@ public static class EntityConfigurations
         modelBuilder.ApplyProductConfigurations();
         modelBuilder.ApplyReviewsConfigurations();
         modelBuilder.ApplyReviewRepliesConfigurations();
-    }
-
-    public static void ApplyAllUsersDatabaseEntityTypeConfigurations(this ModelBuilder modelBuilder)
-    {
         modelBuilder.ApplyUserConfigurations();
     }
 
@@ -110,6 +106,16 @@ public static class EntityConfigurations
 
         userBuilder.Property(u => u.CreatedAtUtc)
             .IsRequired();
+
+        userBuilder.HasMany(u => u.Reviews)
+            .WithOne(r => r.User)
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        userBuilder.HasMany(u => u.Replies)
+            .WithOne(r => r.User)
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
     private static void ApplyReviewsConfigurations(this ModelBuilder modelBuilder)

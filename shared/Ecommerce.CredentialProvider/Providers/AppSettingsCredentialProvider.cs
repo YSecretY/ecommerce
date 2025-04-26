@@ -7,13 +7,9 @@ internal class AppSettingsCredentialProvider(
     IConfiguration configuration
 ) : ICredentialProvider
 {
-    public string GetProductsDbConnection() =>
-        configuration.GetConnectionString(CredentialsNames.ProductsDbConnection)
-        ?? throw new KeyNotFoundException(nameof(CredentialsNames.ProductsDbConnection));
-
-    public string GetUsersDbConnection() =>
-        configuration.GetConnectionString(CredentialsNames.UsersDbConnection)
-        ?? throw new KeyNotFoundException(nameof(CredentialsNames.UsersDbConnection));
+    public string GetAppDbConnection() =>
+        configuration.GetConnectionString(nameof(CredentialsNames.AppDbConnection))
+        ?? throw new KeyNotFoundException(nameof(CredentialsNames.AppDbConnection));
 
     public JwtCredential GetJwtCredential() =>
         configuration.GetSection(nameof(JwtCredential)).Get<JwtCredential>()

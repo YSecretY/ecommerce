@@ -5,7 +5,7 @@ using Ecommerce.Persistence.Domain.Products;
 namespace Ecommerce.Core.Features.Admin.Products.Create;
 
 public class AdminCreateProductUseCase(
-    ProductsDbContext dbContext,
+    ApplicationDbContext dbContext,
     IDateTimeProvider dateTimeProvider
 ) : IAdminCreateProductUseCase
 {

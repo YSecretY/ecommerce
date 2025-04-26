@@ -7,20 +7,14 @@ namespace Ecommerce.Persistence;
 
 public static class DependencyInjectionExtensions
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection services, string productsDbConnection,
-        string usersDbConnection)
+    public static IServiceCollection AddPersistence(this IServiceCollection services, string appDbConnection)
     {
         SoftDeleteInterceptor softDeleteInterceptor = new();
 
         services.TryAddSingleton(softDeleteInterceptor);
 
-        services.AddDbContext<ProductsDbContext>(options => options
-            .UseNpgsql(productsDbConnection)
-            .AddInterceptors(softDeleteInterceptor)
-        );
-
-        services.AddDbContext<UsersDbContext>(options => options
-            .UseNpgsql(usersDbConnection)
+        services.AddDbContext<ApplicationDbContext>(options => options
+            .UseNpgsql(appDbConnection)
             .AddInterceptors(softDeleteInterceptor)
         );
 
@@ -31,10 +25,9 @@ public static class DependencyInjectionExtensions
 
     private static void ApplyMigrations(this IServiceCollection services)
     {
-        ProductsDbContext productsDbContext = services.BuildServiceProvider().GetRequiredService<ProductsDbContext>();
-        UsersDbContext usersDbContext = services.BuildServiceProvider().GetRequiredService<UsersDbContext>();
+        ApplicationDbContext applicationDbContext =
+            services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>();
 
-        productsDbContext.Database.Migrate();
-        usersDbContext.Database.Migrate();
+        applicationDbContext.Database.Migrate();
     }
 }

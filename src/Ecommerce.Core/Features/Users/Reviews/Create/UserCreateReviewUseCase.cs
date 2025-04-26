@@ -7,7 +7,7 @@ using Ecommerce.Persistence.Domain.Reviews;
 namespace Ecommerce.Core.Features.Users.Reviews.Create;
 
 public class UserCreateReviewUseCase(
-    ProductsDbContext dbContext,
+    ApplicationDbContext dbContext,
     IDateTimeProvider dateTimeProvider,
     IIdentityUserAccessor identityUserAccessor
 ) : IUserCreateReviewUseCase

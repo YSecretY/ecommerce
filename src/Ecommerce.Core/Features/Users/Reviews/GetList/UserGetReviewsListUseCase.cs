@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Users.Reviews.GetList;
 
 public class UserGetReviewsListUseCase(
-    ProductsDbContext dbContext,
+    ApplicationDbContext dbContext,
     IIdentityUserAccessor identityUserAccessor
 ) : IUserGetReviewsListUseCase
 {

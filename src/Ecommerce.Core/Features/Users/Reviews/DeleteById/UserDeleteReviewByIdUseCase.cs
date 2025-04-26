@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Users.Reviews.DeleteById;
 
 public class UserDeleteReviewByIdUseCase(
-    ProductsDbContext dbContext,
+    ApplicationDbContext dbContext,
     IIdentityUserAccessor identityUserAccessor
 ) : IUserDeleteReviewByIdUseCase
 {

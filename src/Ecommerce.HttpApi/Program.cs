@@ -14,8 +14,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ICredentialProvider credentialProvider =
     CredentialProviderFactory.GetCredentialProvider(builder.Environment, builder.Configuration);
 
-string productsDbConnection = credentialProvider.GetProductsDbConnection();
-string usersDbConnection = credentialProvider.GetUsersDbConnection();
+string appDbConnection = credentialProvider.GetAppDbConnection();
 JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
 
 # endregion
@@ -24,7 +23,7 @@ JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
 
 builder.Services
     .AddExtensions()
-    .AddPersistence(productsDbConnection, usersDbConnection)
+    .AddPersistence(appDbConnection)
     .AddInfrastructure(new JwtSettings(
         secret: jwtCredential.Secret,
         issuer: jwtCredential.Issuer,

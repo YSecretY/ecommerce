@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Ecommerce.Persistence.Domain.Users;
 
 namespace Ecommerce.Persistence.Domain.Reviews;
 
@@ -14,6 +15,8 @@ public class ProductReviewReply(
     public Guid Id { get; init; } = Guid.NewGuid();
 
     public Guid UserId { get; private set; } = userId;
+
+    public User User { get; private set; } = null!;
 
     public Guid ReviewId { get; private set; } = reviewId;
 

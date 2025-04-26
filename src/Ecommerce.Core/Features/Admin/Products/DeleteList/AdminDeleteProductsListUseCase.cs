@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Admin.Products.DeleteList;
 
 public class AdminDeleteProductsListUseCase(
-    ProductsDbContext dbContext
+    ApplicationDbContext dbContext
 ) : IAdminDeleteProductsListUseCase
 {
     private const int BatchSize = 300;

@@ -14,9 +14,5 @@
     <ItemGroup>
       <ProjectReference Include="..\..\shared\Ecommerce.Extensions\Ecommerce.Extensions.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Database\Users\" />
-    </ItemGroup>
     
 </Project>

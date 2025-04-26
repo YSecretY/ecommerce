@@ -6,7 +6,7 @@ using Ecommerce.Infrastructure.Time;
 namespace Ecommerce.Core.Features.Users.Auth.Register;
 
 public class UserRegisterUseCase(
-    UsersDbContext dbContext,
+    ApplicationDbContext dbContext,
     IPasswordHasher passwordHasher,
     IDateTimeProvider dateTimeProvider
 ) : IUserRegisterUseCase
@@ -26,7 +26,7 @@ public class UserRegisterUseCase(
             role: UserRole.User,
             createdAtUtc: utcNow
         );
-        
+
         await dbContext.Users.AddAsync(user, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
     }

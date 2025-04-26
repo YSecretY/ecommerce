@@ -4,9 +4,7 @@ namespace Ecommerce.CredentialProvider;
 
 public interface ICredentialProvider
 {
-    public string GetProductsDbConnection();
-
-    public string GetUsersDbConnection();
+    public string GetAppDbConnection();
 
     public JwtCredential GetJwtCredential();
 }

@@ -14,7 +14,7 @@
     container_name: ecommerce_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: products
+      POSTGRES_DB: main
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Testpass123
     ports:

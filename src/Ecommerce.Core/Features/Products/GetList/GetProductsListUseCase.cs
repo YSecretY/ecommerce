@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Products.GetList;
 
 public class GetProductsListUseCase(
-    ProductsDbContext dbContext
+    ApplicationDbContext dbContext
 ) : IGetProductsListUseCase
 {
     public async Task<PaginatedEnumerable<ProductDto>> HandleAsync(PaginationQuery paginationQuery,

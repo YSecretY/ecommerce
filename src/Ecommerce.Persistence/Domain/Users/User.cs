@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Ecommerce.Persistence.Domain.Reviews;
 
 namespace Ecommerce.Persistence.Domain.Users;
 
@@ -36,8 +37,17 @@ public class User(
 
     public bool IsDeleted { get; set; }
 
-    public void SoftDelete() =>
+    public ICollection<ProductReview> Reviews { get; private set; } = null!;
+
+    public ICollection<ProductReviewReply> Replies { get; private set; } = null!;
+
+    public void SoftDelete()
+    {
         IsDeleted = true;
+
+        foreach (ProductReview review in Reviews)
+            review.SoftDelete();
+    }
 
     public void ConfirmEmail() =>
         IsEmailConfirmed = true;

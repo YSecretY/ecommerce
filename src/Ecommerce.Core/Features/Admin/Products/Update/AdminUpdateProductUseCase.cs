@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Admin.Products.Update;
 
 public class AdminUpdateProductUseCase(
-    ProductsDbContext dbContext,
+    ApplicationDbContext dbContext,
     IDateTimeProvider dateTimeProvider
 ) : IAdminUpdateProductUseCase
 {

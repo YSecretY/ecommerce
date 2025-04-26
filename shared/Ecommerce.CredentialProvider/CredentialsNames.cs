@@ -2,8 +2,7 @@ namespace Ecommerce.CredentialProvider;
 
 public class CredentialsNames
 {
-    public const string ProductsDbConnection = "ProductsDbConnection";
-    public const string UsersDbConnection = "UsersDbConnection";
+    public const string AppDbConnection = "AppDbConnection";
 
     public const string JwtSecret = "JwtSecret";
     public const string JwtIssuer = "JwtIssuer";

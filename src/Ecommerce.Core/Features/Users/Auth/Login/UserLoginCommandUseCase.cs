@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Users.Auth.Login;
 
 public class UserLoginCommandUseCase(
-    UsersDbContext dbContext,
+    ApplicationDbContext dbContext,
     IPasswordHasher passwordHasher,
     IIdentityTokenGenerator identityTokenGenerator
 ) : IUserLoginCommandUseCase

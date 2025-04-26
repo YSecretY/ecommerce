@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ecommerce.Core.Features.Admin.Products.DeleteById;
 
 public class AdminDeleteProductByIdUseCase(
-    ProductsDbContext dbContext
+    ApplicationDbContext dbContext
 ) : IAdminDeleteProductByIdUseCase
 {
     public async Task HandleAsync(Guid id, CancellationToken cancellationToken = default)
