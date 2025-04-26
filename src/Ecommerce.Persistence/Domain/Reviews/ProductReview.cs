@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using Ecommerce.Persistence.Domain.Products;
 using Ecommerce.Persistence.Domain.Users;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Ecommerce.Persistence.Domain.Reviews;
 
@@ -11,7 +13,7 @@ public class ProductReview(
     DateTime createdAtUtc
 ) : ISoftDeletable
 {
-    public const string TableName = "ProductsReviews";
+    private const string TableName = "ProductsReviews";
 
     public Guid Id { get; init; } = Guid.NewGuid();
 
@@ -38,5 +40,28 @@ public class ProductReview(
 
         foreach (ProductReviewReply reply in Replies)
             reply.SoftDelete();
+    }
+
+    public static void Builder(EntityTypeBuilder<ProductReview> review)
+    {
+        review.ToTable(TableName);
+
+        review.HasKey(r => r.Id);
+
+        review.HasIndex(r => r.ProductId);
+
+        review.Property(r => r.Text)
+            .IsRequired()
+            .HasMaxLength(ProductReviewValidator.MaxTextLength);
+
+        review.HasOne(r => r.Product)
+            .WithMany(p => p.Reviews)
+            .HasForeignKey(r => r.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        review.Property(r => r.CreatedAtUtc)
+            .IsRequired();
+
+        review.HasQueryFilter(r => !r.IsDeleted);
     }
 }

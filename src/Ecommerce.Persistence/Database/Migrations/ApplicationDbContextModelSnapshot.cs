@@ -23,6 +23,69 @@ namespace Ecommerce.Persistence.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Ecommerce.Persistence.Domain.Orders.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
+
+                    b.Property<DateTime?>("DeliveredAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders", (string)null);
+                });
+
+            modelBuilder.Entity("Ecommerce.Persistence.Domain.Orders.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("PricePerUnit")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItems", (string)null);
+                });
+
             modelBuilder.Entity("Ecommerce.Persistence.Domain.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -211,6 +274,72 @@ namespace Ecommerce.Persistence.Database.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("Ecommerce.Persistence.Domain.Orders.Order", b =>
+                {
+                    b.HasOne("Ecommerce.Persistence.Domain.Users.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.OwnsOne("Ecommerce.Persistence.Domain.Orders.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(512)
+                                .HasColumnType("character varying(512)");
+
+                            b1.Property<string>("CountryCode")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(512)
+                                .HasColumnType("character varying(512)");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Ecommerce.Persistence.Domain.Orders.OrderItem", b =>
+                {
+                    b.HasOne("Ecommerce.Persistence.Domain.Orders.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecommerce.Persistence.Domain.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Ecommerce.Persistence.Domain.Reviews.ProductReview", b =>
                 {
                     b.HasOne("Ecommerce.Persistence.Domain.Products.Product", "Product")
@@ -239,7 +368,7 @@ namespace Ecommerce.Persistence.Database.Migrations
                         .IsRequired();
 
                     b.HasOne("Ecommerce.Persistence.Domain.Users.User", "User")
-                        .WithMany("Replies")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -247,6 +376,11 @@ namespace Ecommerce.Persistence.Database.Migrations
                     b.Navigation("Review");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Ecommerce.Persistence.Domain.Orders.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("Ecommerce.Persistence.Domain.Products.Product", b =>
@@ -261,7 +395,7 @@ namespace Ecommerce.Persistence.Database.Migrations
 
             modelBuilder.Entity("Ecommerce.Persistence.Domain.Users.User", b =>
                 {
-                    b.Navigation("Replies");
+                    b.Navigation("Orders");
 
                     b.Navigation("Reviews");
                 });

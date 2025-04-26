@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Ecommerce.Persistence.Domain.Reviews;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Ecommerce.Persistence.Domain.Products;
 
@@ -22,7 +24,7 @@ public class Product(
     DateTime? saleEndsAtUtc
 ) : ISoftDeletable
 {
-    public const string TableName = "Products";
+    private const string TableName = "Products";
 
     public Guid Id { get; init; } = Guid.NewGuid();
 
@@ -120,5 +122,59 @@ public class Product(
         UpdatedAtUtc = updatedAtUtc;
         SaleStartsAtUtc = saleStartsAtUtc;
         SaleEndsAtUtc = saleEndsAtUtc;
+    }
+
+    public static void Builder(EntityTypeBuilder<Product> product)
+    {
+        product.ToTable(TableName);
+
+        product.HasKey(p => p.Id);
+
+        product.HasIndex(p => p.Sku);
+
+        product.Property(p => p.Name)
+            .IsRequired()
+            .HasMaxLength(ProductValidator.MaxNameLength);
+
+        product.Property(p => p.Description)
+            .IsRequired()
+            .HasMaxLength(ProductValidator.MaxDescriptionLength);
+
+        product.Property(p => p.Sku)
+            .IsRequired()
+            .HasMaxLength(ProductValidator.MaxSkuLength);
+
+        product.Property(p => p.Brand)
+            .HasMaxLength(ProductValidator.MaxBrandLength);
+
+        product.Property(p => p.MainImageUrl)
+            .IsRequired()
+            .HasMaxLength(ProductValidator.MaxImageUrlLength);
+
+        product.Property(p => p.CurrencyCode)
+            .IsRequired()
+            .HasMaxLength(ProductValidator.MaxCurrencyCodeLength);
+
+        product.Property(p => p.CountryCode)
+            .IsRequired()
+            .HasMaxLength(ProductValidator.MaxCountryCodeLength);
+
+        product.Property(p => p.TotalCount)
+            .IsRequired();
+
+        product.Property(p => p.IsInStock)
+            .IsRequired();
+
+        product.Property(p => p.CreatedAtUtc)
+            .IsRequired();
+
+        product.Property(p => p.UpdatedAtUtc)
+            .IsRequired();
+
+        product.HasQueryFilter(p => !p.IsDeleted);
+
+        product.Ignore(p => p.IsOnSale);
+
+        product.Ignore(p => p.DisplayPrice);
     }
 }
