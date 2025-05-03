@@ -7,4 +7,6 @@ public interface ICredentialProvider
     public string GetAppDbConnection();
 
     public JwtCredential GetJwtCredential();
+
+    public KafkaCredential GetKafkaCredential();
 }

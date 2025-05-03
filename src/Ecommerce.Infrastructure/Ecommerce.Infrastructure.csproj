@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Ecommerce.Analytics\Ecommerce.Analytics.csproj" />
+      <ProjectReference Include="..\Ecommerce.Kafka\Ecommerce.Kafka.csproj" />
       <ProjectReference Include="..\Ecommerce.Persistence\Ecommerce.Persistence.csproj" />
     </ItemGroup>
 

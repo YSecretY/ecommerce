@@ -1,4 +1,3 @@
-using Ecommerce.Extensions.Exceptions;
 using Ecommerce.Infrastructure.Auth.Abstractions;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;

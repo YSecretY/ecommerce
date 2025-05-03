@@ -1,6 +1,5 @@
 using Ecommerce.Extensions.Exceptions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Ecommerce.Extensions;
 

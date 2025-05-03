@@ -10,4 +10,6 @@ public class CredentialsNames
     public const string JwtAccessTokenExpirationInMinutes = "JwtAccessTokenExpirationInMinutes";
     public const string JwtRefreshTokenExpirationInDays = "JwtRefreshTokenExpirationInMinutes";
     public const string JwtRefreshTokenCookieName = "JwtRefreshTokenCookieName";
+    
+    public const string KafkaBootstrapServers = "KafkaBootstrapServers";
 }
