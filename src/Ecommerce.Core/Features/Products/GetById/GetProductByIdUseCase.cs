@@ -1,12 +1,20 @@
+using Ecommerce.Analytics.Events.Products;
 using Ecommerce.Core.Exceptions.Products;
+using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Infrastructure.Events;
+using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;
+using Ecommerce.Persistence.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Core.Features.Products.GetById;
 
 public class GetProductByIdUseCase(
-    ApplicationDbContext dbContext
+    ApplicationDbContext dbContext,
+    IEventPublisher eventPublisher,
+    IIdentityUserAccessor identityUserAccessor,
+    IDateTimeProvider dateTimeProvider
 ) : IGetProductByIdUseCase
 {
     public async Task<ProductDto> HandleAsync(Guid productId, CancellationToken cancellationToken = default)
@@ -15,6 +23,15 @@ public class GetProductByIdUseCase(
                               .AsNoTracking()
                               .FirstOrDefaultAsync(p => p.Id == productId, cancellationToken)
                           ?? throw new ProductNotFoundException();
+
+        if (identityUserAccessor.IsAuthenticated() && !identityUserAccessor.IsInRole(UserRole.Admin))
+        {
+            Guid userId = identityUserAccessor.GetUserId();
+
+            await eventPublisher.PublishAsync(
+                new ProductViewedEvent(userId, product.Id, dateTimeProvider.UtcNow), cancellationToken
+            );
+        }
 
         return new ProductDto(product);
     }
