@@ -5,6 +5,7 @@ using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Infrastructure.Auth.Internal;
 using Ecommerce.Infrastructure.Events.Internal;
+using Ecommerce.Infrastructure.Events.Internal.Consumers;
 using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Kafka;
@@ -80,5 +81,7 @@ public static class DependencyInjectionExtensions
         services.TryAddSingleton<IKafkaEventProducer<ProductViewedEvent>, ProductViewedEventProducer>();
 
         services.TryAddSingleton<IEventPublisher, KafkaEventPublisher>();
+
+        services.AddHostedService<ProductViewedEventConsumer>();
     }
 }
