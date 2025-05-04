@@ -2,11 +2,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Ecommerce.Extensions.Exceptions;
-using Ecommerce.Infrastructure.Auth.Abstractions;
 using Ecommerce.Infrastructure.Time;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Ecommerce.Infrastructure.Auth;
+namespace Ecommerce.Infrastructure.Auth.Internal;
 
 internal class JwtHelper : IJwtHelper
 {

@@ -1,4 +1,4 @@
-namespace Ecommerce.Analytics.Events;
+namespace Ecommerce.Core.Abstractions.Events;
 
 public class EventBase(DateTime occuredAtUtc)
 {

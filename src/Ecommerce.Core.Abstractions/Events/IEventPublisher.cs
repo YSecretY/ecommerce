@@ -1,6 +1,4 @@
-using Ecommerce.Analytics.Events;
-
-namespace Ecommerce.Infrastructure.Events;
+namespace Ecommerce.Core.Abstractions.Events;
 
 public interface IEventPublisher
 {

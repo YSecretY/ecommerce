@@ -1,8 +1,9 @@
 using System.Text;
-using Ecommerce.Analytics.Events.Products;
+using Ecommerce.Core.Abstractions.Auth;
+using Ecommerce.Core.Abstractions.Events;
+using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Infrastructure.Auth;
-using Ecommerce.Infrastructure.Auth.Abstractions;
-using Ecommerce.Infrastructure.Events;
+using Ecommerce.Infrastructure.Auth.Internal;
 using Ecommerce.Infrastructure.Events.Internal;
 using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
 using Ecommerce.Infrastructure.Time;

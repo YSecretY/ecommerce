@@ -3,7 +3,7 @@ using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;
 using Ecommerce.Infrastructure;
-using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Persistence;
 using Microsoft.OpenApi.Models;
 

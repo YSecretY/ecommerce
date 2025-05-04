@@ -1,6 +1,7 @@
 using System.Security.Claims;
+using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Extensions.Exceptions;
-using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Infrastructure.Auth.Internal;
 using Ecommerce.Persistence.Domain.Users;
 using Microsoft.AspNetCore.Http;
 

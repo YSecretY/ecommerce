@@ -1,4 +1,4 @@
-using Ecommerce.Analytics.Events;
+using Ecommerce.Core.Abstractions.Events;
 using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
 using Microsoft.Extensions.DependencyInjection;
 

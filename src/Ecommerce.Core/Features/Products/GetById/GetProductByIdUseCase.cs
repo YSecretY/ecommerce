@@ -1,7 +1,7 @@
-using Ecommerce.Analytics.Events.Products;
+using Ecommerce.Core.Abstractions.Auth;
+using Ecommerce.Core.Abstractions.Events;
+using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Core.Exceptions.Products;
-using Ecommerce.Infrastructure.Auth.Abstractions;
-using Ecommerce.Infrastructure.Events;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;

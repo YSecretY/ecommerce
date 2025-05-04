@@ -1,4 +1,4 @@
-using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Core.Abstractions.Auth;
 
 namespace Ecommerce.Core.Features.Users.Auth.Login;
 

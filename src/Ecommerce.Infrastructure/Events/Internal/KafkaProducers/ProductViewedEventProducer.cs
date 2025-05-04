@@ -1,4 +1,4 @@
-using Ecommerce.Analytics.Events.Products;
+using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Kafka;
 
 namespace Ecommerce.Infrastructure.Events.Internal.KafkaProducers;

@@ -1,6 +1,6 @@
-using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Core.Abstractions.Auth;
 
-namespace Ecommerce.Infrastructure.Auth;
+namespace Ecommerce.Infrastructure.Auth.Internal;
 
 internal class PasswordHasher : IPasswordHasher
 {

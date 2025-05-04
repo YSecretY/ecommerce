@@ -1,5 +1,5 @@
+using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Extensions.Types;
-using Ecommerce.Infrastructure.Auth.Abstractions;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Reviews;
 using Ecommerce.Persistence.Extensions;

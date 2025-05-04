@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Ecommerce.Persistence.Domain.Users;
 
-namespace Ecommerce.Infrastructure.Auth.Abstractions;
+namespace Ecommerce.Core.Abstractions.Auth;
 
 public interface IIdentityTokenGenerator
 {

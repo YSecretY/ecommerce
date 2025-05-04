@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Ecommerce.Infrastructure.Auth.Abstractions;
+namespace Ecommerce.Infrastructure.Auth.Internal;
 
 internal interface IJwtHelper
 {
