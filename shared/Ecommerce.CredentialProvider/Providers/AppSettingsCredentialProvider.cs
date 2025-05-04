@@ -14,4 +14,8 @@ internal class AppSettingsCredentialProvider(
     public JwtCredential GetJwtCredential() =>
         configuration.GetSection(nameof(JwtCredential)).Get<JwtCredential>()
         ?? throw new KeyNotFoundException(nameof(JwtCredential));
+
+    public KafkaCredential GetKafkaCredential() =>
+        configuration.GetSection(nameof(KafkaCredential)).Get<KafkaCredential>()
+        ?? throw new KeyNotFoundException(nameof(KafkaCredential));
 }

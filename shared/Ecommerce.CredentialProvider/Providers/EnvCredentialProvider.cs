@@ -38,4 +38,12 @@ internal class EnvCredentialProvider : ICredentialProvider
             refreshTokenExpirationDays: refreshTokenExpirationInDays,
             refreshTokenCookieName: cookieName);
     }
+
+    public KafkaCredential GetKafkaCredential()
+    {
+        string bootstrapServers = Environment.GetEnvironmentVariable(nameof(CredentialsNames.KafkaBootstrapServers))
+                                  ?? throw new KeyNotFoundException(nameof(CredentialsNames.KafkaBootstrapServers));
+
+        return new KafkaCredential(bootstrapServers);
+    }
 }

@@ -1,4 +1,4 @@
-namespace Ecommerce.Infrastructure.Auth.Abstractions;
+namespace Ecommerce.Infrastructure.Auth;
 
 public class JwtSettings
 {

@@ -1,6 +1,6 @@
+using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Users;
-using Ecommerce.Infrastructure.Auth.Abstractions;
 using Ecommerce.Infrastructure.Time;
 
 namespace Ecommerce.Core.Features.Users.Auth.Register;

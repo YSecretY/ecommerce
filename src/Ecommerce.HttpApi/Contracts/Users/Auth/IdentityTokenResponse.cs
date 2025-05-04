@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Core.Abstractions.Auth;
 
 namespace Ecommerce.HttpApi.Contracts.Users.Auth;
 

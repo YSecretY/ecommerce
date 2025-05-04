@@ -1,12 +1,11 @@
+using Ecommerce.Analytics;
 using Ecommerce.Core;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;
-using Ecommerce.Extensions.Types;
 using Ecommerce.Infrastructure;
-using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Persistence;
-using Ecommerce.Persistence.Domain.Products.Enums;
 using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -18,6 +17,7 @@ ICredentialProvider credentialProvider =
 
 string appDbConnection = credentialProvider.GetAppDbConnection();
 JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
+KafkaCredential kafkaCredential = credentialProvider.GetKafkaCredential();
 
 # endregion
 
@@ -25,15 +25,22 @@ JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
 
 builder.Services
     .AddExtensions()
-    .AddPersistence(appDbConnection)
-    .AddInfrastructure(new JwtSettings(
+    .AddPersistence(appDbConnection);
+
+await builder.Services.AddInfrastructure(
+    new JwtSettings(
         secret: jwtCredential.Secret,
         issuer: jwtCredential.Issuer,
         audience: jwtCredential.Audience,
         accessTokenExpirationMinutes: jwtCredential.AccessTokenExpirationMinutes,
         refreshTokenExpirationDays: jwtCredential.RefreshTokenExpirationDays,
         refreshTokenCookieName: jwtCredential.RefreshTokenCookieName
-    ))
+    ),
+    kafkaCredential.BootstrapServers
+);
+
+builder.Services
+    .AddAnalytics()
     .AddCore()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen(options =>

@@ -1,4 +1,4 @@
-namespace Ecommerce.Infrastructure.Auth.Abstractions;
+namespace Ecommerce.Core.Abstractions.Auth;
 
 public interface IPasswordHasher
 {

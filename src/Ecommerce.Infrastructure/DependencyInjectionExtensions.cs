@@ -1,7 +1,15 @@
 using System.Text;
+using Ecommerce.Core.Abstractions.Auth;
+using Ecommerce.Core.Abstractions.Events;
+using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Infrastructure.Auth;
-using Ecommerce.Infrastructure.Auth.Abstractions;
+using Ecommerce.Infrastructure.Auth.Internal;
+using Ecommerce.Infrastructure.Events.Internal;
+using Ecommerce.Infrastructure.Events.Internal.Consumers;
+using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
 using Ecommerce.Infrastructure.Time;
+using Ecommerce.Kafka;
+using Ecommerce.Persistence.Domain.Products;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,13 +19,19 @@ namespace Ecommerce.Infrastructure;
 
 public static class DependencyInjectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, JwtSettings jwtSettings)
+    public static async Task AddInfrastructure(
+        this IServiceCollection services,
+        JwtSettings jwtSettings,
+        string kafkaBootstrapServers
+    )
     {
         services
             .AddTime()
             .AddAuth(jwtSettings);
 
-        return services;
+        await services.AddEvents(new KafkaSettings([
+            new TopicSettings(ProductViewedEvent.QueueName, 3, 1)
+        ], kafkaBootstrapServers));
     }
 
     private static IServiceCollection AddTime(this IServiceCollection services)
@@ -58,5 +72,16 @@ public static class DependencyInjectionExtensions
         services.AddAuthorization();
 
         return services;
+    }
+
+    private static async Task AddEvents(this IServiceCollection services, KafkaSettings kafkaSettings)
+    {
+        await services.AddKafka(kafkaSettings);
+
+        services.TryAddSingleton<IKafkaEventProducer<ProductViewedEvent>, ProductViewedEventProducer>();
+
+        services.TryAddSingleton<IEventPublisher, KafkaEventPublisher>();
+
+        services.AddHostedService<ProductViewedEventConsumer>();
     }
 }
