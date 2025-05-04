@@ -8,6 +8,7 @@ using Ecommerce.Infrastructure.Events.Internal;
 using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Kafka;
+using Ecommerce.Persistence.Domain.Products;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -28,7 +29,7 @@ public static class DependencyInjectionExtensions
             .AddAuth(jwtSettings);
 
         await services.AddEvents(new KafkaSettings([
-            new TopicSettings(Topics.ProductViewed, 3, 1)
+            new TopicSettings(ProductViewedEvent.QueueName, 3, 1)
         ], kafkaBootstrapServers));
     }
 

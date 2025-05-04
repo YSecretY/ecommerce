@@ -1,3 +1,4 @@
+using Ecommerce.Analytics;
 using Ecommerce.Core;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
@@ -38,7 +39,9 @@ await builder.Services.AddInfrastructure(
     kafkaCredential.BootstrapServers
 );
 
-builder.Services.AddCore()
+builder.Services
+    .AddAnalytics()
+    .AddCore()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen(options =>
     {

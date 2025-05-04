@@ -29,7 +29,12 @@ public class GetProductByIdUseCase(
             Guid userId = identityUserAccessor.GetUserId();
 
             await eventPublisher.PublishAsync(
-                new ProductViewedEvent(userId, product.Id, dateTimeProvider.UtcNow), cancellationToken
+                new ProductViewedEvent(
+                    userId,
+                    product.Id,
+                    dateTimeProvider.UtcNow
+                ),
+                cancellationToken
             );
         }
 
