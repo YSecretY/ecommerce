@@ -77,6 +77,9 @@ public class Product(
 
     public bool IsDeleted { get; set; }
 
+    public void Buy(int quantity) =>
+        TotalCount -= quantity;
+
     public void SoftDelete()
     {
         IsDeleted = true;
@@ -87,13 +90,13 @@ public class Product(
 
     public ICollection<ProductReview> Reviews { get; private set; } = null!;
 
-    public bool IsOnSale =>
+    public bool IsOnSale(DateTime utcNow) =>
         SalePrice.HasValue &&
-        SaleStartsAtUtc <= DateTime.UtcNow &&
-        SaleEndsAtUtc >= DateTime.UtcNow;
+        SaleStartsAtUtc <= utcNow &&
+        SaleEndsAtUtc >= utcNow;
 
-    public decimal DisplayPrice =>
-        IsOnSale ? SalePrice!.Value : Price;
+    public decimal DisplayPrice(DateTime utcNow) =>
+        IsOnSale(utcNow) ? SalePrice!.Value : Price;
 
     public void Update(
         string name,
@@ -182,9 +185,5 @@ public class Product(
             .IsRequired();
 
         product.HasQueryFilter(p => !p.IsDeleted);
-
-        product.Ignore(p => p.IsOnSale);
-
-        product.Ignore(p => p.DisplayPrice);
     }
 }

@@ -34,4 +34,10 @@ public static class ApplicationExtensions
             .RequireAuthorization()
             .MapRepliesEndpoints()
             .WithTags("Replies");
+    
+    public static void MapOrdersEndpoints(this WebApplication app) =>
+        app.MapGroup("/api/v1/orders")
+            .RequireAuthorization()
+            .MapOrdersEndpoints()
+            .WithTags("Orders");
 }
