@@ -13,7 +13,7 @@ public class AdminCreateProductUseCase(
     {
         DateTime utcNow = dateTimeProvider.UtcNow;
 
-        Product product = ProductValidator.CreateValid(
+        Product product = ProductValidator.CreateOrThrow(
             name: command.Name,
             description: command.Description,
             sku: command.Sku,

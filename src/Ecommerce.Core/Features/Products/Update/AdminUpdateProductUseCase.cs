@@ -23,6 +23,7 @@ public class AdminUpdateProductUseCase(
             name: command.Name,
             description: command.Description,
             sku: command.Sku,
+            category: command.Category,
             brand: command.Brand,
             price: command.Price,
             salePrice: command.SalePrice,

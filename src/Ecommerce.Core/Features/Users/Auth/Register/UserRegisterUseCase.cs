@@ -17,7 +17,7 @@ public class UserRegisterUseCase(
 
         DateTime utcNow = dateTimeProvider.UtcNow;
 
-        User user = UserValidator.CreateValid(
+        User user = UserValidator.CreateOrThrow(
             email: command.Email,
             passwordHash: passwordHasher.Hash(command.Password),
             firstName: command.FirstName,

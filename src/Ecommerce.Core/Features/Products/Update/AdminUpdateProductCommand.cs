@@ -1,3 +1,5 @@
+using Ecommerce.Persistence.Domain.Products.Enums;
+
 namespace Ecommerce.Core.Features.Products.Update;
 
 public record AdminUpdateProductCommand(
@@ -5,6 +7,7 @@ public record AdminUpdateProductCommand(
     string Name,
     string Description,
     string Sku,
+    ProductCategory Category,
     string Brand,
     decimal Price,
     decimal? SalePrice,

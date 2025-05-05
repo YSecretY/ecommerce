@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using Ecommerce.Core.Features.Products.Update;
+using Ecommerce.Extensions.Types;
+using Ecommerce.Persistence.Domain.Products.Enums;
 
 namespace Ecommerce.HttpApi.Contracts.Admin.Products;
 
@@ -16,6 +18,9 @@ public class AdminUpdateProductRequest
 
     [JsonPropertyName("sku")]
     public string Sku { get; set; } = string.Empty;
+
+    [JsonPropertyName("category")]
+    public string Category { get; set; } = string.Empty;
 
     [JsonPropertyName("brand")]
     public string Brand { get; set; } = string.Empty;
@@ -58,6 +63,7 @@ public class AdminUpdateProductRequest
         Name: Name,
         Description: Description,
         Sku: Sku,
+        Category: Category.ToEnum<ProductCategory>(),
         Brand: Brand,
         Price: Price,
         SalePrice: SalePrice,

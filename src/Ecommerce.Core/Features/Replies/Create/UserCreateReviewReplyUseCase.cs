@@ -15,7 +15,7 @@ public class UserCreateReviewReplyUseCase(
     {
         Guid userId = identityUserAccessor.GetUserId();
 
-        ProductReviewReply reply = ProductReviewReplyValidator.CreateValid(
+        ProductReviewReply reply = ProductReviewReplyValidator.CreateOrThrow(
             userId,
             command.ReviewId,
             command.Text,

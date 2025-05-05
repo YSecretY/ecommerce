@@ -69,7 +69,7 @@ public class ProductValidator
         ResponseValidationException.ThrowIf(errors.Any, errors);
     }
 
-    public static Product CreateValid(
+    public static Product CreateOrThrow(
         string name,
         string description,
         string sku,

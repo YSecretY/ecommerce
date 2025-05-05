@@ -40,7 +40,7 @@ public class UserValidator
         ResponseValidationException.ThrowIf(errors.Any, errors);
     }
 
-    public static User CreateValid(
+    public static User CreateOrThrow(
         string email,
         string passwordHash,
         string firstName,
