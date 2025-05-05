@@ -12,5 +12,5 @@ public class PaginationRequest
     public int PageNumber { get; set; }
 
     public PaginationQuery ToPaginationQuery() =>
-        new(PageNumber, PageSize);
+        new(PageSize, PageNumber);
 }
