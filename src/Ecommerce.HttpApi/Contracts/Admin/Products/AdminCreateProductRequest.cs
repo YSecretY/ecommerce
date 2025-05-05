@@ -1,4 +1,7 @@
 using System.Text.Json.Serialization;
+using Ecommerce.Core.Features.Products.Create;
+using Ecommerce.Extensions.Types;
+using Ecommerce.Persistence.Domain.Products.Enums;
 
 namespace Ecommerce.HttpApi.Contracts.Admin.Products;
 
@@ -51,4 +54,23 @@ public class AdminCreateProductRequest
 
     [JsonPropertyName("saleEndsAtUtc")]
     public DateTime? SaleEndsAtUtc { get; set; }
+
+    public AdminCreateProductCommand ToCommand() => new(
+        Name: Name,
+        Description: Description,
+        Sku: Sku,
+        Category: Category.ToEnum<ProductCategory>(),
+        Brand: Brand,
+        SellerName: SellerName,
+        Price: Price,
+        SalePrice: SalePrice,
+        MainImageUrl: MainImageUrl,
+        ImageGalleryUrls: ImageGalleryUrls,
+        CurrencyCode: CurrencyCode,
+        CountryCode: CountryCode,
+        TotalCount: TotalCount,
+        IsInStock: IsInStock,
+        SaleStartsAtUtc: SaleStartsAtUtc,
+        SaleEndsAtUtc: SaleEndsAtUtc
+    );
 }

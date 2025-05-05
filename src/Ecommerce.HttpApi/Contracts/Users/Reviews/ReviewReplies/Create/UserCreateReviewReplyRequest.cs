@@ -1,10 +1,16 @@
 using System.Text.Json.Serialization;
+using Ecommerce.Core.Features.Replies.Create;
 
 namespace Ecommerce.HttpApi.Contracts.Users.Reviews.ReviewReplies.Create;
 
-public record UserCreateReviewReplyRequest(
-    [property: JsonPropertyName("reviewId")]
-    Guid ReviewId,
-    [property: JsonPropertyName("text")]
-    string Text
-);
+public class UserCreateReviewReplyRequest
+{
+    [JsonPropertyName("reviewId")]
+    public Guid ReviewId { get; set; }
+
+    [JsonPropertyName("text")]
+    public string Text { get; set; } = string.Empty;
+
+    public UserCreateReviewReplyCommand ToCommand() =>
+        new(ReviewId, Text);
+}

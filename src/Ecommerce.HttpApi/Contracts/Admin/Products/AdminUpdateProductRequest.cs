@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Ecommerce.Core.Features.Products.Update;
 
 namespace Ecommerce.HttpApi.Contracts.Admin.Products;
 
@@ -51,4 +52,23 @@ public class AdminUpdateProductRequest
 
     [JsonPropertyName("saleEndsAtUtc")]
     public DateTime? SaleEndsAtUtc { get; set; }
+
+    public AdminUpdateProductCommand ToCommand() => new(
+        ProductId: ProductId,
+        Name: Name,
+        Description: Description,
+        Sku: Sku,
+        Brand: Brand,
+        Price: Price,
+        SalePrice: SalePrice,
+        MainImageUrl: MainImageUrl,
+        ImageGalleryUrls: ImageGalleryUrls,
+        CurrencyCode: CurrencyCode,
+        CountryCode: CountryCode,
+        TotalCount: TotalCount,
+        IsInStock: IsInStock,
+        CreatedAtUtc: CreatedAtUtc,
+        SaleStartsAtUtc: SaleStartsAtUtc,
+        SaleEndsAtUtc: SaleEndsAtUtc
+    );
 }

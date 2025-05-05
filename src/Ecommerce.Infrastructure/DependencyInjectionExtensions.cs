@@ -9,7 +9,6 @@ using Ecommerce.Infrastructure.Events.Internal.Consumers;
 using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Kafka;
-using Ecommerce.Persistence.Domain.Products;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

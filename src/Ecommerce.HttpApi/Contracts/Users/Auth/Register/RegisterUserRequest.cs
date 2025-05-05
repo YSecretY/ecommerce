@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Ecommerce.Core.Features.Users.Auth.Register;
 
 namespace Ecommerce.HttpApi.Contracts.Users.Auth.Register;
 
@@ -15,4 +16,11 @@ public class RegisterUserRequest
 
     [JsonPropertyName("lastName")]
     public string LastName { get; set; } = string.Empty;
+
+    public UserRegisterCommand ToCommand() => new(
+        Email,
+        Password,
+        FirstName,
+        LastName
+    );
 }

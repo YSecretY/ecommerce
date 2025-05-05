@@ -1,15 +1,15 @@
-using Ecommerce.Core.Features.Admin.Products.Create;
-using Ecommerce.Core.Features.Admin.Products.DeleteById;
-using Ecommerce.Core.Features.Admin.Products.DeleteList;
-using Ecommerce.Core.Features.Admin.Products.Update;
+using Ecommerce.Core.Features.Products.Create;
+using Ecommerce.Core.Features.Products.DeleteById;
+using Ecommerce.Core.Features.Products.DeleteList;
 using Ecommerce.Core.Features.Products.GetById;
 using Ecommerce.Core.Features.Products.GetList;
+using Ecommerce.Core.Features.Products.Update;
+using Ecommerce.Core.Features.Replies.Create;
+using Ecommerce.Core.Features.Reviews.Create;
+using Ecommerce.Core.Features.Reviews.DeleteById;
+using Ecommerce.Core.Features.Reviews.GetList;
 using Ecommerce.Core.Features.Users.Auth.Login;
 using Ecommerce.Core.Features.Users.Auth.Register;
-using Ecommerce.Core.Features.Users.Replies.Create;
-using Ecommerce.Core.Features.Users.Reviews.Create;
-using Ecommerce.Core.Features.Users.Reviews.DeleteById;
-using Ecommerce.Core.Features.Users.Reviews.GetList;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

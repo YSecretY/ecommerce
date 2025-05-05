@@ -19,22 +19,29 @@ public abstract class KafkaConsumerBase<TMessage>(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        await Task.Yield();
+
+        _consumer.Subscribe(Topic);
+
         _consumer.Subscribe(Topic);
 
         while (!stoppingToken.IsCancellationRequested)
         {
             try
             {
-                ConsumeResult<string, string>? result = _consumer.Consume(stoppingToken);
-
-                TMessage message = KafkaSerializer.Deserialize<TMessage>(result.Message.Value);
+                var result = _consumer.Consume(stoppingToken);
+                var message = KafkaSerializer.Deserialize<TMessage>(result.Message.Value);
 
                 if (!await IsMessageAlreadyHandledAsync(message, stoppingToken))
                     await HandleAsync(message, stoppingToken);
             }
-            catch (Exception exception)
+            catch (OperationCanceledException)
             {
-                await HandleExceptionAsync(exception, stoppingToken);
+                // Graceful shutdown
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(ex, stoppingToken);
             }
         }
 
