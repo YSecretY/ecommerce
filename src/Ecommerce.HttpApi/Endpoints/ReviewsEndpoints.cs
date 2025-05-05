@@ -5,9 +5,9 @@ using Ecommerce.Core.Features.Reviews.GetList;
 using Ecommerce.Extensions.Requests;
 using Ecommerce.Extensions.Types;
 using Ecommerce.HttpApi.Contracts;
-using Ecommerce.HttpApi.Contracts.Users.Reviews;
-using Ecommerce.HttpApi.Contracts.Users.Reviews.Create;
-using Ecommerce.HttpApi.Contracts.Users.Reviews.GetList;
+using Ecommerce.HttpApi.Contracts.Reviews;
+using Ecommerce.HttpApi.Contracts.Reviews.Create;
+using Ecommerce.HttpApi.Contracts.Reviews.GetList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.HttpApi.Endpoints;

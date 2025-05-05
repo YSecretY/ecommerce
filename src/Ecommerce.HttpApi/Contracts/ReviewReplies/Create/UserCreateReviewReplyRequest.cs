@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Ecommerce.Core.Features.Replies.Create;
 
-namespace Ecommerce.HttpApi.Contracts.Users.Reviews.ReviewReplies.Create;
+namespace Ecommerce.HttpApi.Contracts.ReviewReplies.Create;
 
 public class UserCreateReviewReplyRequest
 {

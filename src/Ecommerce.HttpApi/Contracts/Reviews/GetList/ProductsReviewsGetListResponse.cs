@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Ecommerce.Extensions.Types;
 
-namespace Ecommerce.HttpApi.Contracts.Users.Reviews.GetList;
+namespace Ecommerce.HttpApi.Contracts.Reviews.GetList;
 
 public class ProductsReviewsGetListResponse(PaginatedResult<ProductReviewResponse> reviews)
 {

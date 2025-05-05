@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Ecommerce.Core.Features.Reviews.Create;
 
-namespace Ecommerce.HttpApi.Contracts.Users.Reviews.Create;
+namespace Ecommerce.HttpApi.Contracts.Reviews.Create;
 
 public class UserCreateReviewRequest
 {
