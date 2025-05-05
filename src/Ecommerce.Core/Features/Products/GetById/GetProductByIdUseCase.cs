@@ -1,6 +1,7 @@
 using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Core.Abstractions.Events;
 using Ecommerce.Core.Abstractions.Events.Products;
+using Ecommerce.Core.Abstractions.Models.Products;
 using Ecommerce.Core.Exceptions.Products;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;

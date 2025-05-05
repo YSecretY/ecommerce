@@ -1,3 +1,4 @@
+using Ecommerce.Core.Abstractions.Models.Products;
 using Ecommerce.Core.Features.Products;
 using Ecommerce.Core.Features.Products.GetById;
 using Ecommerce.Core.Features.Products.GetList;

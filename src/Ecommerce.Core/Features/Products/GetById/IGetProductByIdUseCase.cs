@@ -1,3 +1,5 @@
+using Ecommerce.Core.Abstractions.Models.Products;
+
 namespace Ecommerce.Core.Features.Products.GetById;
 
 public interface IGetProductByIdUseCase

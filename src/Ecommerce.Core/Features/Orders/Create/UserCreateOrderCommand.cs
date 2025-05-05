@@ -1,3 +1,5 @@
+using Ecommerce.Core.Abstractions.Models.Orders;
+
 namespace Ecommerce.Core.Features.Orders.Create;
 
 public record UserCreateOrderCommand(

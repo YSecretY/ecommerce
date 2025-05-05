@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Ecommerce.Infrastructure.Events.Internal.Consumers;
 
-public class ProductViewedEventConsumer(
+internal class ProductViewedEventConsumer(
     KafkaSettings settings,
     ILogger<KafkaConsumerBase<ProductViewedEvent>> logger,
     IEventHandler<ProductViewedEvent> handler

@@ -1,4 +1,7 @@
 using Ecommerce.Core.Abstractions.Auth;
+using Ecommerce.Core.Abstractions.Events;
+using Ecommerce.Core.Abstractions.Events.Orders;
+using Ecommerce.Core.Abstractions.Models.Orders;
 using Ecommerce.Core.Exceptions.Products;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;
@@ -12,7 +15,8 @@ namespace Ecommerce.Core.Features.Orders.Create;
 public class UserCreateOrderUseCase(
     ApplicationDbContext dbContext,
     IIdentityUserAccessor identityUserAccessor,
-    IDateTimeProvider dateTimeProvider
+    IDateTimeProvider dateTimeProvider,
+    IEventPublisher eventPublisher
 ) : IUserCreateOrderUseCase
 {
     public async Task<Guid> HandleAsync(UserCreateOrderCommand command, CancellationToken cancellationToken = default)
@@ -73,6 +77,8 @@ public class UserCreateOrderUseCase(
 
         await dbContext.Orders.AddAsync(order, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
+
+        await eventPublisher.PublishAsync(new OrderCreatedEvent(new OrderDto(order), utcNow), cancellationToken);
 
         return order.Id;
     }
