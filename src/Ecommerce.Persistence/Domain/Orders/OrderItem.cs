@@ -19,7 +19,7 @@ public class OrderItem(
 
     public Guid ProductId { get; private set; } = productId;
 
-    public Product Product { get; private set; } = null!;
+    public Product? Product { get; private set; }
 
     public Guid OrderId { get; private set; } = orderId;
 
@@ -62,7 +62,7 @@ public class OrderItem(
         orderItem.HasOne(oi => oi.Product)
             .WithMany()
             .HasForeignKey(oi => oi.ProductId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .IsRequired(false);
 
         orderItem.HasOne(oi => oi.Order)
             .WithMany(o => o.OrderItems)

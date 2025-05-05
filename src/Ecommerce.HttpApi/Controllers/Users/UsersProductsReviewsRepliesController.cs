@@ -1,4 +1,4 @@
-using Ecommerce.Core.Features.Users.Replies.Create;
+using Ecommerce.Core.Features.Replies.Create;
 using Ecommerce.Extensions.Requests;
 using Ecommerce.HttpApi.Contracts.Users.Reviews.ReviewReplies.Create;
 using Microsoft.AspNetCore.Mvc;

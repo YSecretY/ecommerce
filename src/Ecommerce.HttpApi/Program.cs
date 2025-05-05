@@ -3,6 +3,7 @@ using Ecommerce.Core;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
 using Ecommerce.Extensions;
+using Ecommerce.HttpApi.Extensions;
 using Ecommerce.Infrastructure;
 using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Persistence;
@@ -69,12 +70,17 @@ builder.Services
                 Array.Empty<string>()
             }
         });
-    })
-    .AddControllers();
+    });
 
 # endregion
 
 WebApplication app = builder.Build();
+
+app.MapAuthEndpoints();
+app.MapProductsEndpoints();
+app.MapReviewsEndpoints();
+app.MapRepliesEndpoints();
+app.MapAdminEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
@@ -87,7 +93,5 @@ app.UseExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

@@ -19,7 +19,7 @@ public class ProductReviewReplyValidator
         ResponseValidationException.ThrowIf(errors.Any, errors);
     }
 
-    public static ProductReviewReply CreateValid(
+    public static ProductReviewReply CreateOrThrow(
         Guid userId,
         Guid reviewId,
         string text,

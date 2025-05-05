@@ -99,6 +99,7 @@ public class Product(
         string name,
         string description,
         string sku,
+        ProductCategory category,
         string brand,
         decimal price,
         decimal? salePrice,
@@ -117,6 +118,7 @@ public class Product(
         Name = name;
         Description = description;
         Sku = sku;
+        Category = category;
         Brand = brand;
         Price = price;
         SalePrice = salePrice;
