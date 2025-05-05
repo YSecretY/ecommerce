@@ -1,7 +1,8 @@
 using System.Text.Json.Serialization;
+using Ecommerce.Core.Abstractions.Models.Reviews;
 using Ecommerce.Core.Features.Reviews;
 
-namespace Ecommerce.HttpApi.Contracts.Users.Reviews;
+namespace Ecommerce.HttpApi.Contracts.Reviews;
 
 public class ProductReviewResponse(Guid reviewId, Guid userId, string text, DateTime createdAt)
 {

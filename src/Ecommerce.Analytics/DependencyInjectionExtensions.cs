@@ -1,5 +1,6 @@
 using Ecommerce.Analytics.EventHandlers;
 using Ecommerce.Core.Abstractions.Events;
+using Ecommerce.Core.Abstractions.Events.Orders;
 using Ecommerce.Core.Abstractions.Events.Products;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -18,6 +19,7 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddEventHandlers(this IServiceCollection services)
     {
         services.TryAddSingleton<IEventHandler<ProductViewedEvent>, ProductViewedEventHandler>();
+        services.TryAddSingleton<IEventHandler<OrderCreatedEvent>, OrderCreatedEventHandler>();
 
         return services;
     }

@@ -1,6 +1,7 @@
 using System.Text;
 using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Core.Abstractions.Events;
+using Ecommerce.Core.Abstractions.Events.Orders;
 using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Infrastructure.Auth.Internal;
@@ -78,9 +79,11 @@ public static class DependencyInjectionExtensions
         await services.AddKafka(kafkaSettings);
 
         services.TryAddSingleton<IKafkaEventProducer<ProductViewedEvent>, ProductViewedEventProducer>();
+        services.TryAddSingleton<IKafkaEventProducer<OrderCreatedEvent>, OrderCreatedEventProducer>();
 
         services.TryAddSingleton<IEventPublisher, KafkaEventPublisher>();
 
         services.AddHostedService<ProductViewedEventConsumer>();
+        services.AddHostedService<OrderCreatedEventConsumer>();
     }
 }

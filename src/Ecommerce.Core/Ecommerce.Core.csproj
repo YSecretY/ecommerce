@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Exceptions\Orders\" />
       <Folder Include="Features\Replies\" />
     </ItemGroup>
 

@@ -1,3 +1,4 @@
+using Ecommerce.Core.Abstractions.Models.Products;
 using Ecommerce.Core.Features.Products;
 using Ecommerce.Core.Features.Products.GetById;
 using Ecommerce.Core.Features.Products.GetList;
@@ -6,7 +7,6 @@ using Ecommerce.Extensions.Types;
 using Ecommerce.HttpApi.Contracts;
 using Ecommerce.HttpApi.Contracts.Products;
 using Ecommerce.HttpApi.Contracts.Products.GetList;
-using Ecommerce.Persistence.Domain.Reviews;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.HttpApi.Endpoints;

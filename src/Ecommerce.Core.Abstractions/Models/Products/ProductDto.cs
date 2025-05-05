@@ -1,6 +1,6 @@
 using Ecommerce.Persistence.Domain.Products;
 
-namespace Ecommerce.Core.Features.Products;
+namespace Ecommerce.Core.Abstractions.Models.Products;
 
 public class ProductDto(
     Guid id,

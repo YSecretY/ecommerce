@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Ecommerce.Core.Abstractions.Models.Products;
 using Ecommerce.Core.Features.Products;
 
 namespace Ecommerce.HttpApi.Contracts.Products;

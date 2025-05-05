@@ -1,3 +1,4 @@
+using Ecommerce.Core.Abstractions.Models.Products;
 using Ecommerce.Extensions.Types;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;

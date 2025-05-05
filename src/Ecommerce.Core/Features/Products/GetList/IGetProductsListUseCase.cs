@@ -1,3 +1,4 @@
+using Ecommerce.Core.Abstractions.Models.Products;
 using Ecommerce.Extensions.Types;
 
 namespace Ecommerce.Core.Features.Products.GetList;

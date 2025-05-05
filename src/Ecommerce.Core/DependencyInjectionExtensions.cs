@@ -1,3 +1,4 @@
+using Ecommerce.Core.Features.Orders.Create;
 using Ecommerce.Core.Features.Products.Create;
 using Ecommerce.Core.Features.Products.DeleteById;
 using Ecommerce.Core.Features.Products.DeleteList;
@@ -23,7 +24,10 @@ public static class DependencyInjectionExtensions
             .AddShared()
             .AddAdmin()
             .AddProducts()
-            .AddUsers();
+            .AddUsers()
+            .AddReviews()
+            .AddReplies()
+            .AddOrders();
 
         return services;
     }
@@ -51,11 +55,28 @@ public static class DependencyInjectionExtensions
         services.TryAddScoped<IUserRegisterUseCase, UserRegisterUseCase>();
         services.TryAddScoped<IUserLoginCommandUseCase, UserLoginCommandUseCase>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddReviews(this IServiceCollection services)
+    {
         services.TryAddScoped<IUserCreateReviewUseCase, UserCreateReviewUseCase>();
         services.TryAddScoped<IUserDeleteReviewByIdUseCase, UserDeleteReviewByIdUseCase>();
         services.TryAddScoped<IUserGetReviewsListUseCase, UserGetReviewsListUseCase>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddReplies(this IServiceCollection services)
+    {
         services.TryAddScoped<IUserCreateReviewReplyUseCase, UserCreateReviewReplyUseCase>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddOrders(this IServiceCollection services)
+    {
+        services.TryAddScoped<IUserCreateOrderUseCase, UserCreateOrderUseCase>();
 
         return services;
     }

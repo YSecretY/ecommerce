@@ -1,3 +1,4 @@
+using Ecommerce.Core.Abstractions.Models.Reviews;
 using Ecommerce.Extensions.Types;
 
 namespace Ecommerce.Core.Features.Reviews.GetList;

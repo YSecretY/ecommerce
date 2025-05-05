@@ -23,8 +23,6 @@ public abstract class KafkaConsumerBase<TMessage>(
 
         _consumer.Subscribe(Topic);
 
-        _consumer.Subscribe(Topic);
-
         while (!stoppingToken.IsCancellationRequested)
         {
             try

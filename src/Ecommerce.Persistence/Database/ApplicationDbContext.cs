@@ -1,3 +1,4 @@
+using Ecommerce.Persistence.Domain.Orders;
 using Ecommerce.Persistence.Domain.Products;
 using Ecommerce.Persistence.Domain.Reviews;
 using Ecommerce.Persistence.Domain.Users;
@@ -21,4 +22,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<ProductReview> ProductsReviews { get; set; } = null!;
 
     public DbSet<ProductReviewReply> ProductReviewReplies { get; set; } = null!;
+
+    public DbSet<Order> Orders { get; set; } = null!;
 }

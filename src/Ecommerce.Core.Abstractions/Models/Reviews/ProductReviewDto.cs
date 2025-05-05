@@ -1,6 +1,6 @@
 using Ecommerce.Persistence.Domain.Reviews;
 
-namespace Ecommerce.Core.Features.Reviews;
+namespace Ecommerce.Core.Abstractions.Models.Reviews;
 
 public class ProductReviewDto(Guid reviewId, Guid userId, string text, DateTime createdAt)
 {
