@@ -10,15 +10,15 @@ internal class ProductDailyStatistics
 
     [BsonId]
     [BsonRepresentation(BsonType.String)]
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     [BsonRepresentation(BsonType.String)]
-    public Guid ProductId { get; private set; }
+    public Guid ProductId { get; set; }
 
     [BsonRepresentation(BsonType.String)]
-    public DateOnly Date { get; private set; }
+    public DateOnly Date { get; set; }
 
-    public int SoldCount { get; private set; }
+    public int SoldCount { get; set; }
 
-    public int ViewsCount { get; private set; }
+    public int ViewsCount { get; set; }
 }

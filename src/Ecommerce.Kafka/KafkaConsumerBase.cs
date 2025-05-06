@@ -27,11 +27,14 @@ public abstract class KafkaConsumerBase<TMessage>(
         {
             try
             {
-                var result = _consumer.Consume(stoppingToken);
-                var message = KafkaSerializer.Deserialize<TMessage>(result.Message.Value);
+                ConsumeResult<string, string>? result = _consumer.Consume(stoppingToken);
+                TMessage message = KafkaSerializer.Deserialize<TMessage>(result.Message.Value);
 
                 if (!await IsMessageAlreadyHandledAsync(message, stoppingToken))
+                {
                     await HandleAsync(message, stoppingToken);
+                    await MarkMessageHandledAsync(message, stoppingToken);
+                }
             }
             catch (OperationCanceledException)
             {
@@ -50,7 +53,9 @@ public abstract class KafkaConsumerBase<TMessage>(
 
     protected abstract Task<bool> IsMessageAlreadyHandledAsync(TMessage message, CancellationToken cancellationToken);
 
-    protected abstract Task HandleAsync(TMessage @event, CancellationToken cancellationToken = default);
+    protected abstract Task HandleAsync(TMessage message, CancellationToken cancellationToken = default);
+
+    protected abstract Task MarkMessageHandledAsync(TMessage message, CancellationToken cancellationToken = default);
 
     protected virtual Task HandleExceptionAsync(Exception exception, CancellationToken cancellationToken = default)
     {

@@ -1,4 +1,5 @@
 using Ecommerce.Infrastructure.Analytics.Models;
+using Ecommerce.Infrastructure.Mongo.Internal.Models;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
@@ -9,7 +10,8 @@ internal class MongoDbMigrationService(
     ILogger<MongoDbMigrationService> logger
 )
 {
-    private static readonly List<string> EssentialCollections = [ProductDailyStatistics.CollectionName];
+    private static readonly List<string> EssentialCollections =
+        [ProductDailyStatistics.CollectionName, ProcessedEvent.CollectionName];
 
     public async Task RunMigrationsAsync(CancellationToken cancellationToken = default)
     {

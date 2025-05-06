@@ -117,6 +117,7 @@ public static class DependencyInjectionExtensions
 
         await migrationService.RunMigrationsAsync();
 
+        services.TryAddSingleton<IEventsInfoService, EventsInfoService>();
         services.TryAddSingleton<IProductStatisticsWriter, ProductStatisticsWriter>();
     }
 }

@@ -7,11 +7,10 @@ public abstract class KafkaProducerBase(KafkaSettings settings)
     private readonly IProducer<string?, string> _producer = new ProducerBuilder<string?, string>(new ProducerConfig
     {
         BootstrapServers = settings.BootstrapServers,
-        LingerMs = 0,
-        BatchSize = 16_384,
-        Acks = Acks.All,
-        EnableIdempotence = true,
-        CompressionType = CompressionType.None
+        LingerMs = 10,
+        BatchSize = 100000,
+        Acks = Acks.Leader,
+        CompressionType = CompressionType.Lz4
     }).Build();
 
     public abstract string Topic { get; }

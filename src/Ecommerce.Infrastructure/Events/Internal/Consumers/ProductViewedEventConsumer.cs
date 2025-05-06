@@ -18,9 +18,15 @@ internal class ProductViewedEventConsumer(
         throw new NotImplementedException();
     }
 
-    protected override async Task HandleAsync(ProductViewedEvent @event, CancellationToken cancellationToken = default)
+    protected override async Task HandleAsync(ProductViewedEvent message, CancellationToken cancellationToken = default)
     {
         // await handler.HandleAsync(@event, cancellationToken);
+    }
+
+    protected override Task MarkMessageHandledAsync(ProductViewedEvent message,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 
     public static string GroupId => $"analytics.{ProductViewedEvent.QueueName}";
