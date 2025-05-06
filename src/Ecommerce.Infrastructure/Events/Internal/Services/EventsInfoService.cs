@@ -1,8 +1,9 @@
 using Ecommerce.Core.Abstractions.Time;
-using Ecommerce.Infrastructure.Mongo.Internal.Models;
+using Ecommerce.Infrastructure.Analytics.Internal.Mongo.Models;
+using Ecommerce.Infrastructure.Mongo.Internal;
 using MongoDB.Driver;
 
-namespace Ecommerce.Infrastructure.Mongo.Internal.Services;
+namespace Ecommerce.Infrastructure.Events.Internal.Services;
 
 internal class EventsInfoService(
     MongoDbContext dbContext,

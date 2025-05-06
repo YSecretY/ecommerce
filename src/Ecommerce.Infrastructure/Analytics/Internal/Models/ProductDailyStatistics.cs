@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Ecommerce.Infrastructure.Analytics.Models;
+namespace Ecommerce.Infrastructure.Analytics.Internal.Models;
 
 internal class ProductDailyStatistics
 {

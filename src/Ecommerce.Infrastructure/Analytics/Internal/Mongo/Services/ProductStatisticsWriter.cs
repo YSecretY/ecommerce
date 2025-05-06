@@ -3,10 +3,11 @@ using Ecommerce.Core.Abstractions.Events.Orders;
 using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Core.Abstractions.Models.Orders;
 using Ecommerce.Core.Abstractions.Time;
-using Ecommerce.Infrastructure.Analytics.Models;
+using Ecommerce.Infrastructure.Analytics.Internal.Models;
+using Ecommerce.Infrastructure.Mongo.Internal;
 using MongoDB.Driver;
 
-namespace Ecommerce.Infrastructure.Mongo.Internal.Services;
+namespace Ecommerce.Infrastructure.Analytics.Internal.Mongo.Services;
 
 internal class ProductStatisticsWriter(
     MongoDbContext dbContext,

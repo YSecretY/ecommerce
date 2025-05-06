@@ -1,5 +1,5 @@
-using Ecommerce.Infrastructure.Analytics.Models;
-using Ecommerce.Infrastructure.Mongo.Internal.Models;
+using Ecommerce.Infrastructure.Analytics.Internal.Models;
+using Ecommerce.Infrastructure.Analytics.Internal.Mongo.Models;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 

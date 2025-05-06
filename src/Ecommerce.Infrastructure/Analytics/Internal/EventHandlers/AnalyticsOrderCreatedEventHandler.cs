@@ -1,7 +1,7 @@
 using Ecommerce.Core.Abstractions.Analytics;
 using Ecommerce.Core.Abstractions.Events.Orders;
 
-namespace Ecommerce.Infrastructure.Events.Internal.Handlers.Analytics;
+namespace Ecommerce.Infrastructure.Analytics.Internal.EventHandlers;
 
 internal class AnalyticsOrderCreatedEventHandler(
     IProductStatisticsWriter productStatisticsWriter

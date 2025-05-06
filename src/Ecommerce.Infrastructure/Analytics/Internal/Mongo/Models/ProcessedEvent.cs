@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Ecommerce.Infrastructure.Mongo.Internal.Models;
+namespace Ecommerce.Infrastructure.Analytics.Internal.Mongo.Models;
 
 public class ProcessedEvent
 {

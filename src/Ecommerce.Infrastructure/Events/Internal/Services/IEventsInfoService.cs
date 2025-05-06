@@ -1,4 +1,4 @@
-namespace Ecommerce.Infrastructure.Mongo.Internal.Services;
+namespace Ecommerce.Infrastructure.Events.Internal.Services;
 
 internal interface IEventsInfoService
 {

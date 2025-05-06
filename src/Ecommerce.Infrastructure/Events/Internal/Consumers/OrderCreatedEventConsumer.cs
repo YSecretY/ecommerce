@@ -1,6 +1,6 @@
 using Ecommerce.Core.Abstractions.Analytics;
 using Ecommerce.Core.Abstractions.Events.Orders;
-using Ecommerce.Infrastructure.Mongo.Internal.Services;
+using Ecommerce.Infrastructure.Events.Internal.Services;
 using Ecommerce.Kafka;
 using Microsoft.Extensions.Logging;
 
