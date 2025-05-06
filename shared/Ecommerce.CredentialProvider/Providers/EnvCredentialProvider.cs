@@ -46,4 +46,15 @@ internal class EnvCredentialProvider : ICredentialProvider
 
         return new KafkaCredential(bootstrapServers);
     }
+
+    public MongoDbCredential GetMongoDbCredential()
+    {
+        string connectionString = Environment.GetEnvironmentVariable(CredentialsNames.MongoDbConnectionString)
+                                  ?? throw new KeyNotFoundException(nameof(CredentialsNames.MongoDbConnectionString));
+
+        string databaseName = Environment.GetEnvironmentVariable(CredentialsNames.MongoDbDatabaseName)
+                              ?? throw new KeyNotFoundException(nameof(CredentialsNames.MongoDbDatabaseName));
+
+        return new MongoDbCredential(connectionString, databaseName);
+    }
 }
