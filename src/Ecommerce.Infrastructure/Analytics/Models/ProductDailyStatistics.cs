@@ -9,14 +9,16 @@ internal class ProductDailyStatistics
     public const string CollectionName = "ProductDailyStatistics";
 
     [BsonId]
+    [BsonRepresentation(BsonType.String)]
     public Guid Id { get; private set; } = Guid.NewGuid();
 
+    [BsonRepresentation(BsonType.String)]
     public Guid ProductId { get; private set; }
 
     [BsonRepresentation(BsonType.String)]
     public DateOnly Date { get; private set; }
 
-    public int OrdersCount { get; private set; }
+    public int SoldCount { get; private set; }
 
     public int ViewsCount { get; private set; }
 }

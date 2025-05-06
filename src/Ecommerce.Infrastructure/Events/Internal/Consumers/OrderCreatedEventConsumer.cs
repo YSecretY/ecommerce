@@ -13,10 +13,10 @@ internal class OrderCreatedEventConsumer(
 {
     protected override string Topic => OrderCreatedEvent.QueueName;
 
-    protected override Task<bool> IsMessageAlreadyHandledAsync(OrderCreatedEvent message,
+    protected override async Task<bool> IsMessageAlreadyHandledAsync(OrderCreatedEvent message,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     protected override async Task HandleAsync(OrderCreatedEvent @event, CancellationToken cancellationToken = default)
