@@ -1,4 +1,3 @@
-using Ecommerce.Analytics;
 using Ecommerce.Core;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
@@ -41,7 +40,6 @@ await builder.Services.AddInfrastructure(
 );
 
 builder.Services
-    .AddAnalytics()
     .AddCore()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen(options =>

@@ -1,4 +1,5 @@
 using System.Text;
+using Ecommerce.Core.Abstractions.Analytics;
 using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Core.Abstractions.Events;
 using Ecommerce.Core.Abstractions.Events.Orders;
@@ -8,6 +9,7 @@ using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Infrastructure.Auth.Internal;
 using Ecommerce.Infrastructure.Events.Internal;
 using Ecommerce.Infrastructure.Events.Internal.Consumers;
+using Ecommerce.Infrastructure.Events.Internal.Handlers.Analytics;
 using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Kafka;
@@ -86,5 +88,12 @@ public static class DependencyInjectionExtensions
 
         services.AddHostedService<ProductViewedEventConsumer>();
         services.AddHostedService<OrderCreatedEventConsumer>();
+    }
+
+    private static IServiceCollection AddAnalytics(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IAnalyticsEventHandler<OrderCreatedEvent>, AnalyticsOrderCreatedEventHandler>();
+
+        return services;
     }
 }
