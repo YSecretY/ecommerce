@@ -22,7 +22,7 @@ internal class OrderCreatedEventConsumer(
         await handler.HandleAsync(message, cancellationToken);
 
     protected override Task MarkMessageHandledAsync(OrderCreatedEvent message,
-        CancellationToken cancellationToken = default) => eventsInfoService.MarkHandledAsync(message.EventId);
+        CancellationToken cancellationToken = default) => eventsInfoService.MarkProcessedAsync(message.EventId);
 
     public static string GroupId => $"analytics.{OrderCreatedEvent.QueueName}";
 }

@@ -16,7 +16,7 @@ internal class EventsInfoService(
     public async Task<bool> IsEventAlreadyProcessedAsync(Guid eventId) =>
         await _collection.Find(e => e.EventId == eventId).AnyAsync();
 
-    public async Task MarkHandledAsync(Guid eventId) =>
+    public async Task MarkProcessedAsync(Guid eventId) =>
         await _collection.InsertOneAsync(new ProcessedEvent
         {
             EventId = eventId,

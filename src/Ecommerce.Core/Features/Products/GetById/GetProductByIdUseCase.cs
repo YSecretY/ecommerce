@@ -31,9 +31,9 @@ public class GetProductByIdUseCase(
 
             await eventPublisher.PublishAsync(
                 new ProductViewedEvent(
-                    userId,
-                    product.Id,
-                    dateTimeProvider.UtcNow
+                    productId: product.Id,
+                    userId: userId,
+                    occuredAtUtc: dateTimeProvider.UtcNow
                 ),
                 cancellationToken
             );

@@ -93,6 +93,7 @@ public static class DependencyInjectionExtensions
         services.TryAddSingleton<IKafkaEventProducer<OrderCreatedEvent>, OrderCreatedEventProducer>();
 
         services.TryAddSingleton<IEventPublisher, KafkaEventPublisher>();
+        services.TryAddSingleton<IEventsInfoService, EventsInfoService>();
 
         services.AddHostedService<ProductViewedEventConsumer>();
         services.AddHostedService<OrderCreatedEventConsumer>();
@@ -101,6 +102,9 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddAnalytics(this IServiceCollection services)
     {
         services.TryAddSingleton<IAnalyticsEventHandler<OrderCreatedEvent>, AnalyticsOrderCreatedEventHandler>();
+        services.TryAddSingleton<IAnalyticsEventHandler<ProductViewedEvent>, AnalyticsProductViewedEventHandler>();
+
+        services.TryAddSingleton<IProductStatisticsWriter, ProductStatisticsWriter>();
 
         return services;
     }
@@ -117,8 +121,5 @@ public static class DependencyInjectionExtensions
             services.BuildServiceProvider().GetRequiredService<MongoDbMigrationService>();
 
         await migrationService.RunMigrationsAsync();
-
-        services.TryAddSingleton<IEventsInfoService, EventsInfoService>();
-        services.TryAddSingleton<IProductStatisticsWriter, ProductStatisticsWriter>();
     }
 }

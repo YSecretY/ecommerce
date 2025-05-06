@@ -43,7 +43,8 @@ internal class ProductStatisticsWriter(
 
         UpdateDefinition<ProductDailyStatistics> update = Builders<ProductDailyStatistics>.Update
             .SetOnInsert(s => s.ProductId, @event.ProductId)
-            .SetOnInsert(s => s.ViewsCount, 1)
+            .SetOnInsert(s => s.Date, dateTimeProvider.UtcToday)
+            .SetOnInsert(s => s.SoldCount, 0)
             .Inc(s => s.ViewsCount, 1);
 
         await _collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true }, cancellationToken);
