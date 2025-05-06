@@ -1,5 +1,4 @@
 using Ecommerce.Core.Abstractions.Models.Reviews;
-using Ecommerce.Core.Features.Reviews;
 using Ecommerce.Core.Features.Reviews.Create;
 using Ecommerce.Core.Features.Reviews.DeleteById;
 using Ecommerce.Core.Features.Reviews.GetList;

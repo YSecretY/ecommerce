@@ -1,3 +1,5 @@
+using Ecommerce.Core.Abstractions.Time;
+
 namespace Ecommerce.Infrastructure.Time;
 
 internal class DateTimeProvider : IDateTimeProvider

@@ -1,4 +1,4 @@
-namespace Ecommerce.Infrastructure.Time;
+namespace Ecommerce.Core.Abstractions.Time;
 
 public interface IDateTimeProvider
 {
