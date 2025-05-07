@@ -1,4 +1,3 @@
-using Ecommerce.Analytics;
 using Ecommerce.Core;
 using Ecommerce.CredentialProvider;
 using Ecommerce.CredentialProvider.Credentials;
@@ -6,6 +5,7 @@ using Ecommerce.Extensions;
 using Ecommerce.HttpApi.Extensions;
 using Ecommerce.Infrastructure;
 using Ecommerce.Infrastructure.Auth;
+using Ecommerce.Infrastructure.Mongo;
 using Ecommerce.Persistence;
 using Microsoft.OpenApi.Models;
 
@@ -19,6 +19,7 @@ ICredentialProvider credentialProvider =
 string appDbConnection = credentialProvider.GetAppDbConnection();
 JwtCredential jwtCredential = credentialProvider.GetJwtCredential();
 KafkaCredential kafkaCredential = credentialProvider.GetKafkaCredential();
+MongoDbCredential mongoDbCredential = credentialProvider.GetMongoDbCredential();
 
 # endregion
 
@@ -37,11 +38,14 @@ await builder.Services.AddInfrastructure(
         refreshTokenExpirationDays: jwtCredential.RefreshTokenExpirationDays,
         refreshTokenCookieName: jwtCredential.RefreshTokenCookieName
     ),
-    kafkaCredential.BootstrapServers
+    kafkaCredential.BootstrapServers,
+    new MongoDbSettings(
+        connectionString: mongoDbCredential.ConnectionString,
+        databaseName: mongoDbCredential.DatabaseName
+    )
 );
 
 builder.Services
-    .AddAnalytics()
     .AddCore()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen(options =>
@@ -80,8 +84,10 @@ app.MapAuthEndpoints();
 app.MapProductsEndpoints();
 app.MapReviewsEndpoints();
 app.MapRepliesEndpoints();
-app.MapAdminEndpoints();
+app.MapAdminProductsEndpoints();
+app.MapAdminOrdersEndpoints();
 app.MapOrdersEndpoints();
+app.MapUsersEndpoints();
 
 if (app.Environment.IsDevelopment())
 {

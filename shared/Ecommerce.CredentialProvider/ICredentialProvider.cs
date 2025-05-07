@@ -9,4 +9,6 @@ public interface ICredentialProvider
     public JwtCredential GetJwtCredential();
 
     public KafkaCredential GetKafkaCredential();
+    
+    public MongoDbCredential GetMongoDbCredential();
 }

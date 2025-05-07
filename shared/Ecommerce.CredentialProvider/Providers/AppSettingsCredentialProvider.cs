@@ -18,4 +18,8 @@ internal class AppSettingsCredentialProvider(
     public KafkaCredential GetKafkaCredential() =>
         configuration.GetSection(nameof(KafkaCredential)).Get<KafkaCredential>()
         ?? throw new KeyNotFoundException(nameof(KafkaCredential));
+
+    public MongoDbCredential GetMongoDbCredential() =>
+        configuration.GetSection(nameof(MongoDbCredential)).Get<MongoDbCredential>()
+        ?? throw new KeyNotFoundException(nameof(MongoDbCredential));
 }

@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Ecommerce.Core.Abstractions.Time;
 using Ecommerce.Extensions.Exceptions;
-using Ecommerce.Infrastructure.Time;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Ecommerce.Infrastructure.Auth.Internal;

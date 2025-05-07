@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Ecommerce.Core.Abstractions.Models.Orders;
-using Ecommerce.Core.Features.Orders;
 
 namespace Ecommerce.HttpApi.Contracts.Orders.Create;
 

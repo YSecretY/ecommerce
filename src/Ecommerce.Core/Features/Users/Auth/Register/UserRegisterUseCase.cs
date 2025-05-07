@@ -1,7 +1,7 @@
 using Ecommerce.Core.Abstractions.Auth;
+using Ecommerce.Core.Abstractions.Time;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Users;
-using Ecommerce.Infrastructure.Time;
 
 namespace Ecommerce.Core.Features.Users.Auth.Register;
 
@@ -22,7 +22,8 @@ public class UserRegisterUseCase(
             passwordHash: passwordHasher.Hash(command.Password),
             firstName: command.FirstName,
             lastName: command.LastName,
-            isEmailConfirmed: false,
+            // TODO: email confirmation 
+            isEmailConfirmed: true,
             role: UserRole.User,
             createdAtUtc: utcNow
         );

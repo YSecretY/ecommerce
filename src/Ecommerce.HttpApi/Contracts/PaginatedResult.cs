@@ -8,7 +8,7 @@ public class PaginatedResult<T>
         IEnumerable<T> data,
         int pageSize,
         int pageNumber,
-        int totalCount
+        long totalCount
     )
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pageSize, nameof(pageSize));
@@ -34,5 +34,5 @@ public class PaginatedResult<T>
 
     public int PageNumber { get; private set; }
 
-    public int TotalCount { get; private set; }
+    public long TotalCount { get; private set; }
 }

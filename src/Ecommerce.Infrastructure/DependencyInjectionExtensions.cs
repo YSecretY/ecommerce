@@ -1,13 +1,22 @@
 using System.Text;
+using Ecommerce.Core.Abstractions.Analytics;
+using Ecommerce.Core.Abstractions.Analytics.Services;
 using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Core.Abstractions.Events;
 using Ecommerce.Core.Abstractions.Events.Orders;
 using Ecommerce.Core.Abstractions.Events.Products;
+using Ecommerce.Core.Abstractions.Time;
+using Ecommerce.Infrastructure.Analytics.Internal.EventHandlers;
+using Ecommerce.Infrastructure.Analytics.Internal.Mongo.Services;
+using Ecommerce.Infrastructure.Analytics.Internal.Mongo.Services.Writers;
 using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Infrastructure.Auth.Internal;
 using Ecommerce.Infrastructure.Events.Internal;
 using Ecommerce.Infrastructure.Events.Internal.Consumers;
 using Ecommerce.Infrastructure.Events.Internal.KafkaProducers;
+using Ecommerce.Infrastructure.Events.Internal.Services;
+using Ecommerce.Infrastructure.Mongo;
+using Ecommerce.Infrastructure.Mongo.Internal;
 using Ecommerce.Infrastructure.Time;
 using Ecommerce.Kafka;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,16 +31,20 @@ public static class DependencyInjectionExtensions
     public static async Task AddInfrastructure(
         this IServiceCollection services,
         JwtSettings jwtSettings,
-        string kafkaBootstrapServers
+        string kafkaBootstrapServers,
+        MongoDbSettings mongoDbSettings
     )
     {
         services
             .AddTime()
-            .AddAuth(jwtSettings);
+            .AddAuth(jwtSettings)
+            .AddAnalytics();
 
         await services.AddEvents(new KafkaSettings([
             new TopicSettings(ProductViewedEvent.QueueName, 3, 1)
         ], kafkaBootstrapServers));
+
+        await services.AddMongoDb(mongoDbSettings);
     }
 
     private static IServiceCollection AddTime(this IServiceCollection services)
@@ -82,8 +95,38 @@ public static class DependencyInjectionExtensions
         services.TryAddSingleton<IKafkaEventProducer<OrderCreatedEvent>, OrderCreatedEventProducer>();
 
         services.TryAddSingleton<IEventPublisher, KafkaEventPublisher>();
+        services.TryAddSingleton<IEventsInfoService, EventsInfoService>();
 
         services.AddHostedService<ProductViewedEventConsumer>();
         services.AddHostedService<OrderCreatedEventConsumer>();
+    }
+
+    private static IServiceCollection AddAnalytics(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IAnalyticsEventHandler<OrderCreatedEvent>, AnalyticsOrderCreatedEventHandler>();
+        services.TryAddSingleton<IAnalyticsEventHandler<ProductViewedEvent>, AnalyticsProductViewedEventHandler>();
+
+        services.TryAddSingleton<IAnalyticsProductsService, AnalyticsProductsService>();
+        services.TryAddSingleton<IAnalyticsUserService, AnalyticsUserService>();
+
+        services.TryAddSingleton<IProductStatisticsWriter, ProductStatisticsWriter>();
+        services.TryAddSingleton<IUserProductViewsStatisticsWriter, UserProductViewsStatisticsWriter>();
+        services.TryAddSingleton<IOrderStatisticsWriter, OrderStatisticsWriter>();
+
+        return services;
+    }
+
+    private static async Task AddMongoDb(this IServiceCollection services, MongoDbSettings settings)
+    {
+        services.TryAddSingleton(settings);
+
+        services.TryAddSingleton<MongoDbContext>();
+
+        services.TryAddSingleton<MongoDbMigrationService>();
+
+        MongoDbMigrationService migrationService =
+            services.BuildServiceProvider().GetRequiredService<MongoDbMigrationService>();
+
+        await migrationService.RunMigrationsAsync();
     }
 }

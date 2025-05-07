@@ -6,7 +6,7 @@ public class PaginatedEnumerable<T>
         IEnumerable<T> data,
         int pageSize,
         int pageNumber,
-        int totalCount
+        long totalCount
     )
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pageSize, nameof(pageSize));
@@ -27,7 +27,7 @@ public class PaginatedEnumerable<T>
 
     public int PageNumber { get; private set; }
 
-    public int TotalCount { get; private set; }
+    public long TotalCount { get; private set; }
 
     public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
 }

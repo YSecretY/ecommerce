@@ -7,13 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Ecommerce.Core.Abstractions\Ecommerce.Core.Abstractions.csproj" />
+      <ProjectReference Include="..\Ecommerce.Core\Ecommerce.Core.csproj" />
       <ProjectReference Include="..\Ecommerce.Kafka\Ecommerce.Kafka.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.15" />
+        <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,11 @@
 using Ecommerce.Core.Features.Orders.Create;
+using Ecommerce.Core.Features.Orders.GetList;
+using Ecommerce.Core.Features.Products.Analytics.GetMostSoldProducts;
+using Ecommerce.Core.Features.Products.Analytics.GetMostViewedProducts;
+using Ecommerce.Core.Features.Products.Analytics.GetProductDailySales;
+using Ecommerce.Core.Features.Products.Analytics.GetProductSales;
+using Ecommerce.Core.Features.Products.Analytics.GetProductTotalStatistics;
+using Ecommerce.Core.Features.Products.Analytics.GetTotalSold;
 using Ecommerce.Core.Features.Products.Create;
 using Ecommerce.Core.Features.Products.DeleteById;
 using Ecommerce.Core.Features.Products.DeleteList;
@@ -9,6 +16,7 @@ using Ecommerce.Core.Features.Replies.Create;
 using Ecommerce.Core.Features.Reviews.Create;
 using Ecommerce.Core.Features.Reviews.DeleteById;
 using Ecommerce.Core.Features.Reviews.GetList;
+using Ecommerce.Core.Features.Users.Analytics.GetMostViewedProducts;
 using Ecommerce.Core.Features.Users.Auth.Login;
 using Ecommerce.Core.Features.Users.Auth.Register;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,6 +55,15 @@ public static class DependencyInjectionExtensions
         services.TryAddScoped<IGetProductByIdUseCase, GetProductByIdUseCase>();
         services.TryAddScoped<IGetProductsListUseCase, GetProductsListUseCase>();
 
+        services.TryAddScoped<IAdminGetProductSalesInDateRangeUseCase, AdminGetProductSalesInDateRangeUseCase>();
+        services.TryAddScoped<IAdminGetMostSoldProductsInDateRangeUseCase, AdminGetMostSoldProductsInDateRangeUseCase>();
+        services.TryAddScoped<IAdminGetMostViewedProductsInDateRangeUseCase, AdminGetMostViewedProductsInDateRangeUseCase>();
+        services.TryAddScoped<IAdminGetProductDailySalesUseCase, AdminGetProductDailySalesUseCase>();
+        services.TryAddScoped<IAdminGetProductTotalStatisticsUseCase, AdminGetProductTotalStatisticsUseCase>();
+        services.TryAddScoped<IAdminGetTotalProductsSoldUseCase, AdminGetTotalProductsSoldUseCase>();
+
+        services.TryAddScoped<IAdminGetOrdersUseCase, AdminGetOrdersUseCase>();
+
         return services;
     }
 
@@ -54,6 +71,8 @@ public static class DependencyInjectionExtensions
     {
         services.TryAddScoped<IUserRegisterUseCase, UserRegisterUseCase>();
         services.TryAddScoped<IUserLoginCommandUseCase, UserLoginCommandUseCase>();
+
+        services.TryAddScoped<IUserGetMostViewedProductsUseCase, UserGetMostViewedProductsUseCase>();
 
         return services;
     }

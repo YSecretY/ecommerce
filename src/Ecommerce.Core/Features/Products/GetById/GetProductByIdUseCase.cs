@@ -2,8 +2,8 @@ using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Core.Abstractions.Events;
 using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Core.Abstractions.Models.Products;
+using Ecommerce.Core.Abstractions.Time;
 using Ecommerce.Core.Exceptions.Products;
-using Ecommerce.Infrastructure.Time;
 using Ecommerce.Persistence.Database;
 using Ecommerce.Persistence.Domain.Products;
 using Ecommerce.Persistence.Domain.Users;
@@ -31,9 +31,9 @@ public class GetProductByIdUseCase(
 
             await eventPublisher.PublishAsync(
                 new ProductViewedEvent(
-                    userId,
-                    product.Id,
-                    dateTimeProvider.UtcNow
+                    productId: product.Id,
+                    userId: userId,
+                    occuredAtUtc: dateTimeProvider.UtcNow
                 ),
                 cancellationToken
             );
