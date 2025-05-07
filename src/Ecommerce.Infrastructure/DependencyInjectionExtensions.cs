@@ -106,6 +106,7 @@ public static class DependencyInjectionExtensions
 
         services.TryAddSingleton<IProductStatisticsWriter, ProductStatisticsWriter>();
         services.TryAddSingleton<IUserProductViewsStatisticsWriter, UserProductViewsStatisticsWriter>();
+        services.TryAddSingleton<IOrderStatisticsWriter, OrderStatisticsWriter>();
 
         return services;
     }

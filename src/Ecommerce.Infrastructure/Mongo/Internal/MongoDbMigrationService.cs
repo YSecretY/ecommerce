@@ -28,6 +28,7 @@ internal class MongoDbMigrationService(
 
         await SetupProductDailyStatisticsCollection(cancellationToken);
         await SetupUserViewsStatisticsCollection(cancellationToken);
+        await SetupOrderDailyStatisticsCollection(cancellationToken);
     }
 
     private async Task SetupProductDailyStatisticsCollection(CancellationToken cancellationToken = default)
@@ -71,5 +72,19 @@ internal class MongoDbMigrationService(
         ], cancellationToken: cancellationToken);
 
         logger.LogInformation("Ensured indexes on {CollectionName}", UserProductViewsStatistics.CollectionName);
+    }
+
+    private async Task SetupOrderDailyStatisticsCollection(CancellationToken cancellationToken = default)
+    {
+        IMongoCollection<OrderDailyStatistics>? collection =
+            dbContext.Database.GetCollection<OrderDailyStatistics>(OrderDailyStatistics.CollectionName);
+
+        IndexKeysDefinition<OrderDailyStatistics>? index = Builders<OrderDailyStatistics>.IndexKeys
+            .Ascending(x => x.Date);
+
+        await collection.Indexes.CreateOneAsync(new CreateIndexModel<OrderDailyStatistics>(index),
+            cancellationToken: cancellationToken);
+
+        logger.LogInformation("Ensured index on {CollectionName} (Date)", OrderDailyStatistics.CollectionName);
     }
 }
