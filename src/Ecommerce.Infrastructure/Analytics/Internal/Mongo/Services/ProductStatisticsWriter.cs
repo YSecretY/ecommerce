@@ -19,6 +19,8 @@ internal class ProductStatisticsWriter(
 
     public async Task HandleAsync(OrderCreatedEvent @event, CancellationToken cancellationToken = default)
     {
+        List<WriteModel<ProductDailyStatistics>> bulkOperations = [];
+
         foreach (OrderItemDto item in @event.OrderDto.Items)
         {
             FilterDefinition<ProductDailyStatistics> filter = Builders<ProductDailyStatistics>.Filter.And(
@@ -31,9 +33,18 @@ internal class ProductStatisticsWriter(
                 .SetOnInsert(s => s.ViewsCount, 1)
                 .Inc(s => s.SoldCount, item.Quantity);
 
-            await _collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true }, cancellationToken);
+            UpdateOneModel<ProductDailyStatistics> updateOne = new(filter, update)
+            {
+                IsUpsert = true
+            };
+
+            bulkOperations.Add(updateOne);
         }
+
+        if (bulkOperations.Count > 0)
+            await _collection.BulkWriteAsync(bulkOperations, new BulkWriteOptions { IsOrdered = false }, cancellationToken);
     }
+
 
     public async Task HandleAsync(ProductViewedEvent @event, CancellationToken cancellationToken = default)
     {

@@ -22,7 +22,8 @@ public class UserRegisterUseCase(
             passwordHash: passwordHasher.Hash(command.Password),
             firstName: command.FirstName,
             lastName: command.LastName,
-            isEmailConfirmed: false,
+            // TODO: email confirmation 
+            isEmailConfirmed: true,
             role: UserRole.User,
             createdAtUtc: utcNow
         );

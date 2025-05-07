@@ -11,7 +11,7 @@ internal class MongoDbMigrationService(
 )
 {
     private static readonly List<string> EssentialCollections =
-        [ProductDailyStatistics.CollectionName, ProcessedEvent.CollectionName];
+        [ProductDailyStatistics.CollectionName, ProcessedEvent.CollectionName, UserProductViewsStatistics.CollectionName];
 
     public async Task RunMigrationsAsync(CancellationToken cancellationToken = default)
     {
@@ -27,6 +27,7 @@ internal class MongoDbMigrationService(
         }
 
         await SetupProductDailyStatisticsCollection(cancellationToken);
+        await SetupUserViewsStatisticsCollection(cancellationToken);
     }
 
     private async Task SetupProductDailyStatisticsCollection(CancellationToken cancellationToken = default)
@@ -43,5 +44,32 @@ internal class MongoDbMigrationService(
         await collection.Indexes.CreateOneAsync(indexModel, cancellationToken: cancellationToken);
 
         logger.LogInformation("Ensured index on {CollectionName} (ProductId + Date)", ProductDailyStatistics.CollectionName);
+    }
+
+    private async Task SetupUserViewsStatisticsCollection(CancellationToken cancellationToken = default)
+    {
+        IMongoCollection<UserProductViewsStatistics>? collection =
+            dbContext.Database.GetCollection<UserProductViewsStatistics>(UserProductViewsStatistics.CollectionName);
+
+        IndexKeysDefinition<UserProductViewsStatistics>? index1 = Builders<UserProductViewsStatistics>.IndexKeys
+            .Ascending(x => x.UserId)
+            .Ascending(x => x.ProductId)
+            .Descending(x => x.ViewsCount);
+
+        IndexKeysDefinition<UserProductViewsStatistics>? index2 = Builders<UserProductViewsStatistics>.IndexKeys
+            .Ascending(x => x.ProductId)
+            .Descending(x => x.ViewsCount);
+
+        IndexKeysDefinition<UserProductViewsStatistics>? index3 = Builders<UserProductViewsStatistics>.IndexKeys
+            .Ascending(x => x.Date)
+            .Ascending(x => x.ProductId);
+
+        await collection.Indexes.CreateManyAsync([
+            new CreateIndexModel<UserProductViewsStatistics>(index1),
+            new CreateIndexModel<UserProductViewsStatistics>(index2),
+            new CreateIndexModel<UserProductViewsStatistics>(index3)
+        ], cancellationToken: cancellationToken);
+
+        logger.LogInformation("Ensured indexes on {CollectionName}", UserProductViewsStatistics.CollectionName);
     }
 }

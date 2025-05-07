@@ -105,6 +105,7 @@ public static class DependencyInjectionExtensions
         services.TryAddSingleton<IAnalyticsEventHandler<ProductViewedEvent>, AnalyticsProductViewedEventHandler>();
 
         services.TryAddSingleton<IProductStatisticsWriter, ProductStatisticsWriter>();
+        services.TryAddSingleton<IUserProductViewsStatisticsWriter, UserProductViewsStatisticsWriter>();
 
         return services;
     }
