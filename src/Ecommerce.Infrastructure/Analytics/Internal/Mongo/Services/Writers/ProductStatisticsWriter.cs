@@ -7,7 +7,7 @@ using Ecommerce.Infrastructure.Analytics.Internal.Models;
 using Ecommerce.Infrastructure.Mongo.Internal;
 using MongoDB.Driver;
 
-namespace Ecommerce.Infrastructure.Analytics.Internal.Mongo.Services;
+namespace Ecommerce.Infrastructure.Analytics.Internal.Mongo.Services.Writers;
 
 internal class ProductStatisticsWriter(
     MongoDbContext dbContext,

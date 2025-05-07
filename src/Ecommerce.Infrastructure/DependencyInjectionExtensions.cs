@@ -1,5 +1,6 @@
 using System.Text;
 using Ecommerce.Core.Abstractions.Analytics;
+using Ecommerce.Core.Abstractions.Analytics.Services;
 using Ecommerce.Core.Abstractions.Auth;
 using Ecommerce.Core.Abstractions.Events;
 using Ecommerce.Core.Abstractions.Events.Orders;
@@ -7,6 +8,7 @@ using Ecommerce.Core.Abstractions.Events.Products;
 using Ecommerce.Core.Abstractions.Time;
 using Ecommerce.Infrastructure.Analytics.Internal.EventHandlers;
 using Ecommerce.Infrastructure.Analytics.Internal.Mongo.Services;
+using Ecommerce.Infrastructure.Analytics.Internal.Mongo.Services.Writers;
 using Ecommerce.Infrastructure.Auth;
 using Ecommerce.Infrastructure.Auth.Internal;
 using Ecommerce.Infrastructure.Events.Internal;
@@ -103,6 +105,10 @@ public static class DependencyInjectionExtensions
     {
         services.TryAddSingleton<IAnalyticsEventHandler<OrderCreatedEvent>, AnalyticsOrderCreatedEventHandler>();
         services.TryAddSingleton<IAnalyticsEventHandler<ProductViewedEvent>, AnalyticsProductViewedEventHandler>();
+
+        services.TryAddSingleton<IAnalyticsOrdersService, AnalyticsOrdersService>();
+        services.TryAddSingleton<IAnalyticsProductsService, AnalyticsProductsService>();
+        services.TryAddSingleton<IAnalyticsUserService, AnalyticsUserService>();
 
         services.TryAddSingleton<IProductStatisticsWriter, ProductStatisticsWriter>();
         services.TryAddSingleton<IUserProductViewsStatisticsWriter, UserProductViewsStatisticsWriter>();
