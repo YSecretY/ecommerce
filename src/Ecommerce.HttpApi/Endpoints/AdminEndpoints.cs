@@ -21,18 +21,18 @@ namespace Ecommerce.HttpApi.Endpoints;
 
 public static class AdminEndpoints
 {
-    public static RouteGroupBuilder MapAdminEndpoints(this RouteGroupBuilder group)
+    public static RouteGroupBuilder MapAdminProductsEndpoints(this RouteGroupBuilder group)
     {
-        group.MapPost("/products", CreateProduct).WithOpenApi();
-        group.MapPut("/products", UpdateProduct).WithOpenApi();
-        group.MapDelete("/products/{id:guid}", DeleteProduct).WithOpenApi();
-        group.MapDelete("/products", DeleteProductsList).WithOpenApi();
-        group.MapGet("/products/sales", GetProductSalesInDateRange).WithOpenApi();
-        group.MapGet("/products/sales/{productId:guid}", GetProductDailySales).WithOpenApi();
-        group.MapGet("/products/statistics/{productId:guid}", GetProductStatistics).WithOpenApi();
-        group.MapGet("/products/most-sold", GetMostSoldProductsInDateRange).WithOpenApi();
-        group.MapGet("/products/most-viewed", GetMostViewedProductsInDateRange).WithOpenApi();
-        group.MapGet("/products/total-sold", GetTotalProductsSold).WithOpenApi();
+        group.MapPost("/", CreateProduct).WithOpenApi();
+        group.MapPut("/", UpdateProduct).WithOpenApi();
+        group.MapDelete("/{id:guid}", DeleteProduct).WithOpenApi();
+        group.MapDelete("/", DeleteProductsList).WithOpenApi();
+        group.MapGet("/sales", GetProductSalesInDateRange).WithOpenApi();
+        group.MapGet("/sales/{productId:guid}", GetProductDailySales).WithOpenApi();
+        group.MapGet("/statistics/{productId:guid}", GetProductStatistics).WithOpenApi();
+        group.MapGet("/most-sold", GetMostSoldProductsInDateRange).WithOpenApi();
+        group.MapGet("/most-viewed", GetMostViewedProductsInDateRange).WithOpenApi();
+        group.MapGet("/total-sold", GetTotalProductsSold).WithOpenApi();
 
         return group;
     }

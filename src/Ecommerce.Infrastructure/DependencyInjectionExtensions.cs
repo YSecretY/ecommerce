@@ -106,7 +106,6 @@ public static class DependencyInjectionExtensions
         services.TryAddSingleton<IAnalyticsEventHandler<OrderCreatedEvent>, AnalyticsOrderCreatedEventHandler>();
         services.TryAddSingleton<IAnalyticsEventHandler<ProductViewedEvent>, AnalyticsProductViewedEventHandler>();
 
-        services.TryAddSingleton<IAnalyticsOrdersService, AnalyticsOrdersService>();
         services.TryAddSingleton<IAnalyticsProductsService, AnalyticsProductsService>();
         services.TryAddSingleton<IAnalyticsUserService, AnalyticsUserService>();
 
