@@ -11,6 +11,12 @@ public static class ApplicationExtensions
             .MapAdminProductsEndpoints()
             .WithTags("admin-products");
 
+    public static void MapAdminOrdersEndpoints(this WebApplication app) =>
+        app.MapGroup("/api/v1/admin/orders")
+            .RequireAuthorization(policy => policy.RequireRole(UserRole.Admin.ToString()))
+            .MapAdminOrdersEndpoints()
+            .WithTags("admin-orders");
+
     public static void MapAuthEndpoints(this WebApplication app) =>
         app.MapGroup("/api/v1/auth")
             .AllowAnonymous()

@@ -85,6 +85,7 @@ app.MapProductsEndpoints();
 app.MapReviewsEndpoints();
 app.MapRepliesEndpoints();
 app.MapAdminProductsEndpoints();
+app.MapAdminOrdersEndpoints();
 app.MapOrdersEndpoints();
 app.MapUsersEndpoints();
 

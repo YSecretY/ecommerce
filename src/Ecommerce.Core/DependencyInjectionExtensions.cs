@@ -1,4 +1,5 @@
 using Ecommerce.Core.Features.Orders.Create;
+using Ecommerce.Core.Features.Orders.GetList;
 using Ecommerce.Core.Features.Products.Analytics.GetMostSoldProducts;
 using Ecommerce.Core.Features.Products.Analytics.GetMostViewedProducts;
 using Ecommerce.Core.Features.Products.Analytics.GetProductDailySales;
@@ -60,6 +61,8 @@ public static class DependencyInjectionExtensions
         services.TryAddScoped<IAdminGetProductDailySalesUseCase, AdminGetProductDailySalesUseCase>();
         services.TryAddScoped<IAdminGetProductTotalStatisticsUseCase, AdminGetProductTotalStatisticsUseCase>();
         services.TryAddScoped<IAdminGetTotalProductsSoldUseCase, AdminGetTotalProductsSoldUseCase>();
+
+        services.TryAddScoped<IAdminGetOrdersUseCase, AdminGetOrdersUseCase>();
 
         return services;
     }

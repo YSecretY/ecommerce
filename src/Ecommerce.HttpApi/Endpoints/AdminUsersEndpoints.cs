@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.HttpApi.Endpoints;
 
-public static class AdminEndpoints
+public static class AdminUsersEndpoints
 {
     public static RouteGroupBuilder MapAdminProductsEndpoints(this RouteGroupBuilder group)
     {
