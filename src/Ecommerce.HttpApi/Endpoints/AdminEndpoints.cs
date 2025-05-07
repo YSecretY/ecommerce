@@ -3,6 +3,7 @@ using Ecommerce.Core.Features.Products.Analytics.GetMostViewedProducts;
 using Ecommerce.Core.Features.Products.Analytics.GetProductDailySales;
 using Ecommerce.Core.Features.Products.Analytics.GetProductSales;
 using Ecommerce.Core.Features.Products.Analytics.GetProductTotalStatistics;
+using Ecommerce.Core.Features.Products.Analytics.GetTotalSold;
 using Ecommerce.Core.Features.Products.Create;
 using Ecommerce.Core.Features.Products.DeleteById;
 using Ecommerce.Core.Features.Products.DeleteList;
@@ -31,6 +32,7 @@ public static class AdminEndpoints
         group.MapGet("/products/statistics/{productId:guid}", GetProductStatistics).WithOpenApi();
         group.MapGet("/products/most-sold", GetMostSoldProductsInDateRange).WithOpenApi();
         group.MapGet("/products/most-viewed", GetMostViewedProductsInDateRange).WithOpenApi();
+        group.MapGet("/products/total-sold", GetTotalProductsSold).WithOpenApi();
 
         return group;
     }
@@ -120,7 +122,11 @@ public static class AdminEndpoints
 
     private static async Task<EndpointResult<ProductStatisticsResponse>> GetProductStatistics(
         [FromRoute] Guid productId,
-        [FromServices] IAdminGetProductTotalStatistics useCase,
+        [FromServices] IAdminGetProductTotalStatisticsUseCase useCase,
         CancellationToken cancellationToken) =>
         new(new ProductStatisticsResponse(await useCase.HandleAsync(productId, cancellationToken)));
+
+    private static async Task<EndpointResult<long>> GetTotalProductsSold(
+        [FromServices] IAdminGetTotalProductsSoldUseCase useCase, CancellationToken cancellationToken) =>
+        new(await useCase.HandleAsync(cancellationToken));
 }

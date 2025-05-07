@@ -3,9 +3,9 @@ using Ecommerce.Core.Abstractions.Analytics.Services;
 
 namespace Ecommerce.Core.Features.Products.Analytics.GetProductTotalStatistics;
 
-internal class AdminGetProductTotalStatistics(
+internal class AdminGetProductTotalStatisticsUseCase(
     IAnalyticsProductsService analyticsProductsService
-) : IAdminGetProductTotalStatistics
+) : IAdminGetProductTotalStatisticsUseCase
 {
     public async Task<ProductStatisticsDto> HandleAsync(Guid productId, CancellationToken cancellationToken = default) =>
         new(

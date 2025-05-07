@@ -139,7 +139,7 @@ internal class AnalyticsProductsService(MongoDbContext dbContext) : IAnalyticsPr
         return result?.Total ?? 0;
     }
 
-    public async Task<int> GetTotalProductsSoldAsync(CancellationToken cancellationToken = default)
+    public async Task<long> GetTotalProductsSoldAsync(CancellationToken cancellationToken = default)
     {
         var result = await _collection.Aggregate()
             .Group(x => true, g => new { Total = g.Sum(x => x.SoldCount) })
