@@ -9,6 +9,7 @@ using Ecommerce.Core.Features.Replies.Create;
 using Ecommerce.Core.Features.Reviews.Create;
 using Ecommerce.Core.Features.Reviews.DeleteById;
 using Ecommerce.Core.Features.Reviews.GetList;
+using Ecommerce.Core.Features.Users.Analytics.GetMostViewedProducts;
 using Ecommerce.Core.Features.Users.Auth.Login;
 using Ecommerce.Core.Features.Users.Auth.Register;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,6 +55,8 @@ public static class DependencyInjectionExtensions
     {
         services.TryAddScoped<IUserRegisterUseCase, UserRegisterUseCase>();
         services.TryAddScoped<IUserLoginCommandUseCase, UserLoginCommandUseCase>();
+
+        services.TryAddScoped<IUserGetMostViewedProductsUseCase, UserGetMostViewedProductsUseCase>();
 
         return services;
     }

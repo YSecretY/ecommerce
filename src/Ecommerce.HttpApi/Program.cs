@@ -86,6 +86,7 @@ app.MapReviewsEndpoints();
 app.MapRepliesEndpoints();
 app.MapAdminEndpoints();
 app.MapOrdersEndpoints();
+app.MapUsersEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
