@@ -1,11 +1,15 @@
+using Ecommerce.Extensions.Types;
+
 namespace Ecommerce.Core.Abstractions.Analytics.Services;
 
 public interface IAnalyticsProductsService
 {
-    public Task<int> GetProductSalesInDateRangeAsync(Guid productId, DateOnly from, DateOnly to,
+    public Task<int> GetProductSalesInDateRangeAsync(Guid productId, DateRangeQuery dateRangeQuery,
         CancellationToken cancellationToken = default);
 
-    public Task<List<Guid>> GetMostSoldProductsAsync(int count, CancellationToken cancellationToken = default);
+    public Task<PaginatedEnumerable<Guid>> GetMostSoldProductsAsync(PaginationQuery paginationQuery,
+        DateRangeQuery dateRangeQuery,
+        CancellationToken cancellationToken = default);
 
     public Task<List<Guid>> GetMostViewedProductsAsync(int count, CancellationToken cancellationToken = default);
 

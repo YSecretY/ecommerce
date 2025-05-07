@@ -1,5 +1,6 @@
 using Ecommerce.Core.Abstractions.Models.Products;
-using Ecommerce.Core.Features.Products.Analytics;
+using Ecommerce.Core.Features.Products.Analytics.GetMostSoldProducts;
+using Ecommerce.Core.Features.Products.Analytics.GetProductSales;
 using Ecommerce.Core.Features.Products.GetById;
 using Ecommerce.Core.Features.Products.GetList;
 using Ecommerce.Extensions.Requests;
@@ -20,6 +21,10 @@ public static class ProductsEndpoints
         group.MapGet("/{id:guid}", GetById).AllowAnonymous().WithOpenApi();
 
         group.MapGet("/sales", GetProductSalesInDateRange)
+            .RequireAuthorization(policy => policy.RequireRole(UserRole.Admin.ToString()))
+            .WithOpenApi();
+
+        group.MapGet("/most-sold", GetMostSoldProductsInDateRange)
             .RequireAuthorization(policy => policy.RequireRole(UserRole.Admin.ToString()))
             .WithOpenApi();
 
@@ -49,9 +54,20 @@ public static class ProductsEndpoints
 
     private static async Task<EndpointResult<int>> GetProductSalesInDateRange(
         [FromQuery] Guid productId,
-        [FromQuery] DateOnly from,
-        [FromQuery] DateOnly to,
+        [AsParameters] DateRangeRequest dateRangeRequest,
         [FromServices] IAdminGetProductSalesInDateRangeUseCase useCase,
-        CancellationToken cancellationToken = default) =>
-        new(await useCase.HandleAsync(productId, from, to, cancellationToken));
+        CancellationToken cancellationToken) =>
+        new(await useCase.HandleAsync(productId, dateRangeRequest.ToDateRangeQuery(), cancellationToken));
+
+    private static async Task<EndpointResult<ProductsListResponse>> GetMostSoldProductsInDateRange(
+        [AsParameters] PaginationRequest paginationRequest,
+        [AsParameters] DateRangeRequest dateRangeRequest,
+        [FromServices] IAdminGetMostSoldProductsInDateRangeUseCase useCase,
+        CancellationToken cancellationToken)
+    {
+        PaginatedEnumerable<ProductDto> products = await useCase.HandleAsync(paginationRequest.ToPaginationQuery(),
+            dateRangeRequest.ToDateRangeQuery(), cancellationToken);
+
+        return new EndpointResult<ProductsListResponse>(new ProductsListResponse(products.Map(p => new ProductResponse(p))));
+    }
 }
