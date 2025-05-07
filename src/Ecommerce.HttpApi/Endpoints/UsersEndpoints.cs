@@ -15,7 +15,7 @@ public static class UsersEndpoints
         return group;
     }
 
-    private static async Task<ActionResult<EndpointResult<List<ProductResponse>>>>
+    private static async Task<EndpointResult<List<ProductResponse>>>
         GetUserMostViewedProductsResponse(
             [FromQuery] int count,
             [FromServices] IUserGetMostViewedProductsUseCase useCase,
