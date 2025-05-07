@@ -1,6 +1,4 @@
 using Ecommerce.Core.Abstractions.Models.Products;
-using Ecommerce.Core.Features.Products.Analytics.GetMostSoldProducts;
-using Ecommerce.Core.Features.Products.Analytics.GetProductSales;
 using Ecommerce.Core.Features.Products.GetById;
 using Ecommerce.Core.Features.Products.GetList;
 using Ecommerce.Extensions.Requests;
@@ -8,7 +6,6 @@ using Ecommerce.Extensions.Types;
 using Ecommerce.HttpApi.Contracts;
 using Ecommerce.HttpApi.Contracts.Products;
 using Ecommerce.HttpApi.Contracts.Products.GetList;
-using Ecommerce.Persistence.Domain.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.HttpApi.Endpoints;
@@ -19,14 +16,6 @@ public static class ProductsEndpoints
     {
         group.MapGet("/", GetList).AllowAnonymous().WithOpenApi();
         group.MapGet("/{id:guid}", GetById).AllowAnonymous().WithOpenApi();
-
-        group.MapGet("/sales", GetProductSalesInDateRange)
-            .RequireAuthorization(policy => policy.RequireRole(UserRole.Admin.ToString()))
-            .WithOpenApi();
-
-        group.MapGet("/most-sold", GetMostSoldProductsInDateRange)
-            .RequireAuthorization(policy => policy.RequireRole(UserRole.Admin.ToString()))
-            .WithOpenApi();
 
         return group;
     }
@@ -50,27 +39,5 @@ public static class ProductsEndpoints
         ProductsListResponse response = new(products.Map(p => new ProductResponse(p)));
 
         return new EndpointResult<ProductsListResponse>(response);
-    }
-
-    private static async Task<EndpointResult<int>> GetProductSalesInDateRange(
-        [FromQuery] Guid productId,
-        [AsParameters] DateRangeRequest dateRangeRequest,
-        [FromServices] IAdminGetProductSalesInDateRangeUseCase useCase,
-        CancellationToken cancellationToken) =>
-        new(await useCase.HandleAsync(productId, dateRangeRequest.ToDateRangeQuery(), cancellationToken));
-
-    private static async Task<EndpointResult<PaginatedResult<ProductWithSalesInfoResponse>>> GetMostSoldProductsInDateRange(
-        [AsParameters] PaginationRequest paginationRequest,
-        [AsParameters] DateRangeRequest dateRangeRequest,
-        [FromServices] IAdminGetMostSoldProductsInDateRangeUseCase useCase,
-        CancellationToken cancellationToken)
-    {
-        PaginatedEnumerable<ProductWithSalesInfoDto> products = await useCase.HandleAsync(
-            paginationRequest.ToPaginationQuery(),
-            dateRangeRequest.ToDateRangeQuery(), cancellationToken);
-
-        PaginatedResult<ProductWithSalesInfoResponse> response = new(products.Map(p => new ProductWithSalesInfoResponse(p)));
-
-        return new EndpointResult<PaginatedResult<ProductWithSalesInfoResponse>>(response);
     }
 }
