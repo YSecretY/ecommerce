@@ -105,8 +105,12 @@ internal class AnalyticsProductsService(MongoDbContext dbContext) : IAnalyticsPr
             Builders<ProductDailyStatistics>.Filter.Eq(x => x.Date, date)
         );
 
-        ProductDailyStatistics? result = await _collection.Find(filter).FirstOrDefaultAsync(cancellationToken);
-        return result?.SoldCount ?? 0;
+        var result = await _collection.Aggregate()
+            .Match(filter)
+            .Group(x => x.ProductId, g => new { Total = g.Sum(x => x.SoldCount) })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return result?.Total ?? 0;
     }
 
     public async Task<int> GetProductTotalSalesAsync(Guid productId, CancellationToken cancellationToken = default)
@@ -122,19 +126,23 @@ internal class AnalyticsProductsService(MongoDbContext dbContext) : IAnalyticsPr
         return result?.Total ?? 0;
     }
 
-    public async Task<int> GetTotalProductsSoldAsync(CancellationToken cancellationToken = default)
+    public async Task<int> GetProductTotalViewsAsync(Guid productId, CancellationToken cancellationToken = default)
     {
+        FilterDefinition<ProductDailyStatistics>? filter =
+            Builders<ProductDailyStatistics>.Filter.Eq(x => x.ProductId, productId);
+
         var result = await _collection.Aggregate()
-            .Group(x => true, g => new { Total = g.Sum(x => x.SoldCount) })
+            .Match(filter)
+            .Group(x => true, g => new { Total = g.Sum(x => x.ViewsCount) })
             .FirstOrDefaultAsync(cancellationToken);
 
         return result?.Total ?? 0;
     }
 
-    public async Task<int> GetTotalProductViewsAsync(CancellationToken cancellationToken = default)
+    public async Task<int> GetTotalProductsSoldAsync(CancellationToken cancellationToken = default)
     {
         var result = await _collection.Aggregate()
-            .Group(x => true, g => new { Total = g.Sum(x => x.ViewsCount) })
+            .Group(x => true, g => new { Total = g.Sum(x => x.SoldCount) })
             .FirstOrDefaultAsync(cancellationToken);
 
         return result?.Total ?? 0;

@@ -7,5 +7,5 @@ internal class AdminGetProductDailySalesUseCase(
 ) : IAdminGetProductDailySalesUseCase
 {
     public async Task<int> HandleAsync(Guid productId, DateOnly date, CancellationToken cancellationToken = default) =>
-        await analyticsProductsService.GetProductTotalSalesAsync(productId, cancellationToken);
+        await analyticsProductsService.GetProductDailySalesAsync(productId, date, cancellationToken);
 }

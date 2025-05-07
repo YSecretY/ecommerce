@@ -18,7 +18,7 @@ public interface IAnalyticsProductsService
 
     public Task<int> GetProductTotalSalesAsync(Guid productId, CancellationToken cancellationToken = default);
 
-    public Task<int> GetTotalProductsSoldAsync(CancellationToken cancellationToken = default);
+    public Task<int> GetProductTotalViewsAsync(Guid productId, CancellationToken cancellationToken = default);
 
-    public Task<int> GetTotalProductViewsAsync(CancellationToken cancellationToken = default);
+    public Task<int> GetTotalProductsSoldAsync(CancellationToken cancellationToken = default);
 }
