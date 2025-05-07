@@ -1,4 +1,5 @@
 using Ecommerce.Core.Features.Products.Analytics.GetMostSoldProducts;
+using Ecommerce.Core.Features.Products.Analytics.GetMostViewedProducts;
 using Ecommerce.Core.Features.Products.Analytics.GetProductSales;
 using Ecommerce.Core.Features.Products.Create;
 using Ecommerce.Core.Features.Products.DeleteById;
@@ -8,8 +9,9 @@ using Ecommerce.Extensions.Requests;
 using Ecommerce.Extensions.Types;
 using Ecommerce.HttpApi.Contracts;
 using Ecommerce.HttpApi.Contracts.Admin.Products;
+using Ecommerce.HttpApi.Contracts.Admin.Products.GetMostSoldInDateRange;
+using Ecommerce.HttpApi.Contracts.Admin.Products.GetMostViewedInDateRange;
 using Ecommerce.HttpApi.Contracts.Products;
-using Ecommerce.Persistence.Domain.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.HttpApi.Endpoints;
@@ -22,14 +24,9 @@ public static class AdminEndpoints
         group.MapPut("/products", UpdateProduct).WithOpenApi();
         group.MapDelete("/products/{id:guid}", DeleteProduct).WithOpenApi();
         group.MapDelete("/products", DeleteProductsList).WithOpenApi();
-
-        group.MapGet("products/sales", GetProductSalesInDateRange)
-            .RequireAuthorization(policy => policy.RequireRole(UserRole.Admin.ToString()))
-            .WithOpenApi();
-
-        group.MapGet("products/most-sold", GetMostSoldProductsInDateRange)
-            .RequireAuthorization(policy => policy.RequireRole(UserRole.Admin.ToString()))
-            .WithOpenApi();
+        group.MapGet("/products/sales", GetProductSalesInDateRange).WithOpenApi();
+        group.MapGet("/products/most-sold", GetMostSoldProductsInDateRange).WithOpenApi();
+        group.MapGet("/products/most-viewed", GetMostViewedProductsInDateRange).WithOpenApi();
 
         return group;
     }
@@ -77,7 +74,7 @@ public static class AdminEndpoints
         CancellationToken cancellationToken) =>
         new(await useCase.HandleAsync(productId, dateRangeRequest.ToDateRangeQuery(), cancellationToken));
 
-    private static async Task<EndpointResult<PaginatedResult<ProductWithSalesInfoResponse>>> GetMostSoldProductsInDateRange(
+    private static async Task<EndpointResult<AdminGetMostSoldProductsInDateRangeResponse>> GetMostSoldProductsInDateRange(
         [AsParameters] PaginationRequest paginationRequest,
         [AsParameters] DateRangeRequest dateRangeRequest,
         [FromServices] IAdminGetMostSoldProductsInDateRangeUseCase useCase,
@@ -89,6 +86,25 @@ public static class AdminEndpoints
 
         PaginatedResult<ProductWithSalesInfoResponse> response = new(products.Map(p => new ProductWithSalesInfoResponse(p)));
 
-        return new EndpointResult<PaginatedResult<ProductWithSalesInfoResponse>>(response);
+        return new EndpointResult<AdminGetMostSoldProductsInDateRangeResponse>(
+            new AdminGetMostSoldProductsInDateRangeResponse(response)
+        );
+    }
+
+    private static async Task<EndpointResult<AdminGetMostViewedProductsInDateRangeResponse>>
+        GetMostViewedProductsInDateRange(
+            [AsParameters] PaginationRequest paginationRequest,
+            [AsParameters] DateRangeRequest dateRangeRequest,
+            [FromServices] IAdminGetMostViewedProductsInDateRangeUseCase useCase,
+            CancellationToken cancellationToken
+        )
+    {
+        PaginatedEnumerable<ProductWithViewsInfoDto> products = await useCase.HandleAsync(
+            paginationRequest.ToPaginationQuery(), dateRangeRequest.ToDateRangeQuery(), cancellationToken);
+
+        PaginatedResult<ProductWithViewsInfoResponse> response = new(products.Map(p => new ProductWithViewsInfoResponse(p)));
+
+        return new EndpointResult<AdminGetMostViewedProductsInDateRangeResponse>(
+            new AdminGetMostViewedProductsInDateRangeResponse(response));
     }
 }

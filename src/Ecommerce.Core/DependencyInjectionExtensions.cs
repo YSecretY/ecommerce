@@ -1,5 +1,6 @@
 using Ecommerce.Core.Features.Orders.Create;
 using Ecommerce.Core.Features.Products.Analytics.GetMostSoldProducts;
+using Ecommerce.Core.Features.Products.Analytics.GetMostViewedProducts;
 using Ecommerce.Core.Features.Products.Analytics.GetProductSales;
 using Ecommerce.Core.Features.Products.Create;
 using Ecommerce.Core.Features.Products.DeleteById;
@@ -52,6 +53,7 @@ public static class DependencyInjectionExtensions
 
         services.TryAddScoped<IAdminGetProductSalesInDateRangeUseCase, AdminGetProductSalesInDateRangeUseCase>();
         services.TryAddScoped<IAdminGetMostSoldProductsInDateRangeUseCase, AdminGetMostSoldProductsInDateRangeUseCase>();
+        services.TryAddScoped<IAdminGetMostViewedProductsInDateRangeUseCase, AdminGetMostViewedProductsInDateRangeUseCase>();
 
         return services;
     }

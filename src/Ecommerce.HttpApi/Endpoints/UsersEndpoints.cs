@@ -10,7 +10,7 @@ public static class UsersEndpoints
 {
     public static RouteGroupBuilder MapUsersEndpoints(this RouteGroupBuilder group)
     {
-        group.MapGet("/users/most-viewed-products", GetUserMostViewedProductsResponse).WithOpenApi();
+        group.MapGet("/products/most-viewed-products", GetUserMostViewedProductsResponse).WithOpenApi();
 
         return group;
     }

@@ -9,10 +9,10 @@ public interface IAnalyticsProductsService
         CancellationToken cancellationToken = default);
 
     public Task<PaginatedEnumerable<ProductSalesDto>> GetMostSoldProductsAsync(PaginationQuery paginationQuery,
-        DateRangeQuery dateRangeQuery,
-        CancellationToken cancellationToken = default);
+        DateRangeQuery dateRangeQuery, CancellationToken cancellationToken = default);
 
-    public Task<List<Guid>> GetMostViewedProductsAsync(int count, CancellationToken cancellationToken = default);
+    public Task<PaginatedEnumerable<ProductViewsDto>> GetMostViewedProductsAsync(PaginationQuery paginationQuery,
+        DateRangeQuery dateRangeQuery, CancellationToken cancellationToken = default);
 
     public Task<int> GetProductDailySalesAsync(Guid productId, DateOnly date, CancellationToken cancellationToken = default);
 
