@@ -1,3 +1,4 @@
+using Ecommerce.Core.Abstractions.Analytics.Models.Products;
 using Ecommerce.Core.Abstractions.Analytics.Services;
 using Ecommerce.Extensions.Types;
 using Ecommerce.Infrastructure.Analytics.Internal.Models;
@@ -28,7 +29,8 @@ internal class AnalyticsProductsService(MongoDbContext dbContext) : IAnalyticsPr
         return result?.Total ?? 0;
     }
 
-    public async Task<PaginatedEnumerable<Guid>> GetMostSoldProductsAsync(PaginationQuery paginationQuery,
+    public async Task<PaginatedEnumerable<ProductSalesDto>> GetMostSoldProductsAsync(
+        PaginationQuery paginationQuery,
         DateRangeQuery dateRangeQuery,
         CancellationToken cancellationToken = default)
     {
@@ -36,6 +38,14 @@ internal class AnalyticsProductsService(MongoDbContext dbContext) : IAnalyticsPr
             Builders<ProductDailyStatistics>.Filter.Gte(x => x.Date, dateRangeQuery.From),
             Builders<ProductDailyStatistics>.Filter.Lte(x => x.Date, dateRangeQuery.To)
         );
+
+        AggregateCountResult? totalCount = await _collection.Aggregate()
+            .Match(filter)
+            .Group(x => x.ProductId, g => new { ProductId = g.Key })
+            .Count()
+            .FirstOrDefaultAsync(cancellationToken);
+
+        long total = totalCount?.Count ?? 0;
 
         var result = await _collection.Aggregate()
             .Match(filter)
@@ -49,15 +59,11 @@ internal class AnalyticsProductsService(MongoDbContext dbContext) : IAnalyticsPr
             .Limit(paginationQuery.PageSize)
             .ToListAsync(cancellationToken);
 
-        AggregateCountResult? totalCount = await _collection.Aggregate()
-            .Match(filter)
-            .Group(x => x.ProductId, g => new { Count = g.Count() })
-            .Count()
-            .FirstOrDefaultAsync(cancellationToken);
+        List<ProductSalesDto> items = result.Select(x => new ProductSalesDto(x.ProductId, x.TotalSold)).ToList();
 
-        return new PaginatedEnumerable<Guid>(result.Select(x => x.ProductId).ToList(), paginationQuery.PageSize,
-            paginationQuery.PageNumber, totalCount?.Count ?? 0);
+        return new PaginatedEnumerable<ProductSalesDto>(items, paginationQuery.PageSize, paginationQuery.PageNumber, total);
     }
+
 
     public async Task<List<Guid>> GetMostViewedProductsAsync(int count, CancellationToken cancellationToken = default)
     {

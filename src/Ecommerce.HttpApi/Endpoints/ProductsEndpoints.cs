@@ -59,15 +59,18 @@ public static class ProductsEndpoints
         CancellationToken cancellationToken) =>
         new(await useCase.HandleAsync(productId, dateRangeRequest.ToDateRangeQuery(), cancellationToken));
 
-    private static async Task<EndpointResult<ProductsListResponse>> GetMostSoldProductsInDateRange(
+    private static async Task<EndpointResult<PaginatedResult<ProductWithSalesInfoResponse>>> GetMostSoldProductsInDateRange(
         [AsParameters] PaginationRequest paginationRequest,
         [AsParameters] DateRangeRequest dateRangeRequest,
         [FromServices] IAdminGetMostSoldProductsInDateRangeUseCase useCase,
         CancellationToken cancellationToken)
     {
-        PaginatedEnumerable<ProductDto> products = await useCase.HandleAsync(paginationRequest.ToPaginationQuery(),
+        PaginatedEnumerable<ProductWithSalesInfoDto> products = await useCase.HandleAsync(
+            paginationRequest.ToPaginationQuery(),
             dateRangeRequest.ToDateRangeQuery(), cancellationToken);
 
-        return new EndpointResult<ProductsListResponse>(new ProductsListResponse(products.Map(p => new ProductResponse(p))));
+        PaginatedResult<ProductWithSalesInfoResponse> response = new(products.Map(p => new ProductWithSalesInfoResponse(p)));
+
+        return new EndpointResult<PaginatedResult<ProductWithSalesInfoResponse>>(response);
     }
 }

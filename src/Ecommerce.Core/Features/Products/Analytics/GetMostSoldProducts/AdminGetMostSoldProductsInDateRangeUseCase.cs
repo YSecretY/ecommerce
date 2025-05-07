@@ -1,3 +1,4 @@
+using Ecommerce.Core.Abstractions.Analytics.Models.Products;
 using Ecommerce.Core.Abstractions.Analytics.Services;
 using Ecommerce.Core.Abstractions.Models.Products;
 using Ecommerce.Extensions.Types;
@@ -11,19 +12,28 @@ internal class AdminGetMostSoldProductsInDateRangeUseCase(
     ApplicationDbContext dbContext
 ) : IAdminGetMostSoldProductsInDateRangeUseCase
 {
-    public async Task<PaginatedEnumerable<ProductDto>> HandleAsync(PaginationQuery paginationQuery,
+    public async Task<PaginatedEnumerable<ProductWithSalesInfoDto>> HandleAsync(PaginationQuery paginationQuery,
         DateRangeQuery dateRangeQuery, CancellationToken cancellationToken = default)
     {
-        PaginatedEnumerable<Guid> result =
+        PaginatedEnumerable<ProductSalesDto> result =
             await analyticsProductsService.GetMostSoldProductsAsync(paginationQuery, dateRangeQuery, cancellationToken);
 
+        HashSet<Guid> productIds = result.Data.Select(x => x.ProductId).ToHashSet();
+
         List<ProductDto> products = await dbContext.Products
-            .Where(p => result.Data.Contains(p.Id))
+            .Where(p => productIds.Contains(p.Id))
             .Select(p => new ProductDto(p))
             .ToListAsync(cancellationToken);
 
-        return new PaginatedEnumerable<ProductDto>(
-            products,
+        List<ProductWithSalesInfoDto> productsWithSalesInfo = new(products.Count);
+        foreach (ProductDto product in products)
+        {
+            ProductSalesDto salesDto = result.Data.First(x => x.ProductId == product.Id);
+            productsWithSalesInfo.Add(new ProductWithSalesInfoDto(product, salesDto.TotalSold));
+        }
+
+        return new PaginatedEnumerable<ProductWithSalesInfoDto>(
+            productsWithSalesInfo,
             paginationQuery.PageSize,
             paginationQuery.PageNumber,
             result.TotalCount
