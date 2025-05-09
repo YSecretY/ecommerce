@@ -20,6 +20,7 @@ internal class AdminGetOrdersUseCase(ApplicationDbContext dbContext) : IAdminGet
             ordersQuery = ordersQuery.Where(x => x.Status == status);
 
         return await ordersQuery
+            .OrderByDescending(o => o.CreatedAtUtc)
             .Select(o => new OrderDto(o))
             .ToPaginatedEnumerableAsync(paginationQuery, cancellationToken);
     }

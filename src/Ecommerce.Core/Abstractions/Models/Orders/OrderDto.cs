@@ -5,6 +5,7 @@ namespace Ecommerce.Core.Abstractions.Models.Orders;
 
 [method: JsonConstructor]
 public class OrderDto(
+    Guid orderId,
     Guid userId,
     List<OrderItemDto> items,
     string currencyCode,
@@ -16,6 +17,7 @@ public class OrderDto(
 {
     public OrderDto(Order order)
         : this(
+            order.Id,
             order.UserId,
             order.OrderItems.Select(i => new OrderItemDto(i)).ToList(),
             order.CurrencyCode,
@@ -26,6 +28,8 @@ public class OrderDto(
         )
     {
     }
+
+    public Guid OrderId { get; private set; } = orderId;
 
     public Guid UserId { get; private set; } = userId;
 

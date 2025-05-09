@@ -5,6 +5,7 @@ using Ecommerce.Persistence.Domain.Orders;
 namespace Ecommerce.HttpApi.Contracts.Orders;
 
 public class OrderResponse(
+    Guid orderId,
     Guid userId,
     List<OrderItemResponse> items,
     string currencyCode,
@@ -16,6 +17,7 @@ public class OrderResponse(
 {
     public OrderResponse(OrderDto dto)
         : this(
+            dto.OrderId,
             dto.UserId,
             dto.Items.Select(i => new OrderItemResponse(i)).ToList(),
             dto.CurrencyCode,
@@ -26,6 +28,9 @@ public class OrderResponse(
         )
     {
     }
+
+    [JsonPropertyName("orderId")]
+    public Guid OrderId { get; private set; } = orderId;
 
     [JsonPropertyName("userId")]
     public Guid UserId { get; private set; } = userId;
